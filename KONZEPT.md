@@ -109,6 +109,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **UI-Framework:** Vuetify/Material-UI für konsistente Benutzeroberfläche
 - **PWA:** Service Worker für Offline-Funktionalität
 - **Karten:** OpenStreetMap mit Leaflet.js
+- **Verkehrsdaten:** Hybrid-Ansatz (Autobahn GmbH API + Overpass API + HERE Maps optional)
 - **Build-Tool:** Vite für schnelle Entwicklung
 
 #### Backend
@@ -117,6 +118,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Echtzeit:** WebSocket für Live-Updates
 - **Authentifizierung:** JWT-basiert mit Refresh-Token
 - **Validierung:** Joi/Yup für Eingabevalidierung
+- **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
 
 #### Datenbank
 - **Primär:** PostgreSQL für strukturierte Daten
@@ -171,7 +173,78 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Sprachnavigation (optional)
 - **Koordination:** Sichtbarkeit anderer Versorger zur besseren Abstimmung
 
-### 3. Team-Koordination
+#### Verkehrsdaten & Straßensperrungen (Hybrid-Ansatz)
+- **Autobahn GmbH API:** Kostenlose Integration deutscher Autobahn-Baustellen und Sperrungen
+  - Baustellen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/roadworks`
+  - Sperrungen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/closure`
+  - Verkehrsmeldungen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/warning`
+- **OpenStreetMap Overpass API:** Lokale Straßenbaustellen aus Community-Daten
+  - **Funktionsweise:** Die Overpass API ermöglicht komplexe Abfragen der OpenStreetMap-Datenbank
+  - **Baustellen-Abfrage:** `[out:json][timeout:25]; (node["highway"~"construction|proposed"](bbox); way["highway"~"construction|proposed"](bbox); relation["highway"~"construction|proposed"](bbox);); out geom;`
+  - **Straßensperrungen:** `[out:json][timeout:25]; (way["access"="no"](bbox); way["motor_vehicle"="no"](bbox);); out geom;`
+  - **Temporäre Hindernisse:** `[out:json][timeout:25]; (node["barrier"](bbox); way["barrier"](bbox);); out geom;`
+  - **Vorteile:**
+    - Kostenlos und DSGVO-konform ohne API-Limits
+    - Community-gepflegte Daten mit lokaler Genauigkeit
+    - Echtzeit-Updates durch Mapper vor Ort
+    - Flexible Abfragesprache für spezifische Anforderungen
+  - **Technische Integration:**
+    - Bounding Box basiert auf aktueller Kartenansicht
+    - Caching der Ergebnisse für 10 Minuten
+    - Fallback auf cached Daten bei API-Überlastung
+    - GeoJSON-Format für direkte Leaflet.js Integration
+- **HERE Maps (Premium-Option):** Echtzeit-Verkehrsdaten bei erweiterten Anforderungen
+  - Traffic Layer mit Jam Factor Visualisierung
+  - Kostenpflichtig, aber umfassende Verkehrslage
+- **Technische Umsetzung:**
+  - Leaflet.js Layer-System für verschiedene Datenquellen
+  - Automatische Aktualisierung alle 15 Minuten
+  - Farbkodierte Darstellung: Orange (Baustellen), Rot (Sperrungen), Gelb (Verkehrsstörungen)
+  - Popup-Informationen mit Details zu Sperrungen und Umleitungsempfehlungen
+
+### 3. Manuelle Straßensperrungen (Disponent)
+
+#### Sperrungen erstellen
+- **Interaktive Kartenerstellung:** Disponent kann direkt auf der Karte Straßensperrungen einzeichnen
+  - Polygon-Tool für Sperrgebiete
+  - Linien-Tool für Straßenabschnitte
+  - Punkt-Tool für lokale Hindernisse
+- **Sperrungstypen:**
+  - Vollsperrung (kein Durchgang)
+  - Teilsperrung (eingeschränkter Verkehr)
+  - Einsatzfahrzeug-Sperrung (nur für Zivilverkehr)
+  - Temporäre Sperrung (mit Zeitbegrenzung)
+
+#### Ausnahmen und Durchfahrtsmöglichkeiten
+- **Einsatzfahrzeug-Korridore:** Definition von Bereichen innerhalb von Sperrungen
+  - Markierung von Durchfahrtspunkten für Versorger
+  - GPS-Koordinaten für exakte Positionierung
+  - Breiten- und Höhenbeschränkungen
+- **Berechtigungsebenen:**
+  - Feuerwehr/Rettungsdienst: Vollzugang
+  - Einsatzversorger: Definierte Korridore
+  - Zivilverkehr: Gesperrt
+- **Zusatzinformationen:**
+  - Kontaktdaten vor Ort (Einsatzleitung)
+  - Alternative Routen
+  - Besondere Hinweise (z.B. "Rücksprache mit Einsatzleitung erforderlich")
+
+#### Technische Umsetzung
+- **Datenbank-Schema:**
+  - Sperrungen-Tabelle mit GeoJSON-Geometrien
+  - Ausnahmen-Tabelle mit Referenz zu Sperrungen
+  - Benutzer-Berechtigungen für Erstellung/Bearbeitung
+- **Real-time Updates:**
+  - WebSocket-Verbindung für sofortige Benachrichtigung aller Versorger
+  - Push-Notifications bei neuen Sperrungen im Einsatzgebiet
+  - Automatische Routenneuberechnung bei aktiven Navigationen
+- **Kartendarstellung:**
+  - Rote Bereiche: Vollsperrungen
+  - Orange Bereiche: Teilsperrungen
+  - Grüne Linien: Einsatzfahrzeug-Korridore
+  - Blaue Punkte: Durchfahrtspunkte mit Popup-Informationen
+
+### 4. Team-Koordination
 
 #### Team-Management
 ```

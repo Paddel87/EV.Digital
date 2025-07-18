@@ -7,6 +7,31 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-07-19
+
+### Hinzugefügt
+- **Hybrid-Ansatz Verkehrsdaten:** Integration von Autobahn GmbH API, OpenStreetMap Overpass API und HERE Maps
+- **Autobahn GmbH API:** Kostenlose deutsche Autobahn-Baustellen, Sperrungen und Verkehrsmeldungen
+- **OpenStreetMap Overpass API:** Detaillierte Integration für lokale Straßenbaustellen aus Community-Daten
+  - Baustellen-Abfragen mit komplexer Overpass QL Syntax
+  - Straßensperrungen und temporäre Hindernisse
+  - Bounding Box basierte Abfragen mit Caching-Strategie
+  - GeoJSON-Format für direkte Leaflet.js Integration
+- **Manuelle Straßensperrungen (Disponent):** Interaktive Kartenerstellung von Sperrungen
+  - Polygon-, Linien- und Punkt-Tools für verschiedene Sperrgebiete
+  - Sperrungstypen: Vollsperrung, Teilsperrung, Einsatzfahrzeug-Sperrung, temporäre Sperrung
+  - Einsatzfahrzeug-Korridore mit GPS-Koordinaten und Durchfahrtspunkten
+  - Berechtigungsebenen für Feuerwehr, Einsatzversorger und Zivilverkehr
+  - Real-time WebSocket-Updates und automatische Routenneuberechnung
+- **Sperrungsmanagement Backend:** REST API für CRUD-Operationen manueller Straßensperrungen
+- **Erweiterte Kartendarstellung:** Farbkodierte Bereiche und Popup-Informationen
+
+### Geändert
+- Technologie-Stack um Verkehrsdaten-APIs erweitert
+- Kartenintegration um Hybrid-Ansatz für Verkehrsdaten erweitert
+- Backend um Sperrungsmanagement-Funktionen erweitert
+- Konzeptdokument um detaillierte Overpass API-Dokumentation erweitert
+
 ## [1.2.0] - 2025-07-18
 
 ### Hinzugefügt
