@@ -7,11 +7,23 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-07-18
+
 ### Hinzugefügt
-- Vision Driven Development Konzept mit autonomer KI-Entwicklung
-- Bottom-to-Top-Entwicklungsphilosophie (Platzhalter)
-- Dokumentationsanforderungen für autonome Implementierung
-- Qualitätssicherungsrichtlinien für KI-gestützte Entwicklung
+- **Benutzerrollen:** Disponent, Ehrenamtliche Versorger:innen, Mobiles Nachschubfahrzeug
+- **Örtlichkeiten:** Geschäftsstelle der Gewerkschaft, Mobile Nachschubfahrzeuge, Einsatzorte
+- **WhatsApp-Bestellsystem:** Externe Bestellung über WhatsApp mit manueller Erfassung
+- **Bestellworkflow:** Einsatzkraft → WhatsApp → Disponent → EV.Digital → Auftrag → Versorger
+- **Echtzeit-Versorger-Tracking:** Live-Standorte aller Versorger auf der Karte
+- **Dynamische Navigation:** Automatische Routenoptimierung mit Live-Updates
+- **Versorger-Karte:** Spezialisierte UI mit Auftragsvisualisierung und Koordination
+- **Externe Akteure:** Einsatzkräfte als Kunden ohne Systemzugriff (Lieferando-Modell)
+
+### Geändert
+- Rollensystem überarbeitet: Einsatzkräfte aus internem System entfernt
+- Anwendungsszenarien um WhatsApp-Integration und Medienbruch-Management erweitert
+- Kartenfunktionen um Echtzeit-Tracking und Live-Koordination erweitert
+- Benutzeroberfläche um spezialisierte Versorger-Ansicht erweitert
 
 ## [1.1.0] - 2025-07-18
 

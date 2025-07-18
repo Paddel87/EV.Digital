@@ -2,7 +2,7 @@
 
 **Projektstart:** 18.07.2025  
 **Status:** Konzeptionierungsphase  
-**Version:** 1.1.0
+**Version:** 1.2.0
 
 ---
 
@@ -64,11 +64,26 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Ehrenamtliche Versorgungsteams bei Großeinsätzen
 - Koordinator:innen für Getränke- und Snackversorgung
 
+### Benutzerrollen
+- **Disponent:** Zentrale Koordination und Auftragsverteilung
+- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge vor Ort
+- **Mobiles Nachschubfahrzeug:** Kann Versorger mobil nachversorgen und unterstützen
+
+### Örtlichkeiten im System
+- **Geschäftsstelle der Gewerkschaft:** Zentrale Anlaufstelle zum Wiederbeladen des Fahrzeuges
+- **Mobiles oder temporär stationäres Nachschubfahrzeug:** Flexible Versorgungsstation
+- **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
+
 ### Anwendungsszenarien
 - Großeinsätze mit mehreren Versorgungsteams
 - Koordination ortsunkundiger Helfer:innen
 - Dokumentation und Nachverfolgung von Versorgungsaufträgen
 - Kommunikation ohne private Kanäle (WhatsApp-Alternative)
+- Mobile Nachversorgung durch Fahrzeuge
+- Koordination zwischen festen und mobilen Versorgungspunkten
+- **WhatsApp-Bestellsystem:** Einsatzkräfte bestellen per WhatsApp, Disponent erfasst händisch in EV.Digital
+- **B2B-Service:** Gewerkschaft als Dienstleister für Einsatzkräfte ohne deren Systemintegration
+- **Medienbruch-Management:** Überbrückung zwischen externen Kommunikationskanälen und internem System
 
 ---
 
@@ -121,10 +136,15 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ### 1. Benutzer- und Rollenverwaltung
 
 #### Rollen
+- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung
 - **Koordinator:in:** Vollzugriff, Team-Management, Auftragsverteilung
 - **Teamleiter:in:** Team-Status, Auftragsannahme, Kommunikation
+- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge, Status-Updates, Kommunikation
+- **Mobiles Nachschubfahrzeug:** Spezielle Rolle für mobile Nachversorgung, Standort-Updates, Kapazitätsmeldungen
 - **Helfer:in:** Basis-Funktionen, Status-Updates
-- **Einsatzkraft:** Bedarfsanmeldung, Status-Einsicht
+
+#### Externe Akteure (nicht im System erfasst)
+- **Einsatzkräfte:** Kunden der Gewerkschaft, die Versorgungsleistungen bestellen (ähnlich wie bei Lieferando/Glovo). Sie haben keinen direkten Systemzugriff und sind nicht als Benutzer registriert.
 
 #### Authentifizierung
 - QR-Code basierte Anmeldung für schnellen Zugang
@@ -139,12 +159,17 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Offline-Karten für kritische Bereiche
 - GPS-Positionierung (optional, datenschutzkonform)
 - Markierung von Versorgungspunkten und Treffpunkten
+- **Echtzeit-Versorger-Tracking:** Aktuelle Standorte aller Versorger auf der Karte
+- **Auftragsvisualisierung:** Standorte der Versorgungsaufträge mit Status-Kennzeichnung
 
-#### Navigation
+#### Navigation für Versorger
+- **Dynamische Routenberechnung:** Automatische Routenoptimierung zur Anfahrt
+- **Live-Updates:** Berücksichtigung aktueller Verkehrslage und Sperrungen
 - Routenplanung zu Einsatzorten
 - Berücksichtigung von Verkehrsbeschränkungen
 - Alternative Routen bei Sperrungen
 - Sprachnavigation (optional)
+- **Koordination:** Sichtbarkeit anderer Versorger zur besseren Abstimmung
 
 ### 3. Team-Koordination
 
@@ -167,10 +192,19 @@ Team-Status:
 ### 4. Bedarfserfassung & Auftragsmanagement
 
 #### Bedarfsanmeldung
+- **WhatsApp-Bestellungen:** Einsatzkräfte senden Versorgungsanfragen per WhatsApp an den Disponenten
+- **Manuelle Erfassung:** Disponent pflegt WhatsApp-Anforderungen händisch mit Standort in EV.Digital ein
+- **Auftragserstellung:** Aus jeder erfassten Anforderung entsteht automatisch ein Auftrag für die Versorger
 - Standardisierte Formulare für häufige Anfragen
 - Freie Texteingabe für spezielle Anforderungen
 - Prioritätsstufen (niedrig, normal, hoch, kritisch)
 - Zeitstempel und Standortangabe
+- **Kundendaten:** Minimale Erfassung der bestellenden Einsatzkraft (nur für Lieferung notwendig)
+
+#### Bestellworkflow
+```
+Einsatzkraft → WhatsApp → Disponent → EV.Digital → Auftrag → Versorger → Auslieferung
+```
 
 #### Auftragsverwaltung
 ```
@@ -239,7 +273,11 @@ Breakpoints:
 
 ### Hauptansichten
 1. **Dashboard:** Übersicht über aktuelle Situation
-2. **Karte:** Geografische Darstellung aller Elemente
+2. **Versorger-Karte:** 
+   - Echtzeit-Standorte aller Versorger
+   - Auftragsstandorte mit Status-Kennzeichnung
+   - Dynamische Routenberechnung zur Anfahrt
+   - Live-Koordination zwischen Versorgern
 3. **Teams:** Team-Status und -verwaltung
 4. **Aufträge:** Auftragsübersicht und -bearbeitung
 5. **Kommunikation:** Nachrichten und Benachrichtigungen
@@ -404,5 +442,5 @@ Breakpoints:
 
 **Erstellt:** 18.07.2025  
 **Letzte Aktualisierung:** 18.07.2025  
-**Version:** 1.1.0  
-**Status:** Konzeptionierungsphase + Vision Driven Development
+**Version:** 1.2.0  
+**Status:** Konzeptionierungsphase + Vision Driven Development + Benutzerrollen & WhatsApp-Integration
