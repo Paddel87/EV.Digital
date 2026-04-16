@@ -57,6 +57,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Optionale Team-Gruppierung:** Versorger:innen arbeiten einzeln oder in Teams (Disponent konfiguriert)
 - **Sperrungen vereinfacht:** Nur noch zwei Stufen (für Versorgungsfahrzeuge befahrbar / für alle gesperrt)
 - **Konsistenzbereinigung:** Doppelte Nummerierung, fehlende Überschriften, veraltete Referenzen behoben
+- **Routing-Logik definiert:** Route nur bei Auftragsübernahme (Vorschlag, manuell starten), dauerhafter Button für Nachschub/Geschäftsstelle, freies Routing optional
 
 ## [1.4.0] - 2026-04-16
 

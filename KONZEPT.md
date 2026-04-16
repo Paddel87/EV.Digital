@@ -186,9 +186,15 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Nachschubfahrzeug Hybrid:** Fahrzeug-Icon mit Versorger-Kennzeichnung
 
 #### Navigation für Versorger:innen und Nachschubfahrer:in
-- **Dynamische Routenberechnung:** TomTom Routing API mit Echtzeit-Verkehrsdaten (serverseitig)
-- **Live-Updates:** Berücksichtigung aktueller Verkehrslage, TomTom-Sperrungen und Disponent-Sperrungen
-- Routenplanung zu Einsatzorten und Versorgungspunkten
+
+**Routing-Auslöser (Priorität):**
+1. **Auftrag übernommen:** Route zum Besteller-Standort wird vorgeschlagen – Versorger:in startet Navigation manuell
+2. **Nachschub/Geschäftsstelle:** Dauerhafter Button in der Kartenansicht – Route zum Nachschubfahrzeug oder zur Geschäftsstelle ist jederzeit möglich
+3. **Freies Routing:** Optionale Möglichkeit, ein beliebiges Ziel anzusteuern – nicht der Standardweg
+
+**Technische Umsetzung:**
+- TomTom Routing API mit Echtzeit-Verkehrsdaten (serverseitig berechnet)
+- Berücksichtigung von TomTom-Sperrungen und Disponent-Sperrungen
 - Alternative Routen bei Sperrungen
 - **Koordination:** Sichtbarkeit anderer Versorger:innen zur besseren Abstimmung
 
