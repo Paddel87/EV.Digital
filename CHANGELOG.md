@@ -27,6 +27,14 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Rollenmodell auf 4 Kernrollen reduziert:** Besteller, Disponent, Versorger:in, Nachschubfahrer:in
   - Koordinator:in, Teamleiter:in und Helfer:in entfernt (Überschneidungen bereinigt)
   - "Mobiles Nachschubfahrzeug" umbenannt zu "Nachschubfahrer:in" (Person statt Fahrzeug)
+- **3 Betriebsmodi Nachschubfahrzeug:**
+  - Mobil (Standard): Fährt herum, beliefert Versorger:innen
+  - Stationär: Hält an, wird als fester Versorgungspunkt sichtbar
+  - Hybrid: Liefert an Besteller UND versorgt Versorger:innen gleichzeitig
+- **Kartensichtbarkeiten pro Rolle:** Rollenabhängige Sichtbarkeitsmatrix definiert
+  - Disponent: Sieht alles
+  - Versorger:in: Sieht alle Fahrzeuge + alle Aufträge
+  - Nachschubfahrer:in: Sieht alle Versorger, Aufträge nur im Hybrid-Modus
 - **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
   - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
   - WhatsApp bleibt als Fallback erhalten

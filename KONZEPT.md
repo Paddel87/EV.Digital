@@ -68,9 +68,10 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
 - **Disponent:** Zentrale Koordination, Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
 - **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
-- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
-
-### Örtlichkeiten im System
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
+  - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
+  - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt auf der Karte sichtbar
+  - *Hybrid:* Fährt selbst Bestellungen an Besteller aus UND versorgt gleichzeitig Versorger:innen
 - **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
 - **Mobiles oder temporär stationäres Nachschubfahrzeug (Mobiles Lager):** Flexible Versorgungsstation mit eigenem Teilbestand. Befüllung wird vom Disponenten erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
@@ -143,7 +144,10 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
 - **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
 - **Versorger:in:** Versorgungsaufträge ausführen, Auftragsannahme, Status-Updates, Kommunikation
-- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
+  - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
+  - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt sichtbar
+  - *Hybrid:* Fährt Bestellungen aus UND versorgt Versorger:innen gleichzeitig
 
 #### Authentifizierung
 - **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
@@ -158,10 +162,25 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Offline-Karten für kritische Bereiche
 - GPS-Positionierung (optional, datenschutzkonform)
 - Markierung von Versorgungspunkten und Treffpunkten
-- **Echtzeit-Versorger-Tracking:** Aktuelle Standorte aller Versorger auf der Karte
+- **Echtzeit-Versorger-Tracking:** Aktuelle Standorte aller Versorger:innen auf der Karte
 - **Auftragsvisualisierung:** Standorte der Versorgungsaufträge mit Status-Kennzeichnung
 
-#### Navigation für Versorger
+#### Kartensichtbarkeiten pro Rolle
+
+| Sieht auf der Karte... | Disponent | Versorger:in | Nachschubfahrer:in (Mobil) | Nachschubfahrer:in (Stationär) | Nachschubfahrer:in (Hybrid) |
+|---|---|---|---|---|---|
+| Alle Aufträge / Besteller-Standorte | Ja | Ja | Nein | Nein | Ja |
+| Eigener Standort | – | Ja | Ja | Ja | Ja |
+| Standorte aller Versorger-Fahrzeuge | Ja | Ja | Ja | Ja | Ja |
+| Standort Nachschubfahrzeug | Ja | Ja | – (eigener) | – (eigener) | – (eigener) |
+| Wird als Versorgungspunkt angezeigt | – | – | Nein | Ja | Nein |
+
+**Darstellung auf der Karte:**
+- **Nachschubfahrzeug Mobil:** Bewegliches Fahrzeug-Icon
+- **Nachschubfahrzeug Stationär:** Fester Versorgungspunkt-Icon (Versorger:innen können anfahren)
+- **Nachschubfahrzeug Hybrid:** Fahrzeug-Icon mit Versorger-Kennzeichnung
+
+#### Navigation für Versorger:innen
 - **Dynamische Routenberechnung:** Automatische Routenoptimierung zur Anfahrt
 - **Live-Updates:** Berücksichtigung aktueller Verkehrslage und Sperrungen
 - Routenplanung zu Einsatzorten
@@ -376,11 +395,11 @@ Breakpoints:
 
 #### Interne Ansichten (Disponent, Versorger:in, Nachschubfahrer:in)
 1. **Dashboard:** Übersicht über aktuelle Situation + eingehende Bestellungen
-2. **Karte:** 
-   - Echtzeit-Standorte aller Versorger:innen und Nachschubfahrer:in
+2. **Karte:** (rollenabhängige Sichtbarkeit, siehe Kartensichtbarkeiten)
+   - Echtzeit-Standorte aller Versorger:innen und Nachschubfahrzeug
    - Auftragsstandorte mit Status-Kennzeichnung
    - Dynamische Routenberechnung zur Anfahrt
-   - Live-Koordination zwischen allen Beteiligten
+   - Nachschubfahrzeug: Modus-Umschaltung (Mobil / Stationär / Hybrid)
 3. **Aufträge:** Auftragsübersicht und -bearbeitung
 4. **Lager & Sortiment:** Artikelstamm, Bestandsübersicht lokales + mobiles Lager (Disponent)
 5. **Kommunikation:** Nachrichten und Benachrichtigungen
