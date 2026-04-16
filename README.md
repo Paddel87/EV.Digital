@@ -26,6 +26,7 @@
 Die Software unterstützt insbesondere:
 
 - **📱 Direktbestellung** – Einsatzkräfte bestellen per QR-Code/Link, ohne App oder Registrierung
+- **📦 Bestandsverwaltung** – Lokales Lager und mobiles Lager im Überblick, Verfügbarkeit in Echtzeit
 - **🗺️ Navigation** – Orientierung für ortsunkundige Versorgungsteams
 - **🤝 Versorgungskoordination** – Übersicht über Anfragen, Teams und Aufträge
 - **📋 Dokumentation** – Quittierung von Übergaben, Statusanzeige

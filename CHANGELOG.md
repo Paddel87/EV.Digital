@@ -16,6 +16,11 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
   - Sortimentsauswahl mit Kategorien und Mengenangabe
   - Live-Bestellstatus (Bestellt → Angenommen → Unterwegs → Geliefert)
 - **Sortimentsverwaltung:** Disponent kann Artikel anlegen, Verfügbarkeit steuern, Mengen begrenzen
+- **Lagerverwaltung:** Zwei Lagerorte (lokales Lager in Geschäftsstelle + mobiles Lager im Nachschubfahrzeug)
+  - Disponent pflegt Artikelstamm und Bestände beider Lager
+  - Befüllung des mobilen Lagers wird vor Fahrtbeginn erfasst
+  - Bestandswarnung bei niedrigem Vorrat
+  - Besteller sehen nur tatsächlich verfügbare Artikel
 - **Besteller als Benutzerrolle:** Einsatzkräfte sind jetzt Teil des Systems (statt externe Akteure)
 
 ### Geändert

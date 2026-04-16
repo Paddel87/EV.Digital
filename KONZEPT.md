@@ -66,13 +66,13 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ### Benutzerrollen
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
-- **Disponent:** Zentrale Koordination, Priorisierung und Auftragsverteilung
+- **Disponent:** Zentrale Koordination, Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
 - **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge vor Ort
 - **Mobiles Nachschubfahrzeug:** Kann Versorger mobil nachversorgen und unterstützen
 
 ### Örtlichkeiten im System
-- **Geschäftsstelle der Gewerkschaft:** Zentrale Anlaufstelle zum Wiederbeladen des Fahrzeuges
-- **Mobiles oder temporär stationäres Nachschubfahrzeug:** Flexible Versorgungsstation
+- **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
+- **Mobiles oder temporär stationäres Nachschubfahrzeug (Mobiles Lager):** Flexible Versorgungsstation mit eigenem Teilbestand. Befüllung wird vom Disponenten erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
 
 ### Anwendungsszenarien
@@ -141,7 +141,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 #### Rollen
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
-- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln
+- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
 - **Koordinator:in:** Vollzugriff, Team-Management, Auftragsverteilung
 - **Teamleiter:in:** Team-Status, Auftragsannahme, Kommunikation
 - **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge, Status-Updates, Kommunikation
@@ -276,11 +276,22 @@ Team-Status:
 4. **Bestellung absenden:** Ein Tap – Bestellung geht direkt ins System
 5. **Status verfolgen:** Einfache Statusanzeige (Bestellt → Angenommen → Unterwegs → Geliefert)
 
-#### Sortimentsverwaltung (durch Disponent)
+#### Lager- und Sortimentsverwaltung (durch Disponent)
+
+**Artikelstamm:**
 - Artikel anlegen, bearbeiten, deaktivieren
 - Kategorien und Sortierung festlegen
-- Verfügbarkeit in Echtzeit anpassen (z.B. "Kaffee ausverkauft")
 - Mengenbegrenzungen pro Bestellung möglich
+
+**Zwei Lagerorte:**
+- **Lokales Lager (Geschäftsstelle):** Gesamtbestand aller Artikel, Disponent pflegt Zu- und Abgänge
+- **Mobiles Lager (Nachschubfahrzeug):** Teilbestand, Disponent erfasst die Befüllung vor Fahrtbeginn
+
+**Bestandsführung:**
+- Disponent kennt und pflegt die Bestände beider Lager
+- Verfügbarkeit wird in Echtzeit angepasst (z.B. "Kaffee ausverkauft")
+- Besteller sehen im Sortiment nur Artikel, die tatsächlich verfügbar sind
+- Bestandswarnung bei niedrigem Vorrat → Disponent koordiniert Nachschub
 
 #### Bestellworkflow
 ```
@@ -375,7 +386,7 @@ Breakpoints:
    - Live-Koordination zwischen Versorgern
 3. **Teams:** Team-Status und -verwaltung
 4. **Aufträge:** Auftragsübersicht und -bearbeitung
-5. **Sortiment:** Artikelverwaltung und Verfügbarkeit (Disponent)
+5. **Lager & Sortiment:** Artikelstamm, Bestandsübersicht lokales + mobiles Lager (Disponent)
 6. **Kommunikation:** Nachrichten und Benachrichtigungen
 
 ---
