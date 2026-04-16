@@ -2,7 +2,7 @@
 
 **Projektstart:** 18.07.2025  
 **Status:** Konzeptionierungsphase  
-**Version:** 1.2.0
+**Version:** 1.5.0
 
 ---
 
@@ -62,16 +62,17 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ### Primäre Zielgruppe
 - Gewerkschaften mit eigener Einsatzbetreuung
 - Ehrenamtliche Versorgungsteams bei Großeinsätzen
-- Koordinator:innen für Getränke- und Snackversorgung
+- Disponenten für Getränke- und Snackversorgung
 
 ### Benutzerrollen
-- **Disponent:** Zentrale Koordination und Auftragsverteilung
-- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge vor Ort
-- **Mobiles Nachschubfahrzeug:** Kann Versorger mobil nachversorgen und unterstützen
+- **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
+- **Disponent:** Zentrale Koordination, Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
+- **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
 
 ### Örtlichkeiten im System
-- **Geschäftsstelle der Gewerkschaft:** Zentrale Anlaufstelle zum Wiederbeladen des Fahrzeuges
-- **Mobiles oder temporär stationäres Nachschubfahrzeug:** Flexible Versorgungsstation
+- **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
+- **Mobiles oder temporär stationäres Nachschubfahrzeug (Mobiles Lager):** Flexible Versorgungsstation mit eigenem Teilbestand. Befüllung wird vom Disponenten erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
 
 ### Anwendungsszenarien
@@ -81,9 +82,9 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Kommunikation ohne private Kanäle (WhatsApp-Alternative)
 - Mobile Nachversorgung durch Fahrzeuge
 - Koordination zwischen festen und mobilen Versorgungspunkten
-- **WhatsApp-Bestellsystem:** Einsatzkräfte bestellen per WhatsApp, Disponent erfasst händisch in EV.Digital
-- **B2B-Service:** Gewerkschaft als Dienstleister für Einsatzkräfte ohne deren Systemintegration
-- **Medienbruch-Management:** Überbrückung zwischen externen Kommunikationskanälen und internem System
+- **Direktbestellung:** Einsatzkräfte bestellen über eigenes Bestell-Interface (QR-Code/Link)
+- **WhatsApp als Fallback:** Manuelle Erfassung durch Disponent, wenn Direktbestellung nicht möglich
+- **B2B-Service:** Gewerkschaft als Dienstleister für Einsatzkräfte
 
 ---
 
@@ -93,43 +94,44 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Frontend      │    │    Backend      │    │   Datenbank     │
-│   (Web-App)     │◄──►│   (REST API)    │◄──►│   (PostgreSQL)  │
-│                 │    │                 │    │                 │
-│ - React/Vue.js  │    │ - Node.js/      │    │ - Benutzer      │
-│ - PWA Support   │    │   Python Flask  │    │ - Teams         │
-│ - Responsive    │    │ - WebSocket     │    │ - Aufträge      │
-│ - Offline-fähig │    │ - Auth System   │    │ - Protokolle    │
+│   (PWA)         │◄──►│   (REST API)    │◄──►│  (PostgreSQL +  │
+│                 │    │                 │    │   PostGIS)      │
+│ - Vue.js 3      │    │ - Node.js +     │    │ - Benutzer      │
+│ - Vuetify 3     │    │   Express       │    │ - Teams         │
+│ - Leaflet.js    │    │ - Socket.IO     │    │ - Aufträge      │
+│ - Offline-fähig │    │ - JWT Auth      │    │ - Geodaten      │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
+         ▲                                            ▲
+         └── Durchgängig TypeScript ──────────────────┘
 ```
 
 ### Technologie-Stack
 
 #### Frontend
-- **Framework:** Vue.js 3 oder React 18
-- **UI-Framework:** Vuetify/Material-UI für konsistente Benutzeroberfläche
+- **Framework:** Vue.js 3
+- **UI-Framework:** Vuetify 3 für konsistente Benutzeroberfläche
 - **PWA:** Service Worker für Offline-Funktionalität
 - **Karten:** OpenStreetMap mit Leaflet.js
 - **Verkehrsdaten:** Hybrid-Ansatz (Autobahn GmbH API + Overpass API + HERE Maps optional)
 - **Build-Tool:** Vite für schnelle Entwicklung
 
 #### Backend
-- **Runtime:** Node.js mit Express.js oder Python mit Flask
+- **Runtime:** Node.js mit Express.js
+- **Sprache:** TypeScript (durchgängig im gesamten Projekt)
 - **API:** RESTful API mit OpenAPI/Swagger Dokumentation
-- **Echtzeit:** WebSocket für Live-Updates
+- **Echtzeit:** Socket.IO für Live-Updates
 - **Authentifizierung:** JWT-basiert mit Refresh-Token
-- **Validierung:** Joi/Yup für Eingabevalidierung
+- **Validierung:** Joi für Eingabevalidierung
 - **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
 
 #### Datenbank
-- **Primär:** PostgreSQL für strukturierte Daten
-- **Cache:** Redis für Session-Management und Caching
+- **Primär:** PostgreSQL mit PostGIS-Erweiterung für Geodaten
 - **Backup:** Automatisierte tägliche Backups
 
 #### Infrastruktur
 - **Container:** Docker für einheitliche Deployment-Umgebung
-- **Orchestrierung:** Docker Compose für lokale Entwicklung
-- **Monitoring:** Prometheus + Grafana für System-Monitoring
-- **Logging:** Structured Logging mit Winston/Python Logging
+- **Orchestrierung:** Docker Compose (ein Befehl startet alles)
+- **Logging:** Structured Logging mit Winston
 
 ---
 
@@ -137,22 +139,17 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ### 1. Benutzer- und Rollenverwaltung
 
-#### Rollen
-- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung
-- **Koordinator:in:** Vollzugriff, Team-Management, Auftragsverteilung
-- **Teamleiter:in:** Team-Status, Auftragsannahme, Kommunikation
-- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge, Status-Updates, Kommunikation
-- **Mobiles Nachschubfahrzeug:** Spezielle Rolle für mobile Nachversorgung, Standort-Updates, Kapazitätsmeldungen
-- **Helfer:in:** Basis-Funktionen, Status-Updates
-
-#### Externe Akteure (nicht im System erfasst)
-- **Einsatzkräfte:** Kunden der Gewerkschaft, die Versorgungsleistungen bestellen (ähnlich wie bei Lieferando/Glovo). Sie haben keinen direkten Systemzugriff und sind nicht als Benutzer registriert.
+#### Rollen (4 Kernrollen)
+- **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
+- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
+- **Versorger:in:** Versorgungsaufträge ausführen, Auftragsannahme, Status-Updates, Kommunikation
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
 
 #### Authentifizierung
-- QR-Code basierte Anmeldung für schnellen Zugang
-- PIN-basierte Anmeldung als Alternative
+- **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
+- **Interne Rollen:** QR-Code oder PIN-basierte Anmeldung
 - Session-Management mit automatischer Abmeldung
-- Keine Registrierung erforderlich (Event-basierte Accounts)
+- Event-basierte Zugänge (gültig nur während des Einsatzes)
 
 ### 2. Kartenintegration & Navigation
 
@@ -262,31 +259,57 @@ Team-Status:
 - Team-Kapazitäten und Ausstattung
 - Schichtplanung und Ablösung
 
-### 4. Bedarfserfassung & Auftragsmanagement
+### 4. Bestell-Interface (Einsatzkräfte)
 
-#### Bedarfsanmeldung
-- **WhatsApp-Bestellungen:** Einsatzkräfte senden Versorgungsanfragen per WhatsApp an den Disponenten
-- **Manuelle Erfassung:** Disponent pflegt WhatsApp-Anforderungen händisch mit Standort in EV.Digital ein
-- **Auftragserstellung:** Aus jeder erfassten Anforderung entsteht automatisch ein Auftrag für die Versorger
-- Standardisierte Formulare für häufige Anfragen
-- Freie Texteingabe für spezielle Anforderungen
-- Prioritätsstufen (niedrig, normal, hoch, kritisch)
-- Zeitstempel und Standortangabe
-- **Kundendaten:** Minimale Erfassung der bestellenden Einsatzkraft (nur für Lieferung notwendig)
+#### Zugang
+- **QR-Code:** Wird am Einsatzort ausgehängt/verteilt – scannt direkt zur Bestellseite
+- **Event-Link:** Alternative URL-Weitergabe (z.B. per Funk, Aushang)
+- **Kein Account nötig:** Kein Login, keine Registrierung, keine App-Installation
+
+#### Bestellvorgang
+1. **Standort freigeben:** GPS-Standort wird übermittelt (Browser-Standortfreigabe)
+2. **Sortiment durchsuchen:** Vordefinierte Artikel mit Kategorien (Getränke, Snacks, Warmes etc.)
+3. **Auswahl treffen:** Artikel und Menge wählen, optional Kommentar hinzufügen
+4. **Bestellung absenden:** Ein Tap – Bestellung geht direkt ins System
+5. **Status verfolgen:** Einfache Statusanzeige (Bestellt → Angenommen → Unterwegs → Geliefert)
+
+#### Lager- und Sortimentsverwaltung (durch Disponent)
+
+**Artikelstamm:**
+- Artikel anlegen, bearbeiten, deaktivieren
+- Kategorien und Sortierung festlegen
+- Mengenbegrenzungen pro Bestellung möglich
+
+**Zwei Lagerorte:**
+- **Lokales Lager (Geschäftsstelle):** Gesamtbestand aller Artikel, Disponent pflegt Zu- und Abgänge
+- **Mobiles Lager (Nachschubfahrzeug):** Teilbestand, Disponent erfasst die Befüllung vor Fahrtbeginn
+
+**Bestandsführung:**
+- Disponent kennt und pflegt die Bestände beider Lager
+- Verfügbarkeit wird in Echtzeit angepasst (z.B. "Kaffee ausverkauft")
+- Besteller sehen im Sortiment nur Artikel, die tatsächlich verfügbar sind
+- Bestandswarnung bei niedrigem Vorrat → Disponent koordiniert Nachschub
 
 #### Bestellworkflow
 ```
-Einsatzkraft → WhatsApp → Disponent → EV.Digital → Auftrag → Versorger → Auslieferung
+Primär:  Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
+Fallback: Einsatzkraft → WhatsApp/Funk → Disponent erfasst manuell → Versorger liefert
 ```
+
+#### Disponenten-Sicht auf Bestellungen
+- Eingehende Bestellungen in Echtzeit (Socket.IO)
+- Bestellungen priorisieren, bündeln oder ablehnen
+- Mehrere Bestellungen am gleichen Standort → ein Auftrag
+- Manuelle Bestellerfassung weiterhin möglich (WhatsApp-Fallback)
 
 #### Auftragsverwaltung
 ```
 Auftragsstatus:
-├── Neu (weiß)
-├── Zugewiesen (gelb)
-├── In Bearbeitung (blau)
-├── Abgeschlossen (grün)
-└── Storniert (rot)
+├── Bestellt (weiß) – Einsatzkraft hat bestellt
+├── Angenommen (gelb) – Disponent hat bestätigt
+├── In Bearbeitung (blau) – Versorger unterwegs
+├── Geliefert (grün) – Übergabe erfolgt
+└── Storniert (rot) – Abgebrochen
 ```
 
 ### 5. Kommunikationssystem
@@ -345,14 +368,21 @@ Breakpoints:
 ```
 
 ### Hauptansichten
-1. **Dashboard:** Übersicht über aktuelle Situation
-2. **Versorger-Karte:** 
-   - Echtzeit-Standorte aller Versorger
+
+#### Besteller-Interface (Einsatzkräfte)
+- **Bestellseite:** Standort freigeben → Sortiment → Bestellen → Status verfolgen
+- Minimalistisch, große Buttons, wenige Schritte
+- Funktioniert ohne Login auf jedem Smartphone-Browser
+
+#### Interne Ansichten (Disponent, Versorger:in, Nachschubfahrer:in)
+1. **Dashboard:** Übersicht über aktuelle Situation + eingehende Bestellungen
+2. **Karte:** 
+   - Echtzeit-Standorte aller Versorger:innen und Nachschubfahrer:in
    - Auftragsstandorte mit Status-Kennzeichnung
    - Dynamische Routenberechnung zur Anfahrt
-   - Live-Koordination zwischen Versorgern
-3. **Teams:** Team-Status und -verwaltung
-4. **Aufträge:** Auftragsübersicht und -bearbeitung
+   - Live-Koordination zwischen allen Beteiligten
+3. **Aufträge:** Auftragsübersicht und -bearbeitung
+4. **Lager & Sortiment:** Artikelstamm, Bestandsübersicht lokales + mobiles Lager (Disponent)
 5. **Kommunikation:** Nachrichten und Benachrichtigungen
 
 ---
@@ -399,7 +429,7 @@ Breakpoints:
 - **Security Tests:** Penetrationstests und Vulnerability Scans
 
 ### Code Quality
-- ESLint/Pylint für Code-Standards
+- ESLint für Code-Standards
 - Prettier für einheitliche Formatierung
 - Pre-commit Hooks für automatische Checks
 - Code Reviews für alle Pull Requests
@@ -410,22 +440,21 @@ Breakpoints:
 ## 🔧 Deployment & Betrieb
 
 ### Deployment-Optionen
-1. **Cloud-Hosting:** AWS/Azure/GCP für Skalierbarkeit
-2. **On-Premise:** Lokale Server für Datenschutz
-3. **Hybrid:** Kombination je nach Anforderung
+1. **Docker Compose:** Standardmäßiges Deployment – ein `docker-compose up` startet alle Services
+2. **Cloud-Hosting:** AWS/Azure/GCP bei Bedarf
+3. **On-Premise:** Lokale Server für maximalen Datenschutz
 
 ### Monitoring & Wartung
-- Application Performance Monitoring (APM)
-- Error Tracking mit Sentry
-- Uptime Monitoring
-- Automatische Backups
+- Health-Endpoint für Service-Überwachung
+- Structured Logging mit Winston
+- Automatische Backups der PostgreSQL-Datenbank
 - Security Updates
 
-### Skalierung
-- Horizontale Skalierung über Load Balancer
-- Database Clustering für hohe Verfügbarkeit
+### Skalierung (bei Bedarf nachrüstbar)
+- Redis für Session-Caching bei steigender Nutzerzahl
+- Load Balancer für horizontale Skalierung
 - CDN für statische Assets
-- Caching-Strategien für Performance
+- Prometheus + Grafana für umfassendes Monitoring
 
 ---
 
@@ -514,6 +543,6 @@ Breakpoints:
 ---
 
 **Erstellt:** 18.07.2025  
-**Letzte Aktualisierung:** 18.07.2025  
-**Version:** 1.2.0  
-**Status:** Konzeptionierungsphase + Vision Driven Development + Benutzerrollen & WhatsApp-Integration
+**Letzte Aktualisierung:** 16.04.2026  
+**Version:** 1.5.0  
+**Status:** Konzeptionierungsphase + Vision Driven Development + Besteller-Interface

@@ -7,6 +7,55 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-04-16
+
+### Hinzugefügt
+- **Bestell-Interface für Einsatzkräfte:** Eigene Bestelloberfläche ohne Registrierung oder App
+  - Zugang per QR-Code oder Event-Link
+  - Standortfreigabe per GPS
+  - Sortimentsauswahl mit Kategorien und Mengenangabe
+  - Live-Bestellstatus (Bestellt → Angenommen → Unterwegs → Geliefert)
+- **Sortimentsverwaltung:** Disponent kann Artikel anlegen, Verfügbarkeit steuern, Mengen begrenzen
+- **Lagerverwaltung:** Zwei Lagerorte (lokales Lager in Geschäftsstelle + mobiles Lager im Nachschubfahrzeug)
+  - Disponent pflegt Artikelstamm und Bestände beider Lager
+  - Befüllung des mobilen Lagers wird vor Fahrtbeginn erfasst
+  - Bestandswarnung bei niedrigem Vorrat
+  - Besteller sehen nur tatsächlich verfügbare Artikel
+- **Besteller als Benutzerrolle:** Einsatzkräfte sind jetzt Teil des Systems (statt externe Akteure)
+
+### Geändert
+- **Rollenmodell auf 4 Kernrollen reduziert:** Besteller, Disponent, Versorger:in, Nachschubfahrer:in
+  - Koordinator:in, Teamleiter:in und Helfer:in entfernt (Überschneidungen bereinigt)
+  - "Mobiles Nachschubfahrzeug" umbenannt zu "Nachschubfahrer:in" (Person statt Fahrzeug)
+- **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
+  - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
+  - WhatsApp bleibt als Fallback erhalten
+- **Disponenten-Rolle:** Vom Daten-Abtipper zum Koordinator (priorisieren, bündeln, steuern)
+- **Auftragsstatus:** Umbenannt für Besteller-Perspektive (Bestellt → Angenommen → Unterwegs → Geliefert)
+- **Hauptansichten:** Besteller-Interface als eigene Ansicht, Sortimentsverwaltung ergänzt
+
+## [1.4.0] - 2026-04-16
+
+### Geändert
+- **Tech-Stack finalisiert:** Klare Entscheidungen statt offener Alternativen
+  - Frontend: Vue.js 3 + Vuetify 3 (statt "Vue.js oder React")
+  - Backend: Node.js + Express + Socket.IO (statt "Node.js oder Python Flask")
+  - Durchgängig TypeScript im gesamten Projekt
+- **Datenbank verschlankt:** PostgreSQL mit PostGIS, Redis entfernt (bei Bedarf nachrüstbar)
+- **Infrastruktur vereinfacht:** Docker Compose als Standard-Deployment
+  - Kubernetes entfernt (überdimensioniert für ehrenamtliches Projekt)
+  - ELK Stack entfernt → Winston Structured Logging
+  - Prometheus/Grafana entfernt → Health-Endpoint (bei Bedarf nachrüstbar)
+- **Projektstruktur aktualisiert:** Flachere Struktur mit docker-compose.yml im Root
+- **Testing:** Vitest statt Jest/Pytest
+
+### Entfernt
+- Redis als Pflichtkomponente (optional bei Skalierungsbedarf)
+- Kubernetes Deployment-Option
+- ELK Stack (Elasticsearch, Logstash, Kibana)
+- Prometheus + Grafana als Standard-Monitoring
+- Staging-Umgebung (Development + Production reicht initial)
+
 ## [1.3.0] - 2025-07-19
 
 ### Hinzugefügt
