@@ -237,6 +237,7 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 ## 📚 Dokumentation
 
 - **[Detailliertes Konzept](KONZEPT.md)** - Umfassende Projektbeschreibung
+- **[Implementierungsfahrplan](FAHRPLAN.md)** - Phasenplan von Infrastruktur bis Release 1.0
 - **[API-Dokumentation](docs/api/)** - REST API Spezifikation
 - **[Benutzerhandbuch](docs/user/)** - Anleitung für Endbenutzer
 - **[Entwickler-Guide](docs/developer/)** - Setup und Entwicklung
