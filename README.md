@@ -45,23 +45,55 @@ Die Software unterstützt insbesondere:
 
 ### 📱 Bestell-Interface für Einsatzkräfte
 - QR-Code scannen → Standort freigeben → Sortiment wählen → Bestellen
-- Bestellstatus live verfolgen (Bestellt → Angenommen → Unterwegs → Geliefert)
+- Bestellstatus live verfolgen (Bestellt → Angenommen → Übernommen → Unterwegs → Geliefert)
 - Kein Account, keine App, keine Registrierung
 
-### 🤝 Teamkoordination
-- Anmeldung per QR-Code oder PIN
-- Statusübersicht aller Teams (frei, unterwegs, im Einsatz)
-- Zuweisung und Rückmeldung von Versorgungsaufträgen
+### 👥 Rollenmodell (4 Kernrollen)
+- **Besteller** (Einsatzkraft) – bestellt per QR-Code/Link, ohne Registrierung
+- **Disponent** – steuert Aufträge, Lager, Sortiment, Verkehrsfilter (stationär oder mobil)
+- **Versorger:in** – liefert Bestellungen aus, Auftrags-Selbstübernahme + Disponent-Steuerung
+- **Nachschubfahrer:in** – fährt mobiles Lager, drei Modi: mobil / stationär / hybrid
 
-### 📋 Bedarfserfassung
+### 🤝 Versorger-Koordination
+- Anmeldung per QR-Code oder PIN
+- Echtzeit-Status (verfügbar, unterwegs, im Einsatz, Pause, nicht verfügbar)
+- Optionale Team-Gruppierung durch Disponent
+
+### 📋 Bedarfserfassung & Zuweisung
 - Bestellungen kommen direkt über das Bestell-Interface
 - Disponent priorisiert, bündelt und verteilt
-- WhatsApp als Fallback bei Bedarf
+- Versorger:innen können Aufträge selbst übernehmen – Disponent kann übersteuern
+- WhatsApp/Funk als Fallback bei Bedarf
+
+### 🗓️ Einsatz-Lifecycle
+- Disponent legt Einsatz vorab an (Name, Datum, Einsatzgebiet, Sortiment)
+- QR-Codes und Event-Links werden automatisch generiert
+- Aktivierung am Einsatztag → Bestellungen und Tracking werden live
+- Einsatz beenden → Protokoll/Export bleibt verfügbar
 
 ### 📡 Kommunikation & Übersicht
 - Kurze Rückfragen oder Statusänderungen möglich (textbasiert)
 - Zentrale Übersicht für Disponenten
 - Automatisierte Protokollierung zur internen Nachbereitung
+
+---
+
+## 🔮 Geplante Erweiterungen
+
+### 📦 Barcode-basierte Warenwirtschaft
+- Verpackungseinheiten scannen (Kamera oder externer Scanner)
+- Hybrid-Auflösung: Open Food Facts + UPCitemdb, Fallback manuell
+- Ladungs-Vorlagen für Fahrzeuge
+- Bestands-Reservierung bei Bestellung, Abbuchung bei Lieferung
+- Nachschub-Übergabe per Liste oder QR-Code
+- Echtzeit-Bestandsübersicht pro Fahrzeug
+
+### 📊 Einsatz-Statistiken
+- Live-Dashboard während des Einsatzes + Post-Auswertung
+- KPIs: Lieferzeit, Peak-Zeiten, Auslastung, beliebte Artikel
+- Visualisierungen: Tabellen, Diagramme, Karten-Heatmap, Zeitverlauf
+- Historischer Einsatz-Vergleich
+- Export: PDF, CSV, JSON
 
 ---
 
@@ -130,18 +162,25 @@ EV.Digital/
 Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
 **Aktuelle Version:** 1.5.0 (16.04.2026)
+- ✅ 4 Kernrollen (Besteller, Disponent, Versorger:in, Nachschubfahrer:in)
 - ✅ Bestell-Interface für Einsatzkräfte (QR-Code → Sortiment → Bestellen)
-- ✅ Medienbruch eliminiert – kein WhatsApp-Umweg mehr nötig
-- ✅ Sortimentsverwaltung durch Disponent
+- ✅ Lager- und Sortimentsverwaltung (lokales + mobiles Lager)
+- ✅ Einsatz-Lifecycle (vorab anlegen → aktivieren → beenden)
+- ✅ TomTom Verkehrsdaten + Routing (serverseitig, mit Disponent-Filter)
+- ✅ Nachschubfahrzeug mit 3 Modi (mobil / stationär / hybrid)
+- ✅ Rollenbasierte Kartensichtbarkeiten
+- ✅ Tech-Stack finalisiert (Vue.js 3 + Node.js + TypeScript + Docker Compose)
+- 🔮 Geplant: Barcode-Warenwirtschaft & Einsatz-Statistiken
 
 ### Roadmap
 
-| Phase | Zeitraum | Status | Beschreibung |
-|-------|----------|--------|--------------|
-| **Konzept** | Juli 2025 | 🟡 In Arbeit | Detaillierte Planung und Spezifikation |
-| **MVP** | Aug-Sep 2025 | ⏳ Geplant | Grundfunktionen und Prototyp |
-| **Beta** | Okt-Nov 2025 | ⏳ Geplant | Testing mit echten Anwendern |
-| **Release** | Dez 2025 | ⏳ Geplant | Produktive Version |
+| Phase | Status | Beschreibung |
+|-------|--------|--------------|
+| **Konzeption** | ✅ Abgeschlossen | Konzept, Rollenmodell, Tech-Stack finalisiert |
+| **MVP-Implementierung** | ⏳ Bevorstehend | Basis-Infrastruktur, Bestell- und Auftragsflow |
+| **Beta** | ⏳ Geplant | Testing mit echten Anwendern |
+| **Release** | ⏳ Geplant | Produktive Version |
+| **Erweiterungen** | 🔮 Zukunft | Barcode-Warenwirtschaft, Statistiken, KI-Routing |
 
 ---
 
