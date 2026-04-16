@@ -124,7 +124,7 @@ Die Software unterstützt insbesondere:
 ## 📁 Projektstruktur
 
 ```
-EV.Digital/
+ev-digital/
 ├── frontend/              # Vue.js 3 + Vuetify (PWA)
 │   ├── src/
 │   ├── public/
@@ -257,8 +257,8 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 
 ```bash
 # Repository klonen
-git clone https://github.com/paddel87/EV.Digital.git
-cd EV.Digital
+git clone https://github.com/paddel87/ev-digital.git
+cd ev-digital
 
 # Alles mit Docker Compose starten
 docker-compose up
