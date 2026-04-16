@@ -600,37 +600,104 @@ Breakpoints:
 - Verpackungseinheit scannen → System erkennt Inhalt (z.B. 25x Snickers)
 - Oder: Einzelbarcode scannen + Menge manuell eingeben
 - Waren werden katalogisiert und dem lokalen Lager zugeordnet
+- **Scan-Technik:** Kamera im Browser (ZXing/QuaggaJS) + Unterstützung für externe USB/Bluetooth-Scanner
 
 #### Barcode-Auflösung (Hybrid-Ansatz)
-- **Externe Datenbank zuerst:** Barcode (EAN/GTIN) wird gegen offene Produktdatenbanken geprüft (z.B. Open Food Facts API)
-- **Fallback manuell:** Wenn nicht gefunden → Disponent erfasst Artikel manuell (Name, Kategorie, Gebindegröße)
+- **Erst Open Food Facts:** Kostenlose Community-DB, gut für Lebensmittel, Snacks, Getränke
+- **Dann UPCitemdb:** Als Fallback für Non-Food-Artikel
+- **Zuletzt manuell:** Wenn beide nicht fündig → Disponent erfasst Artikel manuell
 - **Lokal gespeichert:** Einmal erfasste Artikel werden in eigener Datenbank vorgehalten und beim nächsten Scan sofort erkannt
+
+#### Artikel ohne Barcode
+- Disponent legt Artikel manuell an (Name, Kategorie, Einheit)
+- **Optional:** Etikett mit internem Barcode generieren und drucken → künftig scanbar
+- Alternative: Reine Namenssuche ohne Etikett
+
+#### Einheiten & Gebinde
+- **Basis-Einheit:** Stück, kg oder Liter (pro Artikel festgelegt)
+- **Gebindegröße:** Verpackungseinheit (z.B. "Karton à 25 Stück")
+- Getrennte Verwaltung: Gesamtbestand kann als einzelne Stücke oder komplette Gebinde angezeigt werden
+- **Mindesthaltbarkeitsdatum:** Optional erfassbar, keine automatischen Warnungen
 
 #### Digitale Fahrzeug-Beladung (Disponent)
 - Disponent stellt Packstücke/Ladungen digital zusammen
+- **Ladungs-Vorlagen:** Wiederverwendbare Templates (z.B. "Standard-Tagesladung Versorger"), pro Fahrzeug anwendbar und anpassbar
 - Komplette Packstücke werden im System vom Lager → Fahrzeug verschoben
-- Versorger- und Nachschubfahrzeuge sind sofort korrekt beladen im System
+- **Fahrer-Bestätigung:** Fahrer bestätigt pauschal die Ladung vor Abfahrt (ein Tap → "einsatzbereit")
+- **Abweichungen:** Fahrer kann Korrekturen direkt eingeben (z.B. "3 statt 5 Flaschen Wasser") – Disponent wird automatisch benachrichtigt
 
-#### Warentracking im Einsatz
-- **Versorger:in bei Lieferung:** Gibt an, welche Güter ausgeliefert wurden → Fahrzeugbestand sinkt automatisch
-- **Nachschubfahrzeug bei Übergabe:** Bildet Warenübergabe an Versorgungsfahrzeug im System ab → Bestand verschiebt sich
-- **Disponent:** Sieht jederzeit den aktuellen Bestand pro Fahrzeug in Echtzeit
+#### Bestand-Reservierung bei Bestellung
+- Sobald Bestellung eingeht: Artikel werden im Bestand als "reserviert" markiert
+- Andere Besteller sehen reduzierten verfügbaren Bestand
+- Abbuchung erfolgt erst bei Lieferung
+- Stornierung hebt Reservierung automatisch auf
+
+#### Lieferung durch Versorger:in
+- **Standard:** Pauschale Lieferbestätigung – System bucht die bestellten Artikel vom Fahrzeugbestand ab
+- **Detail-Option:** Versorger:in kann auf Einzelartikel-Bestätigung umschalten (bei Teillieferung oder Abweichungen)
+- **Teillieferung:** Auftrag wird mit tatsächlich gelieferter Menge abgeschlossen, Fehlmenge wird als offene Bestellung neu angelegt
+- **Rückgabe:** Nicht übergebene Artikel werden über "Rückgabe" erfasst und kommen in den Fahrzeugbestand zurück
+
+#### Nachschub-Übergabe (Nachschubfahrzeug → Versorger:in)
+- **Zwei Workflows:**
+  - **Liste:** Nachschubfahrer:in wählt Versorgungsfahrzeug aus Liste, gibt Artikel/Mengen ein
+  - **QR-Code:** Versorger:in zeigt QR-Code, Nachschubfahrer:in scannt → Übergabe wird direkt angelegt
+- **Quittierung:** Pauschale Bestätigung als Standard, Einzelartikel-Option bei Abweichungen
+- Bestand verschiebt sich im System von Nachschubfahrzeug → Versorgungsfahrzeug
 
 #### Warenfluss
 ```
 Lager ──(Beladung)──→ Fahrzeug ──(Lieferung)──→ Besteller
-                          ↑
-Nachschub ──(Übergabe)───┘
+                          ↑              ↓
+Nachschub ──(Übergabe)───┘          (Rückgabe)
+                                         ↓
+                                      Fahrzeug
 ```
+
+#### Echtzeit-Bestandsübersicht
+- Disponent sieht jederzeit: lokaler Lagerbestand + Bestand pro Fahrzeug
+- Versorger:in sieht eigenen Fahrzeugbestand
+- Nachschubfahrer:in sieht eigenen Bestand + Bestände der Versorgungsfahrzeuge (für Nachschub-Planung)
 
 ### Geplant: Einsatz-Statistiken
 
-Umfassende Auswertung nach Einsatzende:
-- **Artikel:** Anzahl Artikelgruppen, Anzahl ausgelieferter Artikel (gesamt + pro Gruppe)
-- **Aufträge:** Anzahl Bestellungen, Anzahl abgeschlossener/stornierter Aufträge
-- **Fahrzeuge:** Anzahl eingesetzter Fahrzeuge (Versorger + Nachschub)
-- **Kilometer:** Gefahrene Kilometer pro Fahrzeug und gesamt
-- **Export:** Statistiken als PDF/CSV für interne Nachbereitung
+#### Zugriff & Timing
+- **Zugriff:** Alle internen Rollen (Disponent, Versorger:in, Nachschubfahrer:in)
+- **Live-Dashboard während des Einsatzes:** Aktuelle Zahlen in Echtzeit sichtbar
+- **Post-Einsatz:** Finale Auswertung bleibt dauerhaft verfügbar
+
+#### Kennzahlen
+- **Basis-KPIs:**
+  - Anzahl Artikelgruppen
+  - Anzahl ausgelieferter Artikel (gesamt + pro Gruppe)
+  - Anzahl Bestellungen und abgeschlossener/stornierter Aufträge
+  - Anzahl eingesetzter Fahrzeuge (Versorger + Nachschub)
+  - Gefahrene Kilometer pro Fahrzeug und gesamt
+- **Erweiterte KPIs:**
+  - Durchschnittliche Lieferzeit (Bestellung → Geliefert)
+  - Peak-Zeiten (wann kamen die meisten Bestellungen?)
+  - Auslastung pro Versorger:in (Anzahl Lieferungen)
+  - Beliebteste Artikel (Top-bestellt)
+
+#### Visualisierung
+- **Tabellen:** Rohdaten und Zusammenfassungen
+- **Diagramme:** Balken-, Linien-, Kreisdiagramme
+- **Karten-Heatmap:** Räumliche Verteilung der Bestellungen
+- **Zeitverlauf:** Einsatz-Timeline (Bestellungen, Lieferungen, aktive Fahrzeuge über Zeit)
+
+#### Einsatz-Vergleich
+- Historische Statistiken verschiedener Einsätze nebeneinander darstellbar
+- Zeigt Trends und Entwicklungen über Zeit
+
+#### Export
+- **PDF:** Druckfertiger Report für Nachbereitung
+- **CSV:** Rohdaten für Excel/Weiterverarbeitung
+- **JSON:** Technische Weiterverarbeitung
+
+#### Aufbewahrung
+- Keine personenbezogenen Daten im System (nur Rollen, keine Namen)
+- **Unbegrenzte Aufbewahrung** aller Einsatz-Statistiken
+- Manuelle Löschung durch Disponent möglich
 
 ### Weitere mögliche Erweiterungen
 - KI-basierte Routenoptimierung

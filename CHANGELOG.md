@@ -68,8 +68,23 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Offline-Fähigkeit konkretisiert:** Karte offline, Aufträge offline bearbeiten, Bestellungen offline aufgeben (Sync bei Reconnect)
 - **Sortiment-Vorlagensystem:** Persistenter Standardkatalog als Vorlage, wird pro Einsatz kopiert und anpassbar
 - **Bottom-to-Top-Philosophie:** Platzhalter durch Beschreibung ersetzt (Basis-Infrastruktur zuerst, dann Features)
-- **Geplant: Barcode-basierte Warenwirtschaft:** Barcode-Scan (EAN/GTIN), Hybrid-Auflösung (externe DB + manuell), digitale Fahrzeug-Beladung, Warentracking bei Lieferung und Nachschub-Übergabe
-- **Geplant: Einsatz-Statistiken:** Artikelgruppen, ausgelieferte Artikel, Aufträge, Kilometer, eingesetzte Fahrzeuge
+- **Geplant: Barcode-basierte Warenwirtschaft (detailliert):**
+  - Barcode-Auflösung: Open Food Facts + UPCitemdb als Hybrid, Fallback manuell, lokal persistiert
+  - Scan-Technik: Kamera (Browser-API) + externe USB/Bluetooth-Scanner
+  - Artikel ohne Barcode: optional mit generiertem Etikett (druckbar)
+  - Einheiten: Stück, kg, Liter + Gebindegrößen, MHD optional (keine Warnung)
+  - Ladungs-Vorlagen: wiederverwendbar, pro Fahrzeug anpassbar
+  - Fahrer-Bestätigung: pauschal, Abweichungen direkt korrigierbar
+  - Bestandsreservierung bei Bestellung (Abbuchung erst bei Lieferung)
+  - Lieferbestätigung: pauschal + Detail-Option, Teillieferung mit Restauftrag, Rückgabe möglich
+  - Nachschub-Übergabe: Liste oder QR-Code, pauschal quittiert
+- **Geplant: Einsatz-Statistiken (detailliert):**
+  - Zugriff für alle internen Rollen, live + post-Einsatz
+  - Erweiterte KPIs: Lieferzeit, Peak-Zeiten, Versorger-Auslastung, beliebte Artikel
+  - Visualisierung: Tabellen, Diagramme, Karten-Heatmap, Zeitverlauf
+  - Einsatz-Vergleich historisch
+  - Export: PDF, CSV, JSON
+  - Aufbewahrung: unbegrenzt (keine personenbezogenen Daten), manuelle Löschung möglich
 
 ## [1.4.0] - 2026-04-16
 
