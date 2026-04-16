@@ -58,6 +58,13 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Sperrungen vereinfacht:** Nur noch zwei Stufen (für Versorgungsfahrzeuge befahrbar / für alle gesperrt)
 - **Konsistenzbereinigung:** Doppelte Nummerierung, fehlende Überschriften, veraltete Referenzen behoben
 - **Routing-Logik definiert:** Route nur bei Auftragsübernahme (Vorschlag, manuell starten), dauerhafter Button für Nachschub/Geschäftsstelle, freies Routing optional
+- **Einsatz-Lifecycle:** Vorab anlegen → aktivieren → beenden. QR-Codes/Event-Links werden automatisch generiert
+- **Besteller-Session:** Cookie-basiert – Browser schließen und Status wiederfinden, Mehrfachbestellungen möglich
+- **Auftragszuweisung:** Versorger:innen übernehmen selbst + Disponent kann zuweisen/übersteuern
+- **Lieferbestätigung:** Nur Versorger:in bestätigt Übergabe, Besteller sieht Status automatisch
+- **Mehrere Nachschubfahrzeuge:** Pro Einsatz können mehrere Fahrzeuge mit unabhängigen Modi und Beständen eingesetzt werden
+- **Auftragsstatus erweitert:** Neuer Status "Übernommen" und "Unterwegs" für bessere Nachverfolgung
+- **Zukunftsperspektiven:** "Integration mit Einsatzleitsystemen" entfernt (nicht im Scope)
 
 ## [1.4.0] - 2026-04-16
 

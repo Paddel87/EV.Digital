@@ -68,14 +68,14 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
 - **Disponent:** Zentrale Koordination (stationär oder mobil), Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
 - **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
-- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
+- **Nachschubfahrer:in:** Fährt ein mobiles Lager, versorgt Versorger:innen. Mehrere Nachschubfahrzeuge pro Einsatz möglich. Drei Betriebsmodi (pro Fahrzeug unabhängig):
   - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
   - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt auf der Karte sichtbar
   - *Hybrid:* Fährt selbst Bestellungen an Besteller aus UND versorgt gleichzeitig Versorger:innen
 
 ### Örtlichkeiten im System
-- **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
-- **Mobiles oder temporär stationäres Nachschubfahrzeug (Mobiles Lager):** Flexible Versorgungsstation mit eigenem Teilbestand. Befüllung wird vom Disponenten erfasst und gepflegt.
+- **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen der Fahrzeuge. Disponent hat vollständigen Überblick über den Warenbestand.
+- **Mobile Nachschubfahrzeuge (Mobile Lager):** Flexible Versorgungsstationen mit eigenem Teilbestand. Befüllung wird vom Disponenten pro Fahrzeug erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
 
 ### Anwendungsszenarien
@@ -140,7 +140,28 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ## 🔧 Funktionale Anforderungen
 
-### 1. Benutzer- und Rollenverwaltung
+### 1. Einsatz-Lifecycle
+
+#### Einsatz anlegen (Vorbereitung)
+- Disponent erstellt einen Einsatz vorab (z.B. am Vortag)
+- **Pflichtangaben:** Name, Datum, Einsatzgebiet (Kartenausschnitt)
+- **Konfiguration:** Sortiment festlegen, Lagerbestände erfassen, Verkehrsfilter setzen
+- **QR-Codes / Event-Links:** Werden automatisch generiert – für Besteller (Bestellseite) und interne Rollen (Anmeldung)
+- Einsatz bleibt im Status "Vorbereitung" bis zur Aktivierung
+
+#### Einsatz aktivieren
+- Disponent aktiviert den Einsatz am Einsatztag
+- Ab Aktivierung: Besteller können bestellen, Versorger:innen können sich anmelden
+- Echtzeit-Funktionen (Socket.IO, Tracking, Bestellungen) werden aktiv
+
+#### Einsatz beenden
+- Disponent beendet den Einsatz
+- Offene Bestellungen werden automatisch storniert
+- Bestell-Links werden deaktiviert
+- Daten werden gemäß Löschkonzept behandelt (DSGVO)
+- Protokoll/Export für Nachbereitung bleibt verfügbar
+
+### 2. Benutzer- und Rollenverwaltung
 
 #### Rollen (4 Kernrollen)
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
@@ -153,11 +174,13 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 #### Authentifizierung
 - **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
+  - Anonyme Cookie-basierte Session: Besteller kann Browser schließen und Status wiederfinden
+  - Mehrfachbestellungen innerhalb eines Einsatzes möglich
 - **Interne Rollen:** QR-Code oder PIN-basierte Anmeldung
 - Session-Management mit automatischer Abmeldung
-- Event-basierte Zugänge (gültig nur während des Einsatzes)
+- Event-basierte Zugänge (gültig nur während des aktiven Einsatzes)
 
-### 2. Kartenintegration & Navigation
+### 3. Kartenintegration & Navigation
 
 #### Kartenfunktionen
 - OpenStreetMap Integration mit Leaflet.js
@@ -174,7 +197,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 | Alle Aufträge / Besteller-Standorte | Ja | Ja | Nein | Nein | Ja |
 | Eigener Standort | Ja (wenn mobil) | Ja | Ja | Ja | Ja |
 | Standorte aller Versorger-Fahrzeuge | Ja | Ja | Ja | Ja | Ja |
-| Standort Nachschubfahrzeug | Ja | Ja | – (eigener) | – (eigener) | – (eigener) |
+| Standorte aller Nachschubfahrzeuge | Ja | Ja | Ja (+ eigener) | Ja (+ eigener) | Ja (+ eigener) |
 | Wird als Versorgungspunkt angezeigt | – | – | Nein | Ja (konfigurierbar) | Nein |
 
 **Stationär-Modus: Sichtbarkeit konfigurierbar**
@@ -246,7 +269,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
 - Durchgestrichene/ausgegraute Darstellung für ignorierte Meldungen (nur Disponent sieht diese)
 - Popup-Informationen mit Details und Filteroptionen
 
-### 3. Manuelle Straßensperrungen (Disponent)
+### 4. Manuelle Straßensperrungen (Disponent)
 
 #### Sperrungen erstellen
 - **Interaktive Kartenerstellung:** Disponent kann direkt auf der Karte Straßensperrungen einzeichnen
@@ -284,7 +307,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
   - Grüne Linien: Versorgungsfahrzeug-Korridore
   - Blaue Punkte: Durchfahrtspunkte mit Popup-Informationen
 
-### 4. Versorger-Koordination
+### 5. Versorger-Koordination
 
 #### Versorger-Status
 ```
@@ -306,7 +329,7 @@ Status:
 - Automatische Benachrichtigungen bei Statusänderungen
 - Schichtplanung und Ablösung
 
-### 5. Bestell-Interface (Einsatzkräfte)
+### 6. Bestell-Interface (Einsatzkräfte)
 
 #### Zugang
 - **QR-Code:** Wird am Einsatzort ausgehängt/verteilt – scannt direkt zur Bestellseite
@@ -329,7 +352,7 @@ Status:
 
 **Zwei Lagerorte:**
 - **Lokales Lager (Geschäftsstelle):** Gesamtbestand aller Artikel, Disponent pflegt Zu- und Abgänge
-- **Mobiles Lager (Nachschubfahrzeug):** Teilbestand, Disponent erfasst die Befüllung vor Fahrtbeginn
+- **Mobile Lager (Nachschubfahrzeuge):** Teilbestand pro Fahrzeug, Disponent erfasst die Befüllung jeweils vor Fahrtbeginn
 
 **Bestandsführung:**
 - Disponent kennt und pflegt die Bestände beider Lager
@@ -349,17 +372,25 @@ Fallback: Einsatzkraft → WhatsApp/Funk → Disponent erfasst manuell → Verso
 - Mehrere Bestellungen am gleichen Standort → ein Auftrag
 - Manuelle Bestellerfassung weiterhin möglich (WhatsApp-Fallback)
 
+#### Auftragszuweisung
+- **Selbstübernahme:** Versorger:innen sehen offene Aufträge und können sich selbst einen nehmen
+- **Disponent-Steuerung:** Disponent kann Aufträge gezielt zuweisen oder Übernahmen übersteuern
+- System zeigt Nähe und Auslastung der Versorger:innen als Entscheidungshilfe
+
 #### Auftragsverwaltung
 ```
 Auftragsstatus:
 ├── Bestellt (weiß) – Einsatzkraft hat bestellt
 ├── Angenommen (gelb) – Disponent hat bestätigt
-├── In Bearbeitung (blau) – Versorger unterwegs
-├── Geliefert (grün) – Übergabe erfolgt
+├── Übernommen (orange) – Versorger:in hat Auftrag übernommen
+├── Unterwegs (blau) – Versorger:in ist auf dem Weg
+├── Geliefert (grün) – Versorger:in bestätigt Übergabe
 └── Storniert (rot) – Abgebrochen
 ```
 
-### 6. Kommunikationssystem
+**Lieferbestätigung:** Nur Versorger:in markiert den Auftrag als "Geliefert". Besteller sieht den Status-Wechsel automatisch in seinem Interface.
+
+### 7. Kommunikationssystem
 
 #### Nachrichten
 - Kurznachrichten zwischen Versorger:innen, Nachschubfahrer:in und Disponent
@@ -445,7 +476,7 @@ Breakpoints:
 
 ### Phase 2: Kernfunktionen (Wochen 5-8)
 - [ ] Benutzer- und Rollenverwaltung
-- [ ] Team-Management System
+- [ ] Versorger-Koordination und optionale Team-Gruppierung
 - [ ] Basis-Kartenintegration
 - [ ] Einfache Auftragserfassung
 - [ ] Grundlegende Kommunikation
@@ -534,7 +565,7 @@ Breakpoints:
 
 ### Benutzer-KPIs
 - Benutzerfreundlichkeit: SUS Score 80+
-- Adoption Rate: 80% der Teams nutzen das System
+- Adoption Rate: 80% der Versorger:innen nutzen das System
 - Fehlerrate: <1% der Aktionen führen zu Fehlern
 - Support-Anfragen: <5% der Benutzer benötigen Hilfe
 
@@ -559,7 +590,6 @@ Breakpoints:
 ## 🔮 Zukunftsperspektiven
 
 ### Mögliche Erweiterungen
-- Integration mit bestehenden Einsatzleitsystemen
 - KI-basierte Routenoptimierung
 - Erweiterte Analytics und Reporting
 - Multi-Tenant Fähigkeiten für verschiedene Organisationen
