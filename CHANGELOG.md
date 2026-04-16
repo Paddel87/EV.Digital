@@ -7,6 +7,9 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+### Hinzugefügt
+- **Namenskonvention:** Trennung zwischen Markenname (`EV.Digital` mit Punkt) und technischem Namen (`ev-digital` kebab-case / `ev_digital` snake_case) dokumentiert. Punkt im Projektnamen kann bei Tooling/Dateisystemen Probleme verursachen, daher klare Trennung für Repo, Projekt-Ordner, Docker, DB, npm.
+
 ## [1.5.0] - 2026-04-16
 
 ### Hinzugefügt
