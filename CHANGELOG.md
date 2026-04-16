@@ -8,6 +8,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [Unreleased]
 
 ### Hinzugefügt
+- **Implementierungsfahrplan (`FAHRPLAN.md`):** Bottom-to-Top-Phasenplan (Phase 0 Projektfundament bis Phase 9 Release 1.0, Phase 10 Post-MVP) mit Meilensteinen, Erfolgskriterien, Risiken und offenen Punkten. MVP-Grenze nach Phase 5 (Karte & Navigation).
 - **Namenskonvention:** Trennung zwischen Markenname (`EV.Digital` mit Punkt) und technischem Namen (`ev-digital` kebab-case / `ev_digital` snake_case) dokumentiert. Punkt im Projektnamen kann bei Tooling/Dateisystemen Probleme verursachen, daher klare Trennung für Repo, Projekt-Ordner, Docker, DB, npm.
 
 ## [1.5.0] - 2026-04-16
