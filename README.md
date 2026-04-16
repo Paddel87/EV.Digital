@@ -4,7 +4,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Status](https://img.shields.io/badge/Status-Konzeptphase-yellow.svg)](#)
-[![Version](https://img.shields.io/badge/Version-1.4.0-blue.svg)](#changelog)
+[![Version](https://img.shields.io/badge/Version-1.5.0-blue.svg)](#changelog)
 [![Last Commit](https://img.shields.io/badge/Last%20Commit-July%202025-brightgreen.svg)](#)
 [![Development](https://img.shields.io/badge/Development-Vision%20Driven-purple.svg)](#-entwicklungsphilosophie-vision-driven-development)
 [![AI Powered](https://img.shields.io/badge/AI%20Powered-Autonomous%20Development-orange.svg)](#)
@@ -25,11 +25,12 @@
 
 Die Software unterstützt insbesondere:
 
+- **📱 Direktbestellung** – Einsatzkräfte bestellen per QR-Code/Link, ohne App oder Registrierung
 - **🗺️ Navigation** – Orientierung für ortsunkundige Versorgungsteams
 - **🤝 Versorgungskoordination** – Übersicht über Anfragen, Teams und Aufträge
 - **📋 Dokumentation** – Quittierung von Übergaben, Statusanzeige
 - **📡 Kommunikation** – Rückmeldungen ohne private Kanäle
-- **🔒 Datenschutz** – keine WhatsApp-Gruppen, keine Standortfreigabe, kein App-Zwang
+- **🔒 Datenschutz** – keine WhatsApp-Gruppen, kein App-Zwang
 
 ---
 
@@ -40,15 +41,20 @@ Die Software unterstützt insbesondere:
 - Nutzung freier Kartendienste wie OpenStreetMap
 - Mobile Nutzung ohne App-Installation
 
+### 📱 Bestell-Interface für Einsatzkräfte
+- QR-Code scannen → Standort freigeben → Sortiment wählen → Bestellen
+- Bestellstatus live verfolgen (Bestellt → Unterwegs → Geliefert)
+- Kein Account, keine App, keine Registrierung
+
 ### 🤝 Teamkoordination
 - Anmeldung per QR-Code oder PIN
 - Statusübersicht aller Teams (frei, unterwegs, im Einsatz)
 - Zuweisung und Rückmeldung von Versorgungsaufträgen
 
 ### 📋 Bedarfserfassung
-- Einfache Eingabe des Versorgungsbedarfs durch Einsatzkräfte
-- Standardisierte Angaben (Menge, Ort, ggf. Kommentar)
-- Zuordnung zu verfügbaren Teams
+- Bestellungen kommen direkt über das Bestell-Interface
+- Disponent priorisiert, bündelt und verteilt
+- WhatsApp als Fallback bei Bedarf
 
 ### 📡 Kommunikation & Übersicht
 - Kurze Rückfragen oder Statusänderungen möglich (textbasiert)
@@ -121,10 +127,10 @@ EV.Digital/
 
 Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
-**Aktuelle Version:** 1.4.0 (16.04.2026)
-- ✅ Tech-Stack finalisiert und verschlankt
-- ✅ Klare Technologie-Entscheidungen (Vue.js 3, Node.js, TypeScript)
-- ✅ Überdimensionierte Infrastruktur entfernt (kein Redis, kein K8s, kein ELK)
+**Aktuelle Version:** 1.5.0 (16.04.2026)
+- ✅ Bestell-Interface für Einsatzkräfte (QR-Code → Sortiment → Bestellen)
+- ✅ Medienbruch eliminiert – kein WhatsApp-Umweg mehr nötig
+- ✅ Sortimentsverwaltung durch Disponent
 
 ### Roadmap
 

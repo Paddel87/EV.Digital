@@ -2,7 +2,7 @@
 
 **Projektstart:** 18.07.2025  
 **Status:** Konzeptionierungsphase  
-**Version:** 1.4.0
+**Version:** 1.5.0
 
 ---
 
@@ -65,7 +65,8 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Koordinator:innen für Getränke- und Snackversorgung
 
 ### Benutzerrollen
-- **Disponent:** Zentrale Koordination und Auftragsverteilung
+- **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
+- **Disponent:** Zentrale Koordination, Priorisierung und Auftragsverteilung
 - **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge vor Ort
 - **Mobiles Nachschubfahrzeug:** Kann Versorger mobil nachversorgen und unterstützen
 
@@ -81,9 +82,9 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Kommunikation ohne private Kanäle (WhatsApp-Alternative)
 - Mobile Nachversorgung durch Fahrzeuge
 - Koordination zwischen festen und mobilen Versorgungspunkten
-- **WhatsApp-Bestellsystem:** Einsatzkräfte bestellen per WhatsApp, Disponent erfasst händisch in EV.Digital
-- **B2B-Service:** Gewerkschaft als Dienstleister für Einsatzkräfte ohne deren Systemintegration
-- **Medienbruch-Management:** Überbrückung zwischen externen Kommunikationskanälen und internem System
+- **Direktbestellung:** Einsatzkräfte bestellen über eigenes Bestell-Interface (QR-Code/Link)
+- **WhatsApp als Fallback:** Manuelle Erfassung durch Disponent, wenn Direktbestellung nicht möglich
+- **B2B-Service:** Gewerkschaft als Dienstleister für Einsatzkräfte
 
 ---
 
@@ -139,21 +140,19 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ### 1. Benutzer- und Rollenverwaltung
 
 #### Rollen
-- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung
+- **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
+- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln
 - **Koordinator:in:** Vollzugriff, Team-Management, Auftragsverteilung
 - **Teamleiter:in:** Team-Status, Auftragsannahme, Kommunikation
 - **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge, Status-Updates, Kommunikation
 - **Mobiles Nachschubfahrzeug:** Spezielle Rolle für mobile Nachversorgung, Standort-Updates, Kapazitätsmeldungen
 - **Helfer:in:** Basis-Funktionen, Status-Updates
 
-#### Externe Akteure (nicht im System erfasst)
-- **Einsatzkräfte:** Kunden der Gewerkschaft, die Versorgungsleistungen bestellen (ähnlich wie bei Lieferando/Glovo). Sie haben keinen direkten Systemzugriff und sind nicht als Benutzer registriert.
-
 #### Authentifizierung
-- QR-Code basierte Anmeldung für schnellen Zugang
-- PIN-basierte Anmeldung als Alternative
+- **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
+- **Interne Rollen:** QR-Code oder PIN-basierte Anmeldung
 - Session-Management mit automatischer Abmeldung
-- Keine Registrierung erforderlich (Event-basierte Accounts)
+- Event-basierte Zugänge (gültig nur während des Einsatzes)
 
 ### 2. Kartenintegration & Navigation
 
@@ -263,31 +262,46 @@ Team-Status:
 - Team-Kapazitäten und Ausstattung
 - Schichtplanung und Ablösung
 
-### 4. Bedarfserfassung & Auftragsmanagement
+### 4. Bestell-Interface (Einsatzkräfte)
 
-#### Bedarfsanmeldung
-- **WhatsApp-Bestellungen:** Einsatzkräfte senden Versorgungsanfragen per WhatsApp an den Disponenten
-- **Manuelle Erfassung:** Disponent pflegt WhatsApp-Anforderungen händisch mit Standort in EV.Digital ein
-- **Auftragserstellung:** Aus jeder erfassten Anforderung entsteht automatisch ein Auftrag für die Versorger
-- Standardisierte Formulare für häufige Anfragen
-- Freie Texteingabe für spezielle Anforderungen
-- Prioritätsstufen (niedrig, normal, hoch, kritisch)
-- Zeitstempel und Standortangabe
-- **Kundendaten:** Minimale Erfassung der bestellenden Einsatzkraft (nur für Lieferung notwendig)
+#### Zugang
+- **QR-Code:** Wird am Einsatzort ausgehängt/verteilt – scannt direkt zur Bestellseite
+- **Event-Link:** Alternative URL-Weitergabe (z.B. per Funk, Aushang)
+- **Kein Account nötig:** Kein Login, keine Registrierung, keine App-Installation
+
+#### Bestellvorgang
+1. **Standort freigeben:** GPS-Standort wird übermittelt (Browser-Standortfreigabe)
+2. **Sortiment durchsuchen:** Vordefinierte Artikel mit Kategorien (Getränke, Snacks, Warmes etc.)
+3. **Auswahl treffen:** Artikel und Menge wählen, optional Kommentar hinzufügen
+4. **Bestellung absenden:** Ein Tap – Bestellung geht direkt ins System
+5. **Status verfolgen:** Einfache Statusanzeige (Bestellt → Angenommen → Unterwegs → Geliefert)
+
+#### Sortimentsverwaltung (durch Disponent)
+- Artikel anlegen, bearbeiten, deaktivieren
+- Kategorien und Sortierung festlegen
+- Verfügbarkeit in Echtzeit anpassen (z.B. "Kaffee ausverkauft")
+- Mengenbegrenzungen pro Bestellung möglich
 
 #### Bestellworkflow
 ```
-Einsatzkraft → WhatsApp → Disponent → EV.Digital → Auftrag → Versorger → Auslieferung
+Primär:  Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
+Fallback: Einsatzkraft → WhatsApp/Funk → Disponent erfasst manuell → Versorger liefert
 ```
+
+#### Disponenten-Sicht auf Bestellungen
+- Eingehende Bestellungen in Echtzeit (Socket.IO)
+- Bestellungen priorisieren, bündeln oder ablehnen
+- Mehrere Bestellungen am gleichen Standort → ein Auftrag
+- Manuelle Bestellerfassung weiterhin möglich (WhatsApp-Fallback)
 
 #### Auftragsverwaltung
 ```
 Auftragsstatus:
-├── Neu (weiß)
-├── Zugewiesen (gelb)
-├── In Bearbeitung (blau)
-├── Abgeschlossen (grün)
-└── Storniert (rot)
+├── Bestellt (weiß) – Einsatzkraft hat bestellt
+├── Angenommen (gelb) – Disponent hat bestätigt
+├── In Bearbeitung (blau) – Versorger unterwegs
+├── Geliefert (grün) – Übergabe erfolgt
+└── Storniert (rot) – Abgebrochen
 ```
 
 ### 5. Kommunikationssystem
@@ -346,7 +360,14 @@ Breakpoints:
 ```
 
 ### Hauptansichten
-1. **Dashboard:** Übersicht über aktuelle Situation
+
+#### Besteller-Interface (Einsatzkräfte)
+- **Bestellseite:** Standort freigeben → Sortiment → Bestellen → Status verfolgen
+- Minimalistisch, große Buttons, wenige Schritte
+- Funktioniert ohne Login auf jedem Smartphone-Browser
+
+#### Interne Ansichten (Disponent, Versorger, Team)
+1. **Dashboard:** Übersicht über aktuelle Situation + eingehende Bestellungen
 2. **Versorger-Karte:** 
    - Echtzeit-Standorte aller Versorger
    - Auftragsstandorte mit Status-Kennzeichnung
@@ -354,7 +375,8 @@ Breakpoints:
    - Live-Koordination zwischen Versorgern
 3. **Teams:** Team-Status und -verwaltung
 4. **Aufträge:** Auftragsübersicht und -bearbeitung
-5. **Kommunikation:** Nachrichten und Benachrichtigungen
+5. **Sortiment:** Artikelverwaltung und Verfügbarkeit (Disponent)
+6. **Kommunikation:** Nachrichten und Benachrichtigungen
 
 ---
 
@@ -515,5 +537,5 @@ Breakpoints:
 
 **Erstellt:** 18.07.2025  
 **Letzte Aktualisierung:** 16.04.2026  
-**Version:** 1.4.0  
-**Status:** Konzeptionierungsphase + Vision Driven Development + Tech-Stack finalisiert
+**Version:** 1.5.0  
+**Status:** Konzeptionierungsphase + Vision Driven Development + Besteller-Interface

@@ -7,6 +7,25 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-04-16
+
+### Hinzugefügt
+- **Bestell-Interface für Einsatzkräfte:** Eigene Bestelloberfläche ohne Registrierung oder App
+  - Zugang per QR-Code oder Event-Link
+  - Standortfreigabe per GPS
+  - Sortimentsauswahl mit Kategorien und Mengenangabe
+  - Live-Bestellstatus (Bestellt → Angenommen → Unterwegs → Geliefert)
+- **Sortimentsverwaltung:** Disponent kann Artikel anlegen, Verfügbarkeit steuern, Mengen begrenzen
+- **Besteller als Benutzerrolle:** Einsatzkräfte sind jetzt Teil des Systems (statt externe Akteure)
+
+### Geändert
+- **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
+  - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
+  - WhatsApp bleibt als Fallback erhalten
+- **Disponenten-Rolle:** Vom Daten-Abtipper zum Koordinator (priorisieren, bündeln, steuern)
+- **Auftragsstatus:** Umbenannt für Besteller-Perspektive (Bestellt → Angenommen → Unterwegs → Geliefert)
+- **Hauptansichten:** Besteller-Interface als eigene Ansicht, Sortimentsverwaltung ergänzt
+
 ## [1.4.0] - 2026-04-16
 
 ### Geändert
