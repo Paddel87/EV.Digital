@@ -62,13 +62,13 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ### Primäre Zielgruppe
 - Gewerkschaften mit eigener Einsatzbetreuung
 - Ehrenamtliche Versorgungsteams bei Großeinsätzen
-- Koordinator:innen für Getränke- und Snackversorgung
+- Disponenten für Getränke- und Snackversorgung
 
 ### Benutzerrollen
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
 - **Disponent:** Zentrale Koordination, Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
-- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge vor Ort
-- **Mobiles Nachschubfahrzeug:** Kann Versorger mobil nachversorgen und unterstützen
+- **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
 
 ### Örtlichkeiten im System
 - **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
@@ -139,14 +139,11 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ### 1. Benutzer- und Rollenverwaltung
 
-#### Rollen
+#### Rollen (4 Kernrollen)
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
 - **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
-- **Koordinator:in:** Vollzugriff, Team-Management, Auftragsverteilung
-- **Teamleiter:in:** Team-Status, Auftragsannahme, Kommunikation
-- **Ehrenamtliche Versorger:innen:** Ausführung der Versorgungsaufträge, Status-Updates, Kommunikation
-- **Mobiles Nachschubfahrzeug:** Spezielle Rolle für mobile Nachversorgung, Standort-Updates, Kapazitätsmeldungen
-- **Helfer:in:** Basis-Funktionen, Status-Updates
+- **Versorger:in:** Versorgungsaufträge ausführen, Auftragsannahme, Status-Updates, Kommunikation
+- **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen unterwegs, Standort-Updates, Kapazitätsmeldungen
 
 #### Authentifizierung
 - **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
@@ -377,17 +374,16 @@ Breakpoints:
 - Minimalistisch, große Buttons, wenige Schritte
 - Funktioniert ohne Login auf jedem Smartphone-Browser
 
-#### Interne Ansichten (Disponent, Versorger, Team)
+#### Interne Ansichten (Disponent, Versorger:in, Nachschubfahrer:in)
 1. **Dashboard:** Übersicht über aktuelle Situation + eingehende Bestellungen
-2. **Versorger-Karte:** 
-   - Echtzeit-Standorte aller Versorger
+2. **Karte:** 
+   - Echtzeit-Standorte aller Versorger:innen und Nachschubfahrer:in
    - Auftragsstandorte mit Status-Kennzeichnung
    - Dynamische Routenberechnung zur Anfahrt
-   - Live-Koordination zwischen Versorgern
-3. **Teams:** Team-Status und -verwaltung
-4. **Aufträge:** Auftragsübersicht und -bearbeitung
-5. **Lager & Sortiment:** Artikelstamm, Bestandsübersicht lokales + mobiles Lager (Disponent)
-6. **Kommunikation:** Nachrichten und Benachrichtigungen
+   - Live-Koordination zwischen allen Beteiligten
+3. **Aufträge:** Auftragsübersicht und -bearbeitung
+4. **Lager & Sortiment:** Artikelstamm, Bestandsübersicht lokales + mobiles Lager (Disponent)
+5. **Kommunikation:** Nachrichten und Benachrichtigungen
 
 ---
 

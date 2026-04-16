@@ -24,6 +24,9 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Besteller als Benutzerrolle:** Einsatzkräfte sind jetzt Teil des Systems (statt externe Akteure)
 
 ### Geändert
+- **Rollenmodell auf 4 Kernrollen reduziert:** Besteller, Disponent, Versorger:in, Nachschubfahrer:in
+  - Koordinator:in, Teamleiter:in und Helfer:in entfernt (Überschneidungen bereinigt)
+  - "Mobiles Nachschubfahrzeug" umbenannt zu "Nachschubfahrer:in" (Person statt Fahrzeug)
 - **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
   - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
   - WhatsApp bleibt als Fallback erhalten

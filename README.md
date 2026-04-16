@@ -19,7 +19,7 @@
 
 - Gewerkschaften mit eigener Einsatzbetreuung
 - Ehrenamtliche Versorgungsteams bei Großeinsätzen
-- Koordinator:innen für Getränke- und Snackversorgung
+- Disponenten für Getränke- und Snackversorgung
 
 ### ✅ Nutzen der Anwendung
 
