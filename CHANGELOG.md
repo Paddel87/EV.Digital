@@ -27,12 +27,64 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Rollenmodell auf 4 Kernrollen reduziert:** Besteller, Disponent, Versorger:in, Nachschubfahrer:in
   - Koordinator:in, Teamleiter:in und Helfer:in entfernt (Überschneidungen bereinigt)
   - "Mobiles Nachschubfahrzeug" umbenannt zu "Nachschubfahrer:in" (Person statt Fahrzeug)
+- **3 Betriebsmodi Nachschubfahrzeug:**
+  - Mobil (Standard): Fährt herum, beliefert Versorger:innen
+  - Stationär: Hält an, wird als fester Versorgungspunkt sichtbar
+  - Hybrid: Liefert an Besteller UND versorgt Versorger:innen gleichzeitig
+- **Kartensichtbarkeiten pro Rolle:** Rollenabhängige Sichtbarkeitsmatrix definiert
+  - Disponent: Sieht alles
+  - Versorger:in: Sieht alle Fahrzeuge + alle Aufträge
+  - Nachschubfahrer:in: Sieht alle Versorger, Aufträge nur im Hybrid-Modus
+- **Verkehrsdaten auf TomTom umgestellt:** Hybrid-Ansatz (3 APIs) durch TomTom ersetzt
+  - Traffic Flow API + Traffic Incidents API
+  - Kostenlos bis 5.000 Requests/Tag
+  - Serverseitige Abfrage: Backend fragt zentral ab, cached, filtert und verteilt per Socket.IO
+  - Clients fragen nie direkt externe APIs ab
+- **Disponent: Verkehrsmeldungs-Filter:** Konfigurierbare Filterung von TomTom-Meldungen
+  - Einzelne Meldungen ignorieren, Einsatzgebiet als "befahrbar" markieren
+  - Zwei Ebenen: Externe Sperrungen (filterbar) vs. interne Sperrungen (gelten immer)
 - **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
   - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
   - WhatsApp bleibt als Fallback erhalten
 - **Disponenten-Rolle:** Vom Daten-Abtipper zum Koordinator (priorisieren, bündeln, steuern)
 - **Auftragsstatus:** Umbenannt für Besteller-Perspektive (Bestellt → Angenommen → Unterwegs → Geliefert)
 - **Hauptansichten:** Besteller-Interface als eigene Ansicht, Sortimentsverwaltung ergänzt
+- **TomTom Routing API:** Routenberechnung mit Echtzeit-Verkehr, serverseitig
+- **Disponent mobil:** Kann auch mobil arbeiten, eigener Standort auf Karte
+- **GPS-Fallback:** Besteller kann Standort alternativ auf Karte antippen oder aus vordefinierten Orten wählen
+- **Gesamtbestand:** Besteller sehen Verfügbarkeit aus beiden Lagern zusammen
+- **Stationär-Sichtbarkeit:** Disponent konfiguriert, ob Nachschubfahrzeug auch für Besteller sichtbar ist
+- **Optionale Team-Gruppierung:** Versorger:innen arbeiten einzeln oder in Teams (Disponent konfiguriert)
+- **Sperrungen vereinfacht:** Nur noch zwei Stufen (für Versorgungsfahrzeuge befahrbar / für alle gesperrt)
+- **Konsistenzbereinigung:** Doppelte Nummerierung, fehlende Überschriften, veraltete Referenzen behoben
+- **Routing-Logik definiert:** Route nur bei Auftragsübernahme (Vorschlag, manuell starten), dauerhafter Button für Nachschub/Geschäftsstelle, freies Routing optional
+- **Einsatz-Lifecycle:** Vorab anlegen → aktivieren → beenden. QR-Codes/Event-Links werden automatisch generiert
+- **Besteller-Session:** Cookie-basiert – Browser schließen und Status wiederfinden, Mehrfachbestellungen möglich
+- **Auftragszuweisung:** Versorger:innen übernehmen selbst + Disponent kann zuweisen/übersteuern
+- **Lieferbestätigung:** Nur Versorger:in bestätigt Übergabe, Besteller sieht Status automatisch
+- **Mehrere Nachschubfahrzeuge:** Pro Einsatz können mehrere Fahrzeuge mit unabhängigen Modi und Beständen eingesetzt werden
+- **Auftragsstatus erweitert:** Neuer Status "Übernommen" und "Unterwegs" für bessere Nachverfolgung
+- **Zukunftsperspektiven:** "Integration mit Einsatzleitsystemen" entfernt (nicht im Scope)
+- **Offline-Fähigkeit konkretisiert:** Karte offline, Aufträge offline bearbeiten, Bestellungen offline aufgeben (Sync bei Reconnect)
+- **Sortiment-Vorlagensystem:** Persistenter Standardkatalog als Vorlage, wird pro Einsatz kopiert und anpassbar
+- **Bottom-to-Top-Philosophie:** Platzhalter durch Beschreibung ersetzt (Basis-Infrastruktur zuerst, dann Features)
+- **Geplant: Barcode-basierte Warenwirtschaft (detailliert):**
+  - Barcode-Auflösung: Open Food Facts + UPCitemdb als Hybrid, Fallback manuell, lokal persistiert
+  - Scan-Technik: Kamera (Browser-API) + externe USB/Bluetooth-Scanner
+  - Artikel ohne Barcode: optional mit generiertem Etikett (druckbar)
+  - Einheiten: Stück, kg, Liter + Gebindegrößen, MHD optional (keine Warnung)
+  - Ladungs-Vorlagen: wiederverwendbar, pro Fahrzeug anpassbar
+  - Fahrer-Bestätigung: pauschal, Abweichungen direkt korrigierbar
+  - Bestandsreservierung bei Bestellung (Abbuchung erst bei Lieferung)
+  - Lieferbestätigung: pauschal + Detail-Option, Teillieferung mit Restauftrag, Rückgabe möglich
+  - Nachschub-Übergabe: Liste oder QR-Code, pauschal quittiert
+- **Geplant: Einsatz-Statistiken (detailliert):**
+  - Zugriff für alle internen Rollen, live + post-Einsatz
+  - Erweiterte KPIs: Lieferzeit, Peak-Zeiten, Versorger-Auslastung, beliebte Artikel
+  - Visualisierung: Tabellen, Diagramme, Karten-Heatmap, Zeitverlauf
+  - Einsatz-Vergleich historisch
+  - Export: PDF, CSV, JSON
+  - Aufbewahrung: unbegrenzt (keine personenbezogenen Daten), manuelle Löschung möglich
 
 ## [1.4.0] - 2026-04-16
 
