@@ -7,6 +7,28 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-04-16
+
+### Geändert
+- **Tech-Stack finalisiert:** Klare Entscheidungen statt offener Alternativen
+  - Frontend: Vue.js 3 + Vuetify 3 (statt "Vue.js oder React")
+  - Backend: Node.js + Express + Socket.IO (statt "Node.js oder Python Flask")
+  - Durchgängig TypeScript im gesamten Projekt
+- **Datenbank verschlankt:** PostgreSQL mit PostGIS, Redis entfernt (bei Bedarf nachrüstbar)
+- **Infrastruktur vereinfacht:** Docker Compose als Standard-Deployment
+  - Kubernetes entfernt (überdimensioniert für ehrenamtliches Projekt)
+  - ELK Stack entfernt → Winston Structured Logging
+  - Prometheus/Grafana entfernt → Health-Endpoint (bei Bedarf nachrüstbar)
+- **Projektstruktur aktualisiert:** Flachere Struktur mit docker-compose.yml im Root
+- **Testing:** Vitest statt Jest/Pytest
+
+### Entfernt
+- Redis als Pflichtkomponente (optional bei Skalierungsbedarf)
+- Kubernetes Deployment-Option
+- ELK Stack (Elasticsearch, Logstash, Kibana)
+- Prometheus + Grafana als Standard-Monitoring
+- Staging-Umgebung (Development + Production reicht initial)
+
 ## [1.3.0] - 2025-07-19
 
 ### Hinzugefügt

@@ -2,7 +2,7 @@
 
 **Projektstart:** 18.07.2025  
 **Status:** Konzeptionierungsphase  
-**Version:** 1.2.0
+**Version:** 1.4.0
 
 ---
 
@@ -93,43 +93,44 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Frontend      │    │    Backend      │    │   Datenbank     │
-│   (Web-App)     │◄──►│   (REST API)    │◄──►│   (PostgreSQL)  │
-│                 │    │                 │    │                 │
-│ - React/Vue.js  │    │ - Node.js/      │    │ - Benutzer      │
-│ - PWA Support   │    │   Python Flask  │    │ - Teams         │
-│ - Responsive    │    │ - WebSocket     │    │ - Aufträge      │
-│ - Offline-fähig │    │ - Auth System   │    │ - Protokolle    │
+│   (PWA)         │◄──►│   (REST API)    │◄──►│  (PostgreSQL +  │
+│                 │    │                 │    │   PostGIS)      │
+│ - Vue.js 3      │    │ - Node.js +     │    │ - Benutzer      │
+│ - Vuetify 3     │    │   Express       │    │ - Teams         │
+│ - Leaflet.js    │    │ - Socket.IO     │    │ - Aufträge      │
+│ - Offline-fähig │    │ - JWT Auth      │    │ - Geodaten      │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
+         ▲                                            ▲
+         └── Durchgängig TypeScript ──────────────────┘
 ```
 
 ### Technologie-Stack
 
 #### Frontend
-- **Framework:** Vue.js 3 oder React 18
-- **UI-Framework:** Vuetify/Material-UI für konsistente Benutzeroberfläche
+- **Framework:** Vue.js 3
+- **UI-Framework:** Vuetify 3 für konsistente Benutzeroberfläche
 - **PWA:** Service Worker für Offline-Funktionalität
 - **Karten:** OpenStreetMap mit Leaflet.js
 - **Verkehrsdaten:** Hybrid-Ansatz (Autobahn GmbH API + Overpass API + HERE Maps optional)
 - **Build-Tool:** Vite für schnelle Entwicklung
 
 #### Backend
-- **Runtime:** Node.js mit Express.js oder Python mit Flask
+- **Runtime:** Node.js mit Express.js
+- **Sprache:** TypeScript (durchgängig im gesamten Projekt)
 - **API:** RESTful API mit OpenAPI/Swagger Dokumentation
-- **Echtzeit:** WebSocket für Live-Updates
+- **Echtzeit:** Socket.IO für Live-Updates
 - **Authentifizierung:** JWT-basiert mit Refresh-Token
-- **Validierung:** Joi/Yup für Eingabevalidierung
+- **Validierung:** Joi für Eingabevalidierung
 - **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
 
 #### Datenbank
-- **Primär:** PostgreSQL für strukturierte Daten
-- **Cache:** Redis für Session-Management und Caching
+- **Primär:** PostgreSQL mit PostGIS-Erweiterung für Geodaten
 - **Backup:** Automatisierte tägliche Backups
 
 #### Infrastruktur
 - **Container:** Docker für einheitliche Deployment-Umgebung
-- **Orchestrierung:** Docker Compose für lokale Entwicklung
-- **Monitoring:** Prometheus + Grafana für System-Monitoring
-- **Logging:** Structured Logging mit Winston/Python Logging
+- **Orchestrierung:** Docker Compose (ein Befehl startet alles)
+- **Logging:** Structured Logging mit Winston
 
 ---
 
@@ -399,7 +400,7 @@ Breakpoints:
 - **Security Tests:** Penetrationstests und Vulnerability Scans
 
 ### Code Quality
-- ESLint/Pylint für Code-Standards
+- ESLint für Code-Standards
 - Prettier für einheitliche Formatierung
 - Pre-commit Hooks für automatische Checks
 - Code Reviews für alle Pull Requests
@@ -410,22 +411,21 @@ Breakpoints:
 ## 🔧 Deployment & Betrieb
 
 ### Deployment-Optionen
-1. **Cloud-Hosting:** AWS/Azure/GCP für Skalierbarkeit
-2. **On-Premise:** Lokale Server für Datenschutz
-3. **Hybrid:** Kombination je nach Anforderung
+1. **Docker Compose:** Standardmäßiges Deployment – ein `docker-compose up` startet alle Services
+2. **Cloud-Hosting:** AWS/Azure/GCP bei Bedarf
+3. **On-Premise:** Lokale Server für maximalen Datenschutz
 
 ### Monitoring & Wartung
-- Application Performance Monitoring (APM)
-- Error Tracking mit Sentry
-- Uptime Monitoring
-- Automatische Backups
+- Health-Endpoint für Service-Überwachung
+- Structured Logging mit Winston
+- Automatische Backups der PostgreSQL-Datenbank
 - Security Updates
 
-### Skalierung
-- Horizontale Skalierung über Load Balancer
-- Database Clustering für hohe Verfügbarkeit
+### Skalierung (bei Bedarf nachrüstbar)
+- Redis für Session-Caching bei steigender Nutzerzahl
+- Load Balancer für horizontale Skalierung
 - CDN für statische Assets
-- Caching-Strategien für Performance
+- Prometheus + Grafana für umfassendes Monitoring
 
 ---
 
@@ -514,6 +514,6 @@ Breakpoints:
 ---
 
 **Erstellt:** 18.07.2025  
-**Letzte Aktualisierung:** 18.07.2025  
-**Version:** 1.2.0  
-**Status:** Konzeptionierungsphase + Vision Driven Development + Benutzerrollen & WhatsApp-Integration
+**Letzte Aktualisierung:** 16.04.2026  
+**Version:** 1.4.0  
+**Status:** Konzeptionierungsphase + Vision Driven Development + Tech-Stack finalisiert

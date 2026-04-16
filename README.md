@@ -4,7 +4,7 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Status](https://img.shields.io/badge/Status-Konzeptphase-yellow.svg)](#)
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue.svg)](#changelog)
+[![Version](https://img.shields.io/badge/Version-1.4.0-blue.svg)](#changelog)
 [![Last Commit](https://img.shields.io/badge/Last%20Commit-July%202025-brightgreen.svg)](#)
 [![Development](https://img.shields.io/badge/Development-Vision%20Driven-purple.svg)](#-entwicklungsphilosophie-vision-driven-development)
 [![AI Powered](https://img.shields.io/badge/AI%20Powered-Autonomous%20Development-orange.svg)](#)
@@ -62,24 +62,22 @@ Die Software unterstützt insbesondere:
 ### Geplanter Tech-Stack
 
 **Frontend:**
-- Vue.js 3 oder React 18
+- Vue.js 3 + Vuetify 3
 - Progressive Web App (PWA)
 - OpenStreetMap mit Leaflet.js
 - Responsive Design (Mobile First)
 
 **Backend:**
-- Node.js mit Express.js oder Python Flask
-- RESTful API mit WebSocket-Support
+- Node.js mit Express.js + Socket.IO
+- RESTful API mit Echtzeit-Updates
 - JWT-basierte Authentifizierung
 
 **Datenbank:**
-- PostgreSQL für strukturierte Daten
-- Redis für Caching und Sessions
+- PostgreSQL mit PostGIS für Geo- und strukturierte Daten
 
 **Infrastruktur:**
-- Docker Container
-- Cloud-ready Deployment
-- Monitoring und Logging
+- Docker Compose (ein Befehl startet alles)
+- Durchgängig TypeScript
 
 ---
 
@@ -87,24 +85,23 @@ Die Software unterstützt insbesondere:
 
 ```
 EV.Digital/
-├── docs/                   # Dokumentation
-│   ├── KONZEPT.md         # Detailliertes Projektkonzept
-│   ├── api/               # API-Dokumentation
-│   └── user/              # Benutzerhandbuch
-├── frontend/              # Frontend-Anwendung
+├── frontend/              # Vue.js 3 + Vuetify (PWA)
 │   ├── src/
 │   ├── public/
 │   └── package.json
-├── backend/               # Backend-API
+├── backend/               # Node.js + Express + Socket.IO
 │   ├── src/
 │   ├── tests/
-│   └── requirements.txt
-├── database/              # Datenbankschemas
+│   └── package.json
+├── database/              # PostgreSQL + PostGIS
 │   ├── migrations/
 │   └── seeds/
-├── deployment/            # Deployment-Konfiguration
-│   ├── docker/
-│   └── kubernetes/
+├── docs/                  # Dokumentation
+│   ├── api/               # API-Dokumentation (OpenAPI/Swagger)
+│   └── user/              # Benutzerhandbuch
+├── docker-compose.yml     # Ein Befehl startet alles
+├── KONZEPT.md             # Detailliertes Projektkonzept
+├── CHANGELOG.md           # Änderungsprotokoll
 └── README.md
 ```
 
@@ -124,10 +121,10 @@ EV.Digital/
 
 Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
-**Aktuelle Version:** 1.1.0 (18.07.2025)
-- ✅ Vision Driven Development-Konzept hinzugefügt
-- ✅ Autonome KI-Entwicklungsphilosophie definiert
-- ✅ Dokumentationsanforderungen spezifiziert
+**Aktuelle Version:** 1.4.0 (16.04.2026)
+- ✅ Tech-Stack finalisiert und verschlankt
+- ✅ Klare Technologie-Entscheidungen (Vue.js 3, Node.js, TypeScript)
+- ✅ Überdimensionierte Infrastruktur entfernt (kein Redis, kein K8s, kein ELK)
 
 ### Roadmap
 
@@ -164,7 +161,7 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 
 ### Entwicklungsrichtlinien
 
-- Code-Style: ESLint/Prettier für JavaScript, Black für Python
+- Code-Style: ESLint/Prettier für TypeScript
 - Tests: Mindestens 80% Code Coverage
 - Commits: Conventional Commits Format
 - Dokumentation: Alle neuen Features dokumentieren
@@ -205,25 +202,23 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 
 ### Voraussetzungen (geplant)
 
-- Node.js 18+ oder Python 3.9+
-- PostgreSQL 13+
-- Redis 6+
-- Docker (optional)
+- Node.js 18+
+- PostgreSQL 15+ (mit PostGIS)
+- Docker + Docker Compose (empfohlen)
 
 ### Lokale Entwicklung (geplant)
 
 ```bash
 # Repository klonen
-git clone https://github.com/username/EV.Digital.git
+git clone https://github.com/paddel87/EV.Digital.git
 cd EV.Digital
 
-# Dependencies installieren
-npm install  # oder pip install -r requirements.txt
+# Alles mit Docker Compose starten
+docker-compose up
 
-# Datenbank setup
+# Oder manuell:
+npm install
 npm run db:setup
-
-# Entwicklungsserver starten
 npm run dev
 ```
 
@@ -233,7 +228,7 @@ npm run dev
 
 ### Geplante Test-Strategie
 
-- **Unit Tests:** Jest/Pytest für Komponenten und Funktionen
+- **Unit Tests:** Vitest für Komponenten und Funktionen
 - **Integration Tests:** API-Endpunkte und Datenbankoperationen
 - **E2E Tests:** Cypress/Playwright für Benutzerflows
 - **Performance Tests:** Lasttest mit Artillery/Locust
@@ -251,15 +246,13 @@ npm run test:perf     # Performance Tests
 
 ### Deployment-Optionen (geplant)
 
-1. **Docker Compose** - Lokale Entwicklung
-2. **Kubernetes** - Skalierbare Produktion
-3. **Cloud Platforms** - AWS, Azure, GCP
-4. **On-Premise** - Eigene Server
+1. **Docker Compose** - Standard-Deployment (ein Befehl startet alles)
+2. **Cloud Platforms** - AWS, Azure, GCP bei Bedarf
+3. **On-Premise** - Eigene Server für maximalen Datenschutz
 
 ### Umgebungen
 
-- **Development:** Lokale Entwicklungsumgebung
-- **Staging:** Test-Umgebung für Integration
+- **Development:** Lokale Entwicklungsumgebung via Docker Compose
 - **Production:** Live-System für Endbenutzer
 
 ---
@@ -275,9 +268,8 @@ npm run test:perf     # Performance Tests
 
 ### Tools
 
-- **Monitoring:** Prometheus + Grafana
-- **Logging:** ELK Stack (Elasticsearch, Logstash, Kibana)
-- **Error Tracking:** Sentry
+- **Logging:** Winston (Structured Logging)
+- **Monitoring:** Health-Endpoint + bei Bedarf nachrüstbar (Prometheus + Grafana)
 - **Analytics:** Selbst-gehostet, DSGVO-konform
 
 ---
