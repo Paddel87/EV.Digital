@@ -594,9 +594,46 @@ Breakpoints:
 
 ## 🔮 Zukunftsperspektiven
 
-### Mögliche Erweiterungen
+### Geplant: Barcode-basierte Warenwirtschaft
+
+#### Warenerfassung per Barcode (Disponent)
+- Verpackungseinheit scannen → System erkennt Inhalt (z.B. 25x Snickers)
+- Oder: Einzelbarcode scannen + Menge manuell eingeben
+- Waren werden katalogisiert und dem lokalen Lager zugeordnet
+
+#### Barcode-Auflösung (Hybrid-Ansatz)
+- **Externe Datenbank zuerst:** Barcode (EAN/GTIN) wird gegen offene Produktdatenbanken geprüft (z.B. Open Food Facts API)
+- **Fallback manuell:** Wenn nicht gefunden → Disponent erfasst Artikel manuell (Name, Kategorie, Gebindegröße)
+- **Lokal gespeichert:** Einmal erfasste Artikel werden in eigener Datenbank vorgehalten und beim nächsten Scan sofort erkannt
+
+#### Digitale Fahrzeug-Beladung (Disponent)
+- Disponent stellt Packstücke/Ladungen digital zusammen
+- Komplette Packstücke werden im System vom Lager → Fahrzeug verschoben
+- Versorger- und Nachschubfahrzeuge sind sofort korrekt beladen im System
+
+#### Warentracking im Einsatz
+- **Versorger:in bei Lieferung:** Gibt an, welche Güter ausgeliefert wurden → Fahrzeugbestand sinkt automatisch
+- **Nachschubfahrzeug bei Übergabe:** Bildet Warenübergabe an Versorgungsfahrzeug im System ab → Bestand verschiebt sich
+- **Disponent:** Sieht jederzeit den aktuellen Bestand pro Fahrzeug in Echtzeit
+
+#### Warenfluss
+```
+Lager ──(Beladung)──→ Fahrzeug ──(Lieferung)──→ Besteller
+                          ↑
+Nachschub ──(Übergabe)───┘
+```
+
+### Geplant: Einsatz-Statistiken
+
+Umfassende Auswertung nach Einsatzende:
+- **Artikel:** Anzahl Artikelgruppen, Anzahl ausgelieferter Artikel (gesamt + pro Gruppe)
+- **Aufträge:** Anzahl Bestellungen, Anzahl abgeschlossener/stornierter Aufträge
+- **Fahrzeuge:** Anzahl eingesetzter Fahrzeuge (Versorger + Nachschub)
+- **Kilometer:** Gefahrene Kilometer pro Fahrzeug und gesamt
+- **Export:** Statistiken als PDF/CSV für interne Nachbereitung
+
+### Weitere mögliche Erweiterungen
 - KI-basierte Routenoptimierung
-- Erweiterte Analytics und Reporting
 - Multi-Tenant Fähigkeiten für verschiedene Organisationen
 - Mobile App für bessere Offline-Funktionalität
 

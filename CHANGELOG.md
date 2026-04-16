@@ -68,6 +68,8 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Offline-Fähigkeit konkretisiert:** Karte offline, Aufträge offline bearbeiten, Bestellungen offline aufgeben (Sync bei Reconnect)
 - **Sortiment-Vorlagensystem:** Persistenter Standardkatalog als Vorlage, wird pro Einsatz kopiert und anpassbar
 - **Bottom-to-Top-Philosophie:** Platzhalter durch Beschreibung ersetzt (Basis-Infrastruktur zuerst, dann Features)
+- **Geplant: Barcode-basierte Warenwirtschaft:** Barcode-Scan (EAN/GTIN), Hybrid-Auflösung (externe DB + manuell), digitale Fahrzeug-Beladung, Warentracking bei Lieferung und Nachschub-Übergabe
+- **Geplant: Einsatz-Statistiken:** Artikelgruppen, ausgelieferte Artikel, Aufträge, Kilometer, eingesetzte Fahrzeuge
 
 ## [1.4.0] - 2026-04-16
 
