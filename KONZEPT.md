@@ -39,7 +39,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ### 2. Bottom-to-Top-Entwicklungsphilosophie
 
-*[Dieser Abschnitt wird vervollständigt, sobald die vollständige Beschreibung vorliegt]*
+Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrastruktur (Datenbank, Authentifizierung, API-Grundgerüst), dann darauf aufbauend die fachlichen Features (Bestellungen, Karte, Aufträge). Jede Schicht ist für sich funktionsfähig und testbar, bevor die nächste aufgesetzt wird.
 
 ### Auswirkungen auf die Implementierung
 
@@ -345,7 +345,9 @@ Status:
 
 #### Lager- und Sortimentsverwaltung (durch Disponent)
 
-**Artikelstamm:**
+**Artikelstamm (Vorlagensystem):**
+- Persistenter Standardkatalog als Vorlage (wird einmalig angelegt und wiederverwendet)
+- Bei Einsatzerstellung: Vorlage wird kopiert und kann pro Einsatz angepasst werden
 - Artikel anlegen, bearbeiten, deaktivieren
 - Kategorien und Sortierung festlegen
 - Mengenbegrenzungen pro Bestellung möglich
@@ -435,7 +437,10 @@ Auftragsstatus:
 - **Mobile First:** Optimiert für Smartphone-Nutzung
 - **Einfachheit:** Intuitive Bedienung ohne Schulung
 - **Barrierefreiheit:** WCAG 2.1 AA konform
-- **Offline-Fähigkeit:** Grundfunktionen ohne Internet
+- **Offline-Fähigkeit:** PWA mit folgenden Offline-Funktionen:
+  - Karte: Zuletzt geladener Kartenausschnitt bleibt verfügbar
+  - Aufträge: Versorger:innen können Status ändern (z.B. "Geliefert"), wird bei Reconnect synchronisiert
+  - Bestellungen: Besteller können offline bestellen, wird bei Reconnect gesendet
 
 ### Responsive Design
 ```

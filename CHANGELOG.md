@@ -65,6 +65,9 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Mehrere Nachschubfahrzeuge:** Pro Einsatz können mehrere Fahrzeuge mit unabhängigen Modi und Beständen eingesetzt werden
 - **Auftragsstatus erweitert:** Neuer Status "Übernommen" und "Unterwegs" für bessere Nachverfolgung
 - **Zukunftsperspektiven:** "Integration mit Einsatzleitsystemen" entfernt (nicht im Scope)
+- **Offline-Fähigkeit konkretisiert:** Karte offline, Aufträge offline bearbeiten, Bestellungen offline aufgeben (Sync bei Reconnect)
+- **Sortiment-Vorlagensystem:** Persistenter Standardkatalog als Vorlage, wird pro Einsatz kopiert und anpassbar
+- **Bottom-to-Top-Philosophie:** Platzhalter durch Beschreibung ersetzt (Basis-Infrastruktur zuerst, dann Features)
 
 ## [1.4.0] - 2026-04-16
 
