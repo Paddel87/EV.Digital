@@ -136,6 +136,23 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 - **Orchestrierung:** Docker Compose (ein Befehl startet alles)
 - **Logging:** Structured Logging mit Winston
 
+### Namenskonvention
+
+Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Kontexten zu Problemen führen (Parsing als Datei-Extension, Tooling-Inkompatibilitäten, Shell-Escaping). Daher gilt folgende Trennung:
+
+| Zweck | Name | Stil |
+|---|---|---|
+| **Markenname / Anzeige** | `EV.Digital` | Mit Punkt (UI, Dokumentation, Marketing) |
+| **Domain** | `ev.digital` | Mit Punkt (DNS-konform) |
+| **GitHub-Repository** | `ev-digital` | kebab-case |
+| **Projekt-/Verzeichnisname** | `ev-digital` | kebab-case |
+| **npm-Paket** | `ev-digital` oder `@gewerkschaft/ev-digital` | kebab-case |
+| **Docker-Images/Container** | `ev-digital-frontend`, `ev-digital-backend` | kebab-case |
+| **Datenbankname** | `ev_digital` | snake_case (SQL-konform) |
+| **Umgebungsvariablen** | `EV_DIGITAL_*` | UPPER_SNAKE_CASE |
+
+**Regel:** Der Markenname mit Punkt erscheint ausschließlich in Oberflächen und Dokumentation. Alle technischen Artefakte (Code, Pfade, Konfiguration, Deployment) nutzen `ev-digital` bzw. `ev_digital`.
+
 ---
 
 ## 🔧 Funktionale Anforderungen
