@@ -35,6 +35,14 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
   - Disponent: Sieht alles
   - Versorger:in: Sieht alle Fahrzeuge + alle Aufträge
   - Nachschubfahrer:in: Sieht alle Versorger, Aufträge nur im Hybrid-Modus
+- **Verkehrsdaten auf TomTom umgestellt:** Hybrid-Ansatz (3 APIs) durch TomTom ersetzt
+  - Traffic Flow API + Traffic Incidents API
+  - Kostenlos bis 5.000 Requests/Tag
+  - Serverseitige Abfrage: Backend fragt zentral ab, cached, filtert und verteilt per Socket.IO
+  - Clients fragen nie direkt externe APIs ab
+- **Disponent: Verkehrsmeldungs-Filter:** Konfigurierbare Filterung von TomTom-Meldungen
+  - Einzelne Meldungen ignorieren, Einsatzgebiet als "befahrbar" markieren
+  - Zwei Ebenen: Externe Sperrungen (filterbar) vs. interne Sperrungen (gelten immer)
 - **Bestellworkflow:** Direktbestellung ersetzt WhatsApp als primären Kanal
   - Neu: Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
   - WhatsApp bleibt als Fallback erhalten

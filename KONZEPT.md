@@ -113,7 +113,6 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **UI-Framework:** Vuetify 3 für konsistente Benutzeroberfläche
 - **PWA:** Service Worker für Offline-Funktionalität
 - **Karten:** OpenStreetMap mit Leaflet.js
-- **Verkehrsdaten:** Hybrid-Ansatz (Autobahn GmbH API + Overpass API + HERE Maps optional)
 - **Build-Tool:** Vite für schnelle Entwicklung
 
 #### Backend
@@ -121,6 +120,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Sprache:** TypeScript (durchgängig im gesamten Projekt)
 - **API:** RESTful API mit OpenAPI/Swagger Dokumentation
 - **Echtzeit:** Socket.IO für Live-Updates
+- **Verkehrsdaten:** TomTom API (Traffic Flow + Traffic Incidents), serverseitig abgefragt und gecached
 - **Authentifizierung:** JWT-basiert mit Refresh-Token
 - **Validierung:** Joi für Eingabevalidierung
 - **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
@@ -189,34 +189,52 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - Sprachnavigation (optional)
 - **Koordination:** Sichtbarkeit anderer Versorger zur besseren Abstimmung
 
-#### Verkehrsdaten & Straßensperrungen (Hybrid-Ansatz)
-- **Autobahn GmbH API:** Kostenlose Integration deutscher Autobahn-Baustellen und Sperrungen
-  - Baustellen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/roadworks`
-  - Sperrungen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/closure`
-  - Verkehrsmeldungen: `https://verkehr.autobahn.de/o/autobahn/{autobahn}/services/warning`
-- **OpenStreetMap Overpass API:** Lokale Straßenbaustellen aus Community-Daten
-  - **Funktionsweise:** Die Overpass API ermöglicht komplexe Abfragen der OpenStreetMap-Datenbank
-  - **Baustellen-Abfrage:** `[out:json][timeout:25]; (node["highway"~"construction|proposed"](bbox); way["highway"~"construction|proposed"](bbox); relation["highway"~"construction|proposed"](bbox);); out geom;`
-  - **Straßensperrungen:** `[out:json][timeout:25]; (way["access"="no"](bbox); way["motor_vehicle"="no"](bbox);); out geom;`
-  - **Temporäre Hindernisse:** `[out:json][timeout:25]; (node["barrier"](bbox); way["barrier"](bbox);); out geom;`
-  - **Vorteile:**
-    - Kostenlos und DSGVO-konform ohne API-Limits
-    - Community-gepflegte Daten mit lokaler Genauigkeit
-    - Echtzeit-Updates durch Mapper vor Ort
-    - Flexible Abfragesprache für spezifische Anforderungen
-  - **Technische Integration:**
-    - Bounding Box basiert auf aktueller Kartenansicht
-    - Caching der Ergebnisse für 10 Minuten
-    - Fallback auf cached Daten bei API-Überlastung
-    - GeoJSON-Format für direkte Leaflet.js Integration
-- **HERE Maps (Premium-Option):** Echtzeit-Verkehrsdaten bei erweiterten Anforderungen
-  - Traffic Layer mit Jam Factor Visualisierung
-  - Kostenpflichtig, aber umfassende Verkehrslage
-- **Technische Umsetzung:**
-  - Leaflet.js Layer-System für verschiedene Datenquellen
-  - Automatische Aktualisierung alle 15 Minuten
-  - Farbkodierte Darstellung: Orange (Baustellen), Rot (Sperrungen), Gelb (Verkehrsstörungen)
-  - Popup-Informationen mit Details zu Sperrungen und Umleitungsempfehlungen
+#### Verkehrsdaten (TomTom API – serverseitig)
+
+**Prinzip:** Clients fragen nie externe APIs ab. Das Backend ist die einzige Datenquelle – es fragt TomTom ab, filtert, cached und liefert aufbereitete Daten per Socket.IO an alle Clients.
+
+```
+TomTom API ──(alle 15 Min.)──→ Backend
+                                  ├── Cached Verkehrsdaten
+                                  ├── Disponent-Filter anwenden
+                                  ├── Eigene Sperrungen mergen
+                                  └──(Socket.IO)──→ Clients: fertiges Lagebild
+```
+
+**TomTom APIs:**
+- **Traffic Flow API:** Echtzeit-Verkehrsfluss (Geschwindigkeit, Staulevel)
+- **Traffic Incidents API:** Baustellen, Sperrungen, Unfälle, Verkehrsstörungen
+- **Kostenmodell:** Kostenlos bis 5.000 Requests/Tag – ausreichend für Einsatzszenarien
+
+**Kontingent-Rechnung:**
+- 15-Min.-Intervall × 12h Einsatz = 48 Requests/Tag (Backend fragt zentral, nicht pro Client)
+- Selbst bei 5-Min.-Intervall: 144 Requests/Tag – weit unter dem Limit
+
+**Serverseitige Verarbeitung:**
+- Backend fragt TomTom im konfigurierbaren Intervall ab (Standard: 15 Min.)
+- Ergebnisse werden gecached und bei TomTom-Ausfall als Fallback genutzt
+- Disponent-Filter werden serverseitig angewendet (siehe Meldungsfilter)
+- Gefilterte + eigene Sperrungen werden zu einem Lagebild zusammengeführt
+- Clients empfangen fertiges GeoJSON per Socket.IO – kein direkter API-Zugriff
+
+#### Disponent: Verkehrsmeldungs-Filter
+
+**Problem:** Am Einsatztag meldet TomTom Sperrungen, die Teil des Einsatzes selbst sind – Versorger:innen müssen diese Bereiche aber befahren.
+
+**Zwei Ebenen von Sperrungen:**
+- **Externe Sperrungen (TomTom):** Können vom Disponent gefiltert/ignoriert werden
+- **Interne Sperrungen (Disponent):** Gelten immer – echte Hindernisse für Versorger:innen
+
+**Filter-Funktionen:**
+- Einzelne TomTom-Meldungen ignorieren/ausblenden
+- Einsatzgebiet definieren: Innerhalb des Gebiets werden externe Sperrungen standardmäßig als "befahrbar" markiert
+- Meldungstypen konfigurieren: z.B. "Alle Veranstaltungssperrungen im Einsatzgebiet ignorieren"
+- Filter jederzeit anpassbar – Änderungen werden sofort an alle Clients verteilt
+
+**Kartendarstellung:**
+- Farbkodierte Darstellung: Orange (Baustellen), Rot (Sperrungen), Gelb (Verkehrsstörungen)
+- Durchgestrichene/ausgegraute Darstellung für ignorierte Meldungen (nur Disponent sieht diese)
+- Popup-Informationen mit Details und Filteroptionen
 
 ### 3. Manuelle Straßensperrungen (Disponent)
 
@@ -251,8 +269,8 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
   - Ausnahmen-Tabelle mit Referenz zu Sperrungen
   - Benutzer-Berechtigungen für Erstellung/Bearbeitung
 - **Real-time Updates:**
-  - WebSocket-Verbindung für sofortige Benachrichtigung aller Versorger
-  - Push-Notifications bei neuen Sperrungen im Einsatzgebiet
+  - Interne Sperrungen werden serverseitig mit TomTom-Daten zusammengeführt
+  - Aktualisiertes Lagebild wird per Socket.IO an alle Clients verteilt
   - Automatische Routenneuberechnung bei aktiven Navigationen
 - **Kartendarstellung:**
   - Rote Bereiche: Vollsperrungen

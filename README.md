@@ -39,7 +39,8 @@ Die Software unterstützt insbesondere:
 
 ### 🗺️ Navigation & Orientierung
 - Kartenanzeige mit relevanten Orten (z. B. Versorgungspunkte, Treffpunkte)
-- Nutzung freier Kartendienste wie OpenStreetMap
+- OpenStreetMap + Echtzeit-Verkehrsdaten via TomTom (serverseitig)
+- Disponent filtert irrelevante Verkehrsmeldungen (z.B. Event-Sperrungen)
 - Mobile Nutzung ohne App-Installation
 
 ### 📱 Bestell-Interface für Einsatzkräfte
