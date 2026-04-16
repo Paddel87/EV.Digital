@@ -8,7 +8,11 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [Unreleased]
 
 ### Hinzugefügt
+- **MVP-Scope (Happy-Path-Ansatz):** Fokus auf einen durchgehenden Workflow vom Einsatz-Anlegen bis zur Lieferung. Alle 4 Rollen real umgesetzt, Kernfunktionen schlank, erweiterte Features (TomTom, Offline, 3 Modi, Sperrungen etc.) iterativ nach MVP. Implementierungs-Phasen nach Bottom-to-Top: Infrastruktur → Backend-Kern → Frontend-Kern → Happy-Path-Integration.
 - **Namenskonvention:** Trennung zwischen Markenname (`EV.Digital` mit Punkt) und technischem Namen (`ev-digital` kebab-case / `ev_digital` snake_case) dokumentiert. Punkt im Projektnamen kann bei Tooling/Dateisystemen Probleme verursachen, daher klare Trennung für Repo, Projekt-Ordner, Docker, DB, npm.
+
+### Geändert
+- **Implementierungsplan:** Von festen Zeit-Phasen (16 Wochen) auf MVP-first mit iterativen Ausbaustufen (v1.0 → v2.1) umgestellt.
 
 ## [1.5.0] - 2026-04-16
 
