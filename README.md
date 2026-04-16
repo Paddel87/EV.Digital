@@ -5,7 +5,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![Status](https://img.shields.io/badge/Status-Konzeptphase-yellow.svg)](#)
 [![Version](https://img.shields.io/badge/Version-1.5.0-blue.svg)](#changelog)
-[![Last Commit](https://img.shields.io/badge/Last%20Commit-July%202025-brightgreen.svg)](#)
+[![Last Commit](https://img.shields.io/badge/Last%20Commit-April%202026-brightgreen.svg)](#)
 [![Development](https://img.shields.io/badge/Development-Vision%20Driven-purple.svg)](#-entwicklungsphilosophie-vision-driven-development)
 [![AI Powered](https://img.shields.io/badge/AI%20Powered-Autonomous%20Development-orange.svg)](#)
 
@@ -45,7 +45,7 @@ Die Software unterstützt insbesondere:
 
 ### 📱 Bestell-Interface für Einsatzkräfte
 - QR-Code scannen → Standort freigeben → Sortiment wählen → Bestellen
-- Bestellstatus live verfolgen (Bestellt → Unterwegs → Geliefert)
+- Bestellstatus live verfolgen (Bestellt → Angenommen → Unterwegs → Geliefert)
 - Kein Account, keine App, keine Registrierung
 
 ### 🤝 Teamkoordination
@@ -60,7 +60,7 @@ Die Software unterstützt insbesondere:
 
 ### 📡 Kommunikation & Übersicht
 - Kurze Rückfragen oder Statusänderungen möglich (textbasiert)
-- Zentrale Übersicht für Koordinationsteams
+- Zentrale Übersicht für Disponenten
 - Automatisierte Protokollierung zur internen Nachbereitung
 
 ---
@@ -197,7 +197,7 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 
 ## 📚 Dokumentation
 
-- **[Detailliertes Konzept](docs/KONZEPT.md)** - Umfassende Projektbeschreibung
+- **[Detailliertes Konzept](KONZEPT.md)** - Umfassende Projektbeschreibung
 - **[API-Dokumentation](docs/api/)** - REST API Spezifikation
 - **[Benutzerhandbuch](docs/user/)** - Anleitung für Endbenutzer
 - **[Entwickler-Guide](docs/developer/)** - Setup und Entwicklung
@@ -341,4 +341,4 @@ Dieses Projekt wird ermöglicht durch:
 
 **Erstellt mit ❤️ für die ehrenamtliche Einsatzversorgung**
 
-*Letzte Aktualisierung: Juli 2025*
+*Letzte Aktualisierung: April 2026*

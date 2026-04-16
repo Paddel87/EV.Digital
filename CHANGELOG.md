@@ -49,6 +49,14 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Disponenten-Rolle:** Vom Daten-Abtipper zum Koordinator (priorisieren, bündeln, steuern)
 - **Auftragsstatus:** Umbenannt für Besteller-Perspektive (Bestellt → Angenommen → Unterwegs → Geliefert)
 - **Hauptansichten:** Besteller-Interface als eigene Ansicht, Sortimentsverwaltung ergänzt
+- **TomTom Routing API:** Routenberechnung mit Echtzeit-Verkehr, serverseitig
+- **Disponent mobil:** Kann auch mobil arbeiten, eigener Standort auf Karte
+- **GPS-Fallback:** Besteller kann Standort alternativ auf Karte antippen oder aus vordefinierten Orten wählen
+- **Gesamtbestand:** Besteller sehen Verfügbarkeit aus beiden Lagern zusammen
+- **Stationär-Sichtbarkeit:** Disponent konfiguriert, ob Nachschubfahrzeug auch für Besteller sichtbar ist
+- **Optionale Team-Gruppierung:** Versorger:innen arbeiten einzeln oder in Teams (Disponent konfiguriert)
+- **Sperrungen vereinfacht:** Nur noch zwei Stufen (für Versorgungsfahrzeuge befahrbar / für alle gesperrt)
+- **Konsistenzbereinigung:** Doppelte Nummerierung, fehlende Überschriften, veraltete Referenzen behoben
 
 ## [1.4.0] - 2026-04-16
 

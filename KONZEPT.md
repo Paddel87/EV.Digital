@@ -66,12 +66,14 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 ### Benutzerrollen
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
-- **Disponent:** Zentrale Koordination, Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
+- **Disponent:** Zentrale Koordination (stationär oder mobil), Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
 - **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
 - **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
   - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
   - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt auf der Karte sichtbar
   - *Hybrid:* Fährt selbst Bestellungen an Besteller aus UND versorgt gleichzeitig Versorger:innen
+
+### Örtlichkeiten im System
 - **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen des Fahrzeuges. Disponent hat vollständigen Überblick über den Warenbestand.
 - **Mobiles oder temporär stationäres Nachschubfahrzeug (Mobiles Lager):** Flexible Versorgungsstation mit eigenem Teilbestand. Befüllung wird vom Disponenten erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
@@ -98,8 +100,8 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 │   (PWA)         │◄──►│   (REST API)    │◄──►│  (PostgreSQL +  │
 │                 │    │                 │    │   PostGIS)      │
 │ - Vue.js 3      │    │ - Node.js +     │    │ - Benutzer      │
-│ - Vuetify 3     │    │   Express       │    │ - Teams         │
-│ - Leaflet.js    │    │ - Socket.IO     │    │ - Aufträge      │
+│ - Vuetify 3     │    │   Express       │    │ - Aufträge      │
+│ - Leaflet.js    │    │ - Socket.IO     │    │ - Lager/Artikel │
 │ - Offline-fähig │    │ - JWT Auth      │    │ - Geodaten      │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          ▲                                            ▲
@@ -120,7 +122,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 - **Sprache:** TypeScript (durchgängig im gesamten Projekt)
 - **API:** RESTful API mit OpenAPI/Swagger Dokumentation
 - **Echtzeit:** Socket.IO für Live-Updates
-- **Verkehrsdaten:** TomTom API (Traffic Flow + Traffic Incidents), serverseitig abgefragt und gecached
+- **Verkehrsdaten & Routing:** TomTom API (Traffic Flow + Traffic Incidents + Routing), serverseitig abgefragt und gecached
 - **Authentifizierung:** JWT-basiert mit Refresh-Token
 - **Validierung:** Joi für Eingabevalidierung
 - **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
@@ -142,7 +144,7 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 
 #### Rollen (4 Kernrollen)
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
-- **Disponent:** Zentrale Koordination, Vollzugriff, Team-Management, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
+- **Disponent:** Zentrale Koordination (stationär oder mobil), Vollzugriff, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
 - **Versorger:in:** Versorgungsaufträge ausführen, Auftragsannahme, Status-Updates, Kommunikation
 - **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
   - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
@@ -170,24 +172,25 @@ Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses K
 | Sieht auf der Karte... | Disponent | Versorger:in | Nachschubfahrer:in (Mobil) | Nachschubfahrer:in (Stationär) | Nachschubfahrer:in (Hybrid) |
 |---|---|---|---|---|---|
 | Alle Aufträge / Besteller-Standorte | Ja | Ja | Nein | Nein | Ja |
-| Eigener Standort | – | Ja | Ja | Ja | Ja |
+| Eigener Standort | Ja (wenn mobil) | Ja | Ja | Ja | Ja |
 | Standorte aller Versorger-Fahrzeuge | Ja | Ja | Ja | Ja | Ja |
 | Standort Nachschubfahrzeug | Ja | Ja | – (eigener) | – (eigener) | – (eigener) |
-| Wird als Versorgungspunkt angezeigt | – | – | Nein | Ja | Nein |
+| Wird als Versorgungspunkt angezeigt | – | – | Nein | Ja (konfigurierbar) | Nein |
+
+**Stationär-Modus: Sichtbarkeit konfigurierbar**
+- Disponent legt fest, ob der stationäre Versorgungspunkt nur für Versorger:innen (Nachschub holen) oder auch für Besteller (z.B. als Abholstation) sichtbar ist
 
 **Darstellung auf der Karte:**
 - **Nachschubfahrzeug Mobil:** Bewegliches Fahrzeug-Icon
-- **Nachschubfahrzeug Stationär:** Fester Versorgungspunkt-Icon (Versorger:innen können anfahren)
+- **Nachschubfahrzeug Stationär:** Fester Versorgungspunkt-Icon
 - **Nachschubfahrzeug Hybrid:** Fahrzeug-Icon mit Versorger-Kennzeichnung
 
-#### Navigation für Versorger:innen
-- **Dynamische Routenberechnung:** Automatische Routenoptimierung zur Anfahrt
-- **Live-Updates:** Berücksichtigung aktueller Verkehrslage und Sperrungen
-- Routenplanung zu Einsatzorten
-- Berücksichtigung von Verkehrsbeschränkungen
+#### Navigation für Versorger:innen und Nachschubfahrer:in
+- **Dynamische Routenberechnung:** TomTom Routing API mit Echtzeit-Verkehrsdaten (serverseitig)
+- **Live-Updates:** Berücksichtigung aktueller Verkehrslage, TomTom-Sperrungen und Disponent-Sperrungen
+- Routenplanung zu Einsatzorten und Versorgungspunkten
 - Alternative Routen bei Sperrungen
-- Sprachnavigation (optional)
-- **Koordination:** Sichtbarkeit anderer Versorger zur besseren Abstimmung
+- **Koordination:** Sichtbarkeit anderer Versorger:innen zur besseren Abstimmung
 
 #### Verkehrsdaten (TomTom API – serverseitig)
 
@@ -204,6 +207,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
 **TomTom APIs:**
 - **Traffic Flow API:** Echtzeit-Verkehrsfluss (Geschwindigkeit, Staulevel)
 - **Traffic Incidents API:** Baustellen, Sperrungen, Unfälle, Verkehrsstörungen
+- **Routing API:** Routenberechnung mit Echtzeit-Verkehrsdaten für Versorger:innen und Nachschubfahrer:in
 - **Kostenmodell:** Kostenlos bis 5.000 Requests/Tag – ausreichend für Einsatzszenarien
 
 **Kontingent-Rechnung:**
@@ -244,22 +248,18 @@ TomTom API ──(alle 15 Min.)──→ Backend
   - Linien-Tool für Straßenabschnitte
   - Punkt-Tool für lokale Hindernisse
 - **Sperrungstypen:**
-  - Vollsperrung (kein Durchgang)
-  - Teilsperrung (eingeschränkter Verkehr)
-  - Einsatzfahrzeug-Sperrung (nur für Zivilverkehr)
+  - Vollsperrung (auch Versorgungsfahrzeuge können nicht passieren)
+  - Teilsperrung (für Versorgungsfahrzeuge befahrbar)
   - Temporäre Sperrung (mit Zeitbegrenzung)
 
 #### Ausnahmen und Durchfahrtsmöglichkeiten
-- **Einsatzfahrzeug-Korridore:** Definition von Bereichen innerhalb von Sperrungen
-  - Markierung von Durchfahrtspunkten für Versorger
+- **Versorgungsfahrzeug-Korridore:** Definition von befahrbaren Bereichen innerhalb von Sperrungen
+  - Markierung von Durchfahrtspunkten für Versorgungsfahrzeuge
   - GPS-Koordinaten für exakte Positionierung
-  - Breiten- und Höhenbeschränkungen
-- **Berechtigungsebenen:**
-  - Feuerwehr/Rettungsdienst: Vollzugang
-  - Einsatzversorger: Definierte Korridore
-  - Zivilverkehr: Gesperrt
+- **Zwei Stufen:**
+  - Für Versorgungsfahrzeuge befahrbar (Versorger:innen + Nachschubfahrer:in)
+  - Für alle gesperrt (auch Versorgungsfahrzeuge können nicht passieren)
 - **Zusatzinformationen:**
-  - Kontaktdaten vor Ort (Einsatzleitung)
   - Alternative Routen
   - Besondere Hinweise (z.B. "Rücksprache mit Einsatzleitung erforderlich")
 
@@ -273,16 +273,16 @@ TomTom API ──(alle 15 Min.)──→ Backend
   - Aktualisiertes Lagebild wird per Socket.IO an alle Clients verteilt
   - Automatische Routenneuberechnung bei aktiven Navigationen
 - **Kartendarstellung:**
-  - Rote Bereiche: Vollsperrungen
-  - Orange Bereiche: Teilsperrungen
-  - Grüne Linien: Einsatzfahrzeug-Korridore
+  - Rote Bereiche: Vollsperrungen (auch für Versorgungsfahrzeuge)
+  - Orange Bereiche: Teilsperrungen (für Versorgungsfahrzeuge befahrbar)
+  - Grüne Linien: Versorgungsfahrzeug-Korridore
   - Blaue Punkte: Durchfahrtspunkte mit Popup-Informationen
 
-### 4. Team-Koordination
+### 4. Versorger-Koordination
 
-#### Team-Management
+#### Versorger-Status
 ```
-Team-Status:
+Status:
 ├── Verfügbar (grün)
 ├── Unterwegs (gelb)
 ├── Im Einsatz (rot)
@@ -290,13 +290,17 @@ Team-Status:
 └── Nicht verfügbar (grau)
 ```
 
+#### Optionale Team-Gruppierung
+- Versorger:innen können einzeln oder in Teams arbeiten
+- Disponent kann Versorger:innen optional zu Teams gruppieren (z.B. 2er-Teams pro Fahrzeug)
+- Aufträge werden an Einzelpersonen oder Teams zugewiesen
+
 #### Funktionen
-- Echtzeit-Statusübersicht aller Teams
+- Echtzeit-Statusübersicht aller Versorger:innen und Nachschubfahrer:in
 - Automatische Benachrichtigungen bei Statusänderungen
-- Team-Kapazitäten und Ausstattung
 - Schichtplanung und Ablösung
 
-### 4. Bestell-Interface (Einsatzkräfte)
+### 5. Bestell-Interface (Einsatzkräfte)
 
 #### Zugang
 - **QR-Code:** Wird am Einsatzort ausgehängt/verteilt – scannt direkt zur Bestellseite
@@ -304,7 +308,7 @@ Team-Status:
 - **Kein Account nötig:** Kein Login, keine Registrierung, keine App-Installation
 
 #### Bestellvorgang
-1. **Standort freigeben:** GPS-Standort wird übermittelt (Browser-Standortfreigabe)
+1. **Standort angeben:** GPS-Standort per Browser-Freigabe (bevorzugt). Alternativ: Standort auf Karte antippen oder aus vordefinierten Orten wählen
 2. **Sortiment durchsuchen:** Vordefinierte Artikel mit Kategorien (Getränke, Snacks, Warmes etc.)
 3. **Auswahl treffen:** Artikel und Menge wählen, optional Kommentar hinzufügen
 4. **Bestellung absenden:** Ein Tap – Bestellung geht direkt ins System
@@ -324,7 +328,7 @@ Team-Status:
 **Bestandsführung:**
 - Disponent kennt und pflegt die Bestände beider Lager
 - Verfügbarkeit wird in Echtzeit angepasst (z.B. "Kaffee ausverkauft")
-- Besteller sehen im Sortiment nur Artikel, die tatsächlich verfügbar sind
+- **Besteller sehen den Gesamtbestand** (lokales + mobiles Lager zusammen) – die interne Aufteilung ist für Besteller nicht relevant
 - Bestandswarnung bei niedrigem Vorrat → Disponent koordiniert Nachschub
 
 #### Bestellworkflow
@@ -349,11 +353,11 @@ Auftragsstatus:
 └── Storniert (rot) – Abgebrochen
 ```
 
-### 5. Kommunikationssystem
+### 6. Kommunikationssystem
 
 #### Nachrichten
-- Kurznachrichten zwischen Teams und Koordination
-- Broadcast-Nachrichten für alle Teams
+- Kurznachrichten zwischen Versorger:innen, Nachschubfahrer:in und Disponent
+- Broadcast-Nachrichten an alle Versorger:innen
 - Automatische Benachrichtigungen
 - Nachrichtenverlauf mit Zeitstempel
 
@@ -582,4 +586,4 @@ Breakpoints:
 **Erstellt:** 18.07.2025  
 **Letzte Aktualisierung:** 16.04.2026  
 **Version:** 1.5.0  
-**Status:** Konzeptionierungsphase + Vision Driven Development + Besteller-Interface
+**Status:** Konzeptionierungsphase + Vision Driven Development + Konsistenzbereinigung
