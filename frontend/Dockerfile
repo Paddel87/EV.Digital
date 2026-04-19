@@ -10,7 +10,7 @@ RUN npm ci --workspace frontend --include-workspace-root
 FROM node:${NODE_VERSION} AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/frontend/node_modules ./frontend/node_modules
+COPY package.json package-lock.json* ./
 COPY tsconfig.base.json ./
 COPY frontend ./frontend
 RUN npm run build -w frontend
