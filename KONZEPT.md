@@ -21,17 +21,20 @@ Die Realisierung des Projekts "Einsatzversorgung Digital" folgt dem **Vision Dri
 Ein zentrales und unabdingbares Prinzip für die erfolgreiche Umsetzung dieses Konzepts ist die **autonome Arbeitsweise der entwickelnden KI**:
 
 #### Eigenständige Informationsbeschaffung
+
 - Die KI muss proaktiv und eigenständig auf **alle** im System vorhandenen Dokumente zurückgreifen
 - Vollständige Nutzung von Architekturentwürfen, Konzepten, Schnittstellenbeschreibungen etc.
 - Erstellung einer funktionsfähigen und kohärenten Software basierend auf der Gesamtdokumentation
 
 #### Vorausschauende Planung
+
 - Antizipierendes Vorgehen ohne menschliche Hilfe zur Klärung von Unklarheiten
 - Frühzeitige Erkennung potenzieller Integrationsprobleme und Abhängigkeiten
 - Selbstständige Erarbeitung von Lösungen für logische Lücken
 - Proaktive Behandlung von Architektur- und Implementierungsherausforderungen
 
 #### Implizites Wissen nutzen
+
 - Die Gesamtheit der Dokumentation bildet den "Wissensschatz" des Projekts
 - Ableitung nicht nur expliziter Anweisungen, sondern auch impliziter Zusammenhänge
 - Berücksichtigung von Architekturentscheidungen aus dem Gesamtkontext
@@ -44,12 +47,14 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 ### Auswirkungen auf die Implementierung
 
 #### Dokumentationsanforderungen
+
 - **Vollständigkeit:** Alle Architekturentscheidungen müssen dokumentiert sein
 - **Konsistenz:** Widerspruchsfreie Dokumentation zwischen verschiedenen Bereichen
 - **Detailgrad:** Ausreichende Detailtiefe für autonome Implementierung
 - **Verknüpfung:** Klare Abhängigkeiten und Zusammenhänge zwischen Komponenten
 
 #### Qualitätssicherung
+
 - **Selbstvalidierung:** KI muss eigene Implementierungen gegen Konzept validieren
 - **Kohärenzprüfung:** Automatische Überprüfung der Gesamtarchitektur
 - **Iterative Verbesserung:** Kontinuierliche Anpassung basierend auf Erkenntnissen
@@ -60,25 +65,29 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 ## 🎯 Zielgruppe & Anwendungsfälle
 
 ### Primäre Zielgruppe
+
 - Gewerkschaften mit eigener Einsatzbetreuung
 - Ehrenamtliche Versorgungsteams bei Großeinsätzen
 - Disponenten für Getränke- und Snackversorgung
 
 ### Benutzerrollen
+
 - **Besteller (Einsatzkraft):** Gibt Standort frei, wählt aus dem Sortiment, sendet Bestellung ab – per QR-Code/Link, ohne Registrierung
 - **Disponent:** Zentrale Koordination (stationär oder mobil), Priorisierung, Auftragsverteilung, Pflege des Artikelstamms und Verwaltung der Bestände (lokales Lager + mobiles Lager)
 - **Versorger:in:** Ausführung der Versorgungsaufträge vor Ort, Status-Updates, Kommunikation
 - **Nachschubfahrer:in:** Fährt ein mobiles Lager, versorgt Versorger:innen. Mehrere Nachschubfahrzeuge pro Einsatz möglich. Drei Betriebsmodi (pro Fahrzeug unabhängig):
-  - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
-  - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt auf der Karte sichtbar
-  - *Hybrid:* Fährt selbst Bestellungen an Besteller aus UND versorgt gleichzeitig Versorger:innen
+  - _Mobil (Standard):_ Fährt herum, beliefert Versorger:innen mit Nachschub
+  - _Stationär:_ Hält an einem Ort, wird als fester Versorgungspunkt auf der Karte sichtbar
+  - _Hybrid:_ Fährt selbst Bestellungen an Besteller aus UND versorgt gleichzeitig Versorger:innen
 
 ### Örtlichkeiten im System
+
 - **Geschäftsstelle der Gewerkschaft (Lokales Lager):** Zentraler Gesamtbestand, Anlaufstelle zum Wiederbeladen der Fahrzeuge. Disponent hat vollständigen Überblick über den Warenbestand.
 - **Mobile Nachschubfahrzeuge (Mobile Lager):** Flexible Versorgungsstationen mit eigenem Teilbestand. Befüllung wird vom Disponenten pro Fahrzeug erfasst und gepflegt.
 - **Verschiedene Örtlichkeiten:** Standorte an denen Einsatzkräfte eine Einsatzbetreuung wünschen
 
 ### Anwendungsszenarien
+
 - Großeinsätze mit mehreren Versorgungsteams
 - Koordination ortsunkundiger Helfer:innen
 - Dokumentation und Nachverfolgung von Versorgungsaufträgen
@@ -94,6 +103,7 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 ## 🏗️ Technische Architektur
 
 ### System-Architektur
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Frontend      │    │    Backend      │    │   Datenbank     │
@@ -111,6 +121,7 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 ### Technologie-Stack
 
 #### Frontend
+
 - **Framework:** Vue.js 3
 - **UI-Framework:** Vuetify 3 für konsistente Benutzeroberfläche
 - **PWA:** Service Worker für Offline-Funktionalität
@@ -118,6 +129,7 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 - **Build-Tool:** Vite für schnelle Entwicklung
 
 #### Backend
+
 - **Runtime:** Node.js mit Express.js
 - **Sprache:** TypeScript (durchgängig im gesamten Projekt)
 - **API:** RESTful API mit OpenAPI/Swagger Dokumentation
@@ -128,10 +140,12 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 - **Sperrungsmanagement:** REST API für CRUD-Operationen manueller Straßensperrungen
 
 #### Datenbank
+
 - **Primär:** PostgreSQL mit PostGIS-Erweiterung für Geodaten
 - **Backup:** Automatisierte tägliche Backups
 
 #### Infrastruktur
+
 - **Container:** Docker für einheitliche Deployment-Umgebung
 - **Orchestrierung:** Docker Compose (ein Befehl startet alles)
 - **Logging:** Structured Logging mit Winston
@@ -140,16 +154,16 @@ Die Implementierung erfolgt von der Basis nach oben: Zuerst entsteht die Infrast
 
 Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Kontexten zu Problemen führen (Parsing als Datei-Extension, Tooling-Inkompatibilitäten, Shell-Escaping). Daher gilt folgende Trennung:
 
-| Zweck | Name | Stil |
-|---|---|---|
-| **Markenname / Anzeige** | `EV.Digital` | Mit Punkt (UI, Dokumentation, Marketing) |
-| **Domain** | `ev.digital` | Mit Punkt (DNS-konform) |
-| **GitHub-Repository** | `ev-digital` | kebab-case |
-| **Projekt-/Verzeichnisname** | `ev-digital` | kebab-case |
-| **npm-Paket** | `ev-digital` oder `@gewerkschaft/ev-digital` | kebab-case |
-| **Docker-Images/Container** | `ev-digital-frontend`, `ev-digital-backend` | kebab-case |
-| **Datenbankname** | `ev_digital` | snake_case (SQL-konform) |
-| **Umgebungsvariablen** | `EV_DIGITAL_*` | UPPER_SNAKE_CASE |
+| Zweck                        | Name                                         | Stil                                     |
+| ---------------------------- | -------------------------------------------- | ---------------------------------------- |
+| **Markenname / Anzeige**     | `EV.Digital`                                 | Mit Punkt (UI, Dokumentation, Marketing) |
+| **Domain**                   | `ev.digital`                                 | Mit Punkt (DNS-konform)                  |
+| **GitHub-Repository**        | `ev-digital`                                 | kebab-case                               |
+| **Projekt-/Verzeichnisname** | `ev-digital`                                 | kebab-case                               |
+| **npm-Paket**                | `ev-digital` oder `@gewerkschaft/ev-digital` | kebab-case                               |
+| **Docker-Images/Container**  | `ev-digital-frontend`, `ev-digital-backend`  | kebab-case                               |
+| **Datenbankname**            | `ev_digital`                                 | snake_case (SQL-konform)                 |
+| **Umgebungsvariablen**       | `EV_DIGITAL_*`                               | UPPER_SNAKE_CASE                         |
 
 **Regel:** Der Markenname mit Punkt erscheint ausschließlich in Oberflächen und Dokumentation. Alle technischen Artefakte (Code, Pfade, Konfiguration, Deployment) nutzen `ev-digital` bzw. `ev_digital`.
 
@@ -160,6 +174,7 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 ### 1. Einsatz-Lifecycle
 
 #### Einsatz anlegen (Vorbereitung)
+
 - Disponent erstellt einen Einsatz vorab (z.B. am Vortag)
 - **Pflichtangaben:** Name, Datum, Einsatzgebiet (Kartenausschnitt)
 - **Konfiguration:** Sortiment festlegen, Lagerbestände erfassen, Verkehrsfilter setzen
@@ -167,11 +182,13 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 - Einsatz bleibt im Status "Vorbereitung" bis zur Aktivierung
 
 #### Einsatz aktivieren
+
 - Disponent aktiviert den Einsatz am Einsatztag
 - Ab Aktivierung: Besteller können bestellen, Versorger:innen können sich anmelden
 - Echtzeit-Funktionen (Socket.IO, Tracking, Bestellungen) werden aktiv
 
 #### Einsatz beenden
+
 - Disponent beendet den Einsatz
 - Offene Bestellungen werden automatisch storniert
 - Bestell-Links werden deaktiviert
@@ -181,15 +198,17 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 ### 2. Benutzer- und Rollenverwaltung
 
 #### Rollen (4 Kernrollen)
+
 - **Besteller (Einsatzkraft):** Zugang per QR-Code/Link ohne Registrierung, Standortfreigabe, Sortimentsauswahl, Bestellstatus einsehen
 - **Disponent:** Zentrale Koordination (stationär oder mobil), Vollzugriff, Auftragsverteilung, Bestellungen priorisieren/bündeln, Artikelstamm pflegen, Bestände beider Lager verwalten
 - **Versorger:in:** Versorgungsaufträge ausführen, Auftragsannahme, Status-Updates, Kommunikation
 - **Nachschubfahrer:in:** Fährt das mobile Lager, versorgt Versorger:innen. Drei Betriebsmodi:
-  - *Mobil (Standard):* Fährt herum, beliefert Versorger:innen mit Nachschub
-  - *Stationär:* Hält an einem Ort, wird als fester Versorgungspunkt sichtbar
-  - *Hybrid:* Fährt Bestellungen aus UND versorgt Versorger:innen gleichzeitig
+  - _Mobil (Standard):_ Fährt herum, beliefert Versorger:innen mit Nachschub
+  - _Stationär:_ Hält an einem Ort, wird als fester Versorgungspunkt sichtbar
+  - _Hybrid:_ Fährt Bestellungen aus UND versorgt Versorger:innen gleichzeitig
 
 #### Authentifizierung
+
 - **Besteller:** QR-Code oder Event-Link – kein Account, keine Registrierung, keine App
   - Anonyme Cookie-basierte Session: Besteller kann Browser schließen und Status wiederfinden
   - Mehrfachbestellungen innerhalb eines Einsatzes möglich
@@ -200,6 +219,7 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 ### 3. Kartenintegration & Navigation
 
 #### Kartenfunktionen
+
 - OpenStreetMap Integration mit Leaflet.js
 - Offline-Karten für kritische Bereiche
 - GPS-Positionierung (optional, datenschutzkonform)
@@ -209,18 +229,20 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 
 #### Kartensichtbarkeiten pro Rolle
 
-| Sieht auf der Karte... | Disponent | Versorger:in | Nachschubfahrer:in (Mobil) | Nachschubfahrer:in (Stationär) | Nachschubfahrer:in (Hybrid) |
-|---|---|---|---|---|---|
-| Alle Aufträge / Besteller-Standorte | Ja | Ja | Nein | Nein | Ja |
-| Eigener Standort | Ja (wenn mobil) | Ja | Ja | Ja | Ja |
-| Standorte aller Versorger-Fahrzeuge | Ja | Ja | Ja | Ja | Ja |
-| Standorte aller Nachschubfahrzeuge | Ja | Ja | Ja (+ eigener) | Ja (+ eigener) | Ja (+ eigener) |
-| Wird als Versorgungspunkt angezeigt | – | – | Nein | Ja (konfigurierbar) | Nein |
+| Sieht auf der Karte...              | Disponent       | Versorger:in | Nachschubfahrer:in (Mobil) | Nachschubfahrer:in (Stationär) | Nachschubfahrer:in (Hybrid) |
+| ----------------------------------- | --------------- | ------------ | -------------------------- | ------------------------------ | --------------------------- |
+| Alle Aufträge / Besteller-Standorte | Ja              | Ja           | Nein                       | Nein                           | Ja                          |
+| Eigener Standort                    | Ja (wenn mobil) | Ja           | Ja                         | Ja                             | Ja                          |
+| Standorte aller Versorger-Fahrzeuge | Ja              | Ja           | Ja                         | Ja                             | Ja                          |
+| Standorte aller Nachschubfahrzeuge  | Ja              | Ja           | Ja (+ eigener)             | Ja (+ eigener)                 | Ja (+ eigener)              |
+| Wird als Versorgungspunkt angezeigt | –               | –            | Nein                       | Ja (konfigurierbar)            | Nein                        |
 
 **Stationär-Modus: Sichtbarkeit konfigurierbar**
+
 - Disponent legt fest, ob der stationäre Versorgungspunkt nur für Versorger:innen (Nachschub holen) oder auch für Besteller (z.B. als Abholstation) sichtbar ist
 
 **Darstellung auf der Karte:**
+
 - **Nachschubfahrzeug Mobil:** Bewegliches Fahrzeug-Icon
 - **Nachschubfahrzeug Stationär:** Fester Versorgungspunkt-Icon
 - **Nachschubfahrzeug Hybrid:** Fahrzeug-Icon mit Versorger-Kennzeichnung
@@ -228,11 +250,13 @@ Der Punkt in "EV.Digital" ist Teil des Markennamens, kann aber in technischen Ko
 #### Navigation für Versorger:innen und Nachschubfahrer:in
 
 **Routing-Auslöser (Priorität):**
+
 1. **Auftrag übernommen:** Route zum Besteller-Standort wird vorgeschlagen – Versorger:in startet Navigation manuell
 2. **Nachschub/Geschäftsstelle:** Dauerhafter Button in der Kartenansicht – Route zum Nachschubfahrzeug oder zur Geschäftsstelle ist jederzeit möglich
 3. **Freies Routing:** Optionale Möglichkeit, ein beliebiges Ziel anzusteuern – nicht der Standardweg
 
 **Technische Umsetzung:**
+
 - TomTom Routing API mit Echtzeit-Verkehrsdaten (serverseitig berechnet)
 - Berücksichtigung von TomTom-Sperrungen und Disponent-Sperrungen
 - Alternative Routen bei Sperrungen
@@ -251,16 +275,19 @@ TomTom API ──(alle 15 Min.)──→ Backend
 ```
 
 **TomTom APIs:**
+
 - **Traffic Flow API:** Echtzeit-Verkehrsfluss (Geschwindigkeit, Staulevel)
 - **Traffic Incidents API:** Baustellen, Sperrungen, Unfälle, Verkehrsstörungen
 - **Routing API:** Routenberechnung mit Echtzeit-Verkehrsdaten für Versorger:innen und Nachschubfahrer:in
 - **Kostenmodell:** Kostenlos bis 5.000 Requests/Tag – ausreichend für Einsatzszenarien
 
 **Kontingent-Rechnung:**
+
 - 15-Min.-Intervall × 12h Einsatz = 48 Requests/Tag (Backend fragt zentral, nicht pro Client)
 - Selbst bei 5-Min.-Intervall: 144 Requests/Tag – weit unter dem Limit
 
 **Serverseitige Verarbeitung:**
+
 - Backend fragt TomTom im konfigurierbaren Intervall ab (Standard: 15 Min.)
 - Ergebnisse werden gecached und bei TomTom-Ausfall als Fallback genutzt
 - Disponent-Filter werden serverseitig angewendet (siehe Meldungsfilter)
@@ -272,16 +299,19 @@ TomTom API ──(alle 15 Min.)──→ Backend
 **Problem:** Am Einsatztag meldet TomTom Sperrungen, die Teil des Einsatzes selbst sind – Versorger:innen müssen diese Bereiche aber befahren.
 
 **Zwei Ebenen von Sperrungen:**
+
 - **Externe Sperrungen (TomTom):** Können vom Disponent gefiltert/ignoriert werden
 - **Interne Sperrungen (Disponent):** Gelten immer – echte Hindernisse für Versorger:innen
 
 **Filter-Funktionen:**
+
 - Einzelne TomTom-Meldungen ignorieren/ausblenden
 - Einsatzgebiet definieren: Innerhalb des Gebiets werden externe Sperrungen standardmäßig als "befahrbar" markiert
 - Meldungstypen konfigurieren: z.B. "Alle Veranstaltungssperrungen im Einsatzgebiet ignorieren"
 - Filter jederzeit anpassbar – Änderungen werden sofort an alle Clients verteilt
 
 **Kartendarstellung:**
+
 - Farbkodierte Darstellung: Orange (Baustellen), Rot (Sperrungen), Gelb (Verkehrsstörungen)
 - Durchgestrichene/ausgegraute Darstellung für ignorierte Meldungen (nur Disponent sieht diese)
 - Popup-Informationen mit Details und Filteroptionen
@@ -289,6 +319,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
 ### 4. Manuelle Straßensperrungen (Disponent)
 
 #### Sperrungen erstellen
+
 - **Interaktive Kartenerstellung:** Disponent kann direkt auf der Karte Straßensperrungen einzeichnen
   - Polygon-Tool für Sperrgebiete
   - Linien-Tool für Straßenabschnitte
@@ -299,6 +330,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
   - Temporäre Sperrung (mit Zeitbegrenzung)
 
 #### Ausnahmen und Durchfahrtsmöglichkeiten
+
 - **Versorgungsfahrzeug-Korridore:** Definition von befahrbaren Bereichen innerhalb von Sperrungen
   - Markierung von Durchfahrtspunkten für Versorgungsfahrzeuge
   - GPS-Koordinaten für exakte Positionierung
@@ -310,6 +342,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
   - Besondere Hinweise (z.B. "Rücksprache mit Einsatzleitung erforderlich")
 
 #### Technische Umsetzung
+
 - **Datenbank-Schema:**
   - Sperrungen-Tabelle mit GeoJSON-Geometrien
   - Ausnahmen-Tabelle mit Referenz zu Sperrungen
@@ -327,6 +360,7 @@ TomTom API ──(alle 15 Min.)──→ Backend
 ### 5. Versorger-Koordination
 
 #### Versorger-Status
+
 ```
 Status:
 ├── Verfügbar (grün)
@@ -337,11 +371,13 @@ Status:
 ```
 
 #### Optionale Team-Gruppierung
+
 - Versorger:innen können einzeln oder in Teams arbeiten
 - Disponent kann Versorger:innen optional zu Teams gruppieren (z.B. 2er-Teams pro Fahrzeug)
 - Aufträge werden an Einzelpersonen oder Teams zugewiesen
 
 #### Funktionen
+
 - Echtzeit-Statusübersicht aller Versorger:innen und Nachschubfahrer:in
 - Automatische Benachrichtigungen bei Statusänderungen
 - Schichtplanung und Ablösung
@@ -349,11 +385,13 @@ Status:
 ### 6. Bestell-Interface (Einsatzkräfte)
 
 #### Zugang
+
 - **QR-Code:** Wird am Einsatzort ausgehängt/verteilt – scannt direkt zur Bestellseite
 - **Event-Link:** Alternative URL-Weitergabe (z.B. per Funk, Aushang)
 - **Kein Account nötig:** Kein Login, keine Registrierung, keine App-Installation
 
 #### Bestellvorgang
+
 1. **Standort angeben:** GPS-Standort per Browser-Freigabe (bevorzugt). Alternativ: Standort auf Karte antippen oder aus vordefinierten Orten wählen
 2. **Sortiment durchsuchen:** Vordefinierte Artikel mit Kategorien (Getränke, Snacks, Warmes etc.)
 3. **Auswahl treffen:** Artikel und Menge wählen, optional Kommentar hinzufügen
@@ -363,6 +401,7 @@ Status:
 #### Lager- und Sortimentsverwaltung (durch Disponent)
 
 **Artikelstamm (Vorlagensystem):**
+
 - Persistenter Standardkatalog als Vorlage (wird einmalig angelegt und wiederverwendet)
 - Bei Einsatzerstellung: Vorlage wird kopiert und kann pro Einsatz angepasst werden
 - Artikel anlegen, bearbeiten, deaktivieren
@@ -370,33 +409,39 @@ Status:
 - Mengenbegrenzungen pro Bestellung möglich
 
 **Zwei Lagerorte:**
+
 - **Lokales Lager (Geschäftsstelle):** Gesamtbestand aller Artikel, Disponent pflegt Zu- und Abgänge
 - **Mobile Lager (Nachschubfahrzeuge):** Teilbestand pro Fahrzeug, Disponent erfasst die Befüllung jeweils vor Fahrtbeginn
 
 **Bestandsführung:**
+
 - Disponent kennt und pflegt die Bestände beider Lager
 - Verfügbarkeit wird in Echtzeit angepasst (z.B. "Kaffee ausverkauft")
 - **Besteller sehen den Gesamtbestand** (lokales + mobiles Lager zusammen) – die interne Aufteilung ist für Besteller nicht relevant
 - Bestandswarnung bei niedrigem Vorrat → Disponent koordiniert Nachschub
 
 #### Bestellworkflow
+
 ```
 Primär:  Einsatzkraft → Bestell-Interface → EV.Digital → Disponent prüft → Versorger liefert
 Fallback: Einsatzkraft → WhatsApp/Funk → Disponent erfasst manuell → Versorger liefert
 ```
 
 #### Disponenten-Sicht auf Bestellungen
+
 - Eingehende Bestellungen in Echtzeit (Socket.IO)
 - Bestellungen priorisieren, bündeln oder ablehnen
 - Mehrere Bestellungen am gleichen Standort → ein Auftrag
 - Manuelle Bestellerfassung weiterhin möglich (WhatsApp-Fallback)
 
 #### Auftragszuweisung
+
 - **Selbstübernahme:** Versorger:innen sehen offene Aufträge und können sich selbst einen nehmen
 - **Disponent-Steuerung:** Disponent kann Aufträge gezielt zuweisen oder Übernahmen übersteuern
 - System zeigt Nähe und Auslastung der Versorger:innen als Entscheidungshilfe
 
 #### Auftragsverwaltung
+
 ```
 Auftragsstatus:
 ├── Bestellt (weiß) – Einsatzkraft hat bestellt
@@ -412,12 +457,14 @@ Auftragsstatus:
 ### 7. Kommunikationssystem
 
 #### Nachrichten
+
 - Kurznachrichten zwischen Versorger:innen, Nachschubfahrer:in und Disponent
 - Broadcast-Nachrichten an alle Versorger:innen
 - Automatische Benachrichtigungen
 - Nachrichtenverlauf mit Zeitstempel
 
 #### Protokollierung
+
 - Automatische Dokumentation aller Aktivitäten
 - Export-Funktion für Nachbereitung
 - Anonymisierte Statistiken
@@ -428,12 +475,14 @@ Auftragsstatus:
 ## 🔒 Datenschutz & Sicherheit
 
 ### Datenschutz-Prinzipien
+
 - **Privacy by Design:** Datenschutz von Anfang an mitgedacht
 - **Datenminimierung:** Nur notwendige Daten erfassen
 - **Zweckbindung:** Daten nur für definierten Zweck verwenden
 - **Löschkonzept:** Automatische Löschung nach Einsatzende
 
 ### Sicherheitsmaßnahmen
+
 - HTTPS-Verschlüsselung für alle Verbindungen
 - Sichere Session-Verwaltung mit HttpOnly Cookies
 - Input-Validierung und Sanitization
@@ -441,6 +490,7 @@ Auftragsstatus:
 - Regelmäßige Security-Updates
 
 ### DSGVO-Compliance
+
 - Einverständniserklärung bei Erstnutzung
 - Recht auf Auskunft und Löschung
 - Datenschutzerklärung in verständlicher Sprache
@@ -451,6 +501,7 @@ Auftragsstatus:
 ## 📱 Benutzeroberfläche & UX
 
 ### Design-Prinzipien
+
 - **Mobile First:** Optimiert für Smartphone-Nutzung
 - **Einfachheit:** Intuitive Bedienung ohne Schulung
 - **Barrierefreiheit:** WCAG 2.1 AA konform
@@ -460,6 +511,7 @@ Auftragsstatus:
   - Bestellungen: Besteller können offline bestellen, wird bei Reconnect gesendet
 
 ### Responsive Design
+
 ```
 Breakpoints:
 ├── Mobile: 320px - 768px
@@ -470,11 +522,13 @@ Breakpoints:
 ### Hauptansichten
 
 #### Besteller-Interface (Einsatzkräfte)
+
 - **Bestellseite:** Standort freigeben → Sortiment → Bestellen → Status verfolgen
 - Minimalistisch, große Buttons, wenige Schritte
 - Funktioniert ohne Login auf jedem Smartphone-Browser
 
 #### Interne Ansichten (Disponent, Versorger:in, Nachschubfahrer:in)
+
 1. **Dashboard:** Übersicht über aktuelle Situation + eingehende Bestellungen
 2. **Karte:** (rollenabhängige Sichtbarkeit, siehe Kartensichtbarkeiten)
    - Echtzeit-Standorte aller Versorger:innen und Nachschubfahrzeug
@@ -490,6 +544,7 @@ Breakpoints:
 ## 🚀 Implementierungsplan
 
 ### Phase 1: Grundlagen (Wochen 1-4)
+
 - [ ] Projektsetup und Entwicklungsumgebung
 - [ ] Datenbank-Schema Design
 - [ ] Basis-API Entwicklung
@@ -497,6 +552,7 @@ Breakpoints:
 - [ ] Grundlegende Frontend-Struktur
 
 ### Phase 2: Kernfunktionen (Wochen 5-8)
+
 - [ ] Benutzer- und Rollenverwaltung
 - [ ] Versorger-Koordination und optionale Team-Gruppierung
 - [ ] Basis-Kartenintegration
@@ -504,6 +560,7 @@ Breakpoints:
 - [ ] Grundlegende Kommunikation
 
 ### Phase 3: Erweiterte Features (Wochen 9-12)
+
 - [ ] Erweiterte Kartenfunktionen
 - [ ] Offline-Funktionalität
 - [ ] Push-Benachrichtigungen
@@ -511,6 +568,7 @@ Breakpoints:
 - [ ] Performance-Optimierung
 
 ### Phase 4: Testing & Deployment (Wochen 13-16)
+
 - [ ] Umfassende Tests (Unit, Integration, E2E)
 - [ ] Security-Audit
 - [ ] Performance-Tests
@@ -522,6 +580,7 @@ Breakpoints:
 ## 📊 Qualitätssicherung
 
 ### Testing-Strategie
+
 - **Unit Tests:** 80%+ Code Coverage
 - **Integration Tests:** API-Endpunkte und Datenbankoperationen
 - **E2E Tests:** Kritische Benutzerflows
@@ -529,6 +588,7 @@ Breakpoints:
 - **Security Tests:** Penetrationstests und Vulnerability Scans
 
 ### Code Quality
+
 - ESLint für Code-Standards
 - Prettier für einheitliche Formatierung
 - Pre-commit Hooks für automatische Checks
@@ -540,17 +600,20 @@ Breakpoints:
 ## 🔧 Deployment & Betrieb
 
 ### Deployment-Optionen
+
 1. **Docker Compose:** Standardmäßiges Deployment – ein `docker-compose up` startet alle Services
 2. **Cloud-Hosting:** AWS/Azure/GCP bei Bedarf
 3. **On-Premise:** Lokale Server für maximalen Datenschutz
 
 ### Monitoring & Wartung
+
 - Health-Endpoint für Service-Überwachung
 - Structured Logging mit Winston
 - Automatische Backups der PostgreSQL-Datenbank
 - Security Updates
 
 ### Skalierung (bei Bedarf nachrüstbar)
+
 - Redis für Session-Caching bei steigender Nutzerzahl
 - Load Balancer für horizontale Skalierung
 - CDN für statische Assets
@@ -561,6 +624,7 @@ Breakpoints:
 ## 💰 Kostenschätzung
 
 ### Entwicklungskosten (16 Wochen)
+
 - **Frontend-Entwicklung:** 320 Stunden
 - **Backend-Entwicklung:** 280 Stunden
 - **DevOps & Deployment:** 80 Stunden
@@ -570,6 +634,7 @@ Breakpoints:
 **Gesamt:** ~880 Stunden
 
 ### Betriebskosten (monatlich)
+
 - **Cloud-Hosting:** 50-200€
 - **Monitoring & Tools:** 30-100€
 - **Wartung & Support:** 200-500€
@@ -580,12 +645,14 @@ Breakpoints:
 ## 🎯 Erfolgskriterien
 
 ### Technische KPIs
+
 - Verfügbarkeit: 99.5%+
 - Antwortzeit: <2 Sekunden
 - Mobile Performance: Lighthouse Score 90+
 - Sicherheit: Keine kritischen Vulnerabilities
 
 ### Benutzer-KPIs
+
 - Benutzerfreundlichkeit: SUS Score 80+
 - Adoption Rate: 80% der Versorger:innen nutzen das System
 - Fehlerrate: <1% der Aktionen führen zu Fehlern
@@ -596,12 +663,14 @@ Breakpoints:
 ## 📚 Dokumentation
 
 ### Technische Dokumentation
+
 - API-Dokumentation (OpenAPI/Swagger)
 - Deployment-Handbuch
 - Entwickler-Guidelines
 - Architektur-Diagramme
 
 ### Benutzer-Dokumentation
+
 - Benutzerhandbuch
 - Video-Tutorials
 - FAQ
@@ -614,29 +683,34 @@ Breakpoints:
 ### Geplant: Barcode-basierte Warenwirtschaft
 
 #### Warenerfassung per Barcode (Disponent)
+
 - Verpackungseinheit scannen → System erkennt Inhalt (z.B. 25x Snickers)
 - Oder: Einzelbarcode scannen + Menge manuell eingeben
 - Waren werden katalogisiert und dem lokalen Lager zugeordnet
 - **Scan-Technik:** Kamera im Browser (ZXing/QuaggaJS) + Unterstützung für externe USB/Bluetooth-Scanner
 
 #### Barcode-Auflösung (Hybrid-Ansatz)
+
 - **Erst Open Food Facts:** Kostenlose Community-DB, gut für Lebensmittel, Snacks, Getränke
 - **Dann UPCitemdb:** Als Fallback für Non-Food-Artikel
 - **Zuletzt manuell:** Wenn beide nicht fündig → Disponent erfasst Artikel manuell
 - **Lokal gespeichert:** Einmal erfasste Artikel werden in eigener Datenbank vorgehalten und beim nächsten Scan sofort erkannt
 
 #### Artikel ohne Barcode
+
 - Disponent legt Artikel manuell an (Name, Kategorie, Einheit)
 - **Optional:** Etikett mit internem Barcode generieren und drucken → künftig scanbar
 - Alternative: Reine Namenssuche ohne Etikett
 
 #### Einheiten & Gebinde
+
 - **Basis-Einheit:** Stück, kg oder Liter (pro Artikel festgelegt)
 - **Gebindegröße:** Verpackungseinheit (z.B. "Karton à 25 Stück")
 - Getrennte Verwaltung: Gesamtbestand kann als einzelne Stücke oder komplette Gebinde angezeigt werden
 - **Mindesthaltbarkeitsdatum:** Optional erfassbar, keine automatischen Warnungen
 
 #### Digitale Fahrzeug-Beladung (Disponent)
+
 - Disponent stellt Packstücke/Ladungen digital zusammen
 - **Ladungs-Vorlagen:** Wiederverwendbare Templates (z.B. "Standard-Tagesladung Versorger"), pro Fahrzeug anwendbar und anpassbar
 - Komplette Packstücke werden im System vom Lager → Fahrzeug verschoben
@@ -644,18 +718,21 @@ Breakpoints:
 - **Abweichungen:** Fahrer kann Korrekturen direkt eingeben (z.B. "3 statt 5 Flaschen Wasser") – Disponent wird automatisch benachrichtigt
 
 #### Bestand-Reservierung bei Bestellung
+
 - Sobald Bestellung eingeht: Artikel werden im Bestand als "reserviert" markiert
 - Andere Besteller sehen reduzierten verfügbaren Bestand
 - Abbuchung erfolgt erst bei Lieferung
 - Stornierung hebt Reservierung automatisch auf
 
 #### Lieferung durch Versorger:in
+
 - **Standard:** Pauschale Lieferbestätigung – System bucht die bestellten Artikel vom Fahrzeugbestand ab
 - **Detail-Option:** Versorger:in kann auf Einzelartikel-Bestätigung umschalten (bei Teillieferung oder Abweichungen)
 - **Teillieferung:** Auftrag wird mit tatsächlich gelieferter Menge abgeschlossen, Fehlmenge wird als offene Bestellung neu angelegt
 - **Rückgabe:** Nicht übergebene Artikel werden über "Rückgabe" erfasst und kommen in den Fahrzeugbestand zurück
 
 #### Nachschub-Übergabe (Nachschubfahrzeug → Versorger:in)
+
 - **Zwei Workflows:**
   - **Liste:** Nachschubfahrer:in wählt Versorgungsfahrzeug aus Liste, gibt Artikel/Mengen ein
   - **QR-Code:** Versorger:in zeigt QR-Code, Nachschubfahrer:in scannt → Übergabe wird direkt angelegt
@@ -663,6 +740,7 @@ Breakpoints:
 - Bestand verschiebt sich im System von Nachschubfahrzeug → Versorgungsfahrzeug
 
 #### Warenfluss
+
 ```
 Lager ──(Beladung)──→ Fahrzeug ──(Lieferung)──→ Besteller
                           ↑              ↓
@@ -672,6 +750,7 @@ Nachschub ──(Übergabe)───┘          (Rückgabe)
 ```
 
 #### Echtzeit-Bestandsübersicht
+
 - Disponent sieht jederzeit: lokaler Lagerbestand + Bestand pro Fahrzeug
 - Versorger:in sieht eigenen Fahrzeugbestand
 - Nachschubfahrer:in sieht eigenen Bestand + Bestände der Versorgungsfahrzeuge (für Nachschub-Planung)
@@ -679,11 +758,13 @@ Nachschub ──(Übergabe)───┘          (Rückgabe)
 ### Geplant: Einsatz-Statistiken
 
 #### Zugriff & Timing
+
 - **Zugriff:** Alle internen Rollen (Disponent, Versorger:in, Nachschubfahrer:in)
 - **Live-Dashboard während des Einsatzes:** Aktuelle Zahlen in Echtzeit sichtbar
 - **Post-Einsatz:** Finale Auswertung bleibt dauerhaft verfügbar
 
 #### Kennzahlen
+
 - **Basis-KPIs:**
   - Anzahl Artikelgruppen
   - Anzahl ausgelieferter Artikel (gesamt + pro Gruppe)
@@ -697,31 +778,37 @@ Nachschub ──(Übergabe)───┘          (Rückgabe)
   - Beliebteste Artikel (Top-bestellt)
 
 #### Visualisierung
+
 - **Tabellen:** Rohdaten und Zusammenfassungen
 - **Diagramme:** Balken-, Linien-, Kreisdiagramme
 - **Karten-Heatmap:** Räumliche Verteilung der Bestellungen
 - **Zeitverlauf:** Einsatz-Timeline (Bestellungen, Lieferungen, aktive Fahrzeuge über Zeit)
 
 #### Einsatz-Vergleich
+
 - Historische Statistiken verschiedener Einsätze nebeneinander darstellbar
 - Zeigt Trends und Entwicklungen über Zeit
 
 #### Export
+
 - **PDF:** Druckfertiger Report für Nachbereitung
 - **CSV:** Rohdaten für Excel/Weiterverarbeitung
 - **JSON:** Technische Weiterverarbeitung
 
 #### Aufbewahrung
+
 - Keine personenbezogenen Daten im System (nur Rollen, keine Namen)
 - **Unbegrenzte Aufbewahrung** aller Einsatz-Statistiken
 - Manuelle Löschung durch Disponent möglich
 
 ### Weitere mögliche Erweiterungen
+
 - KI-basierte Routenoptimierung
 - Multi-Tenant Fähigkeiten für verschiedene Organisationen
 - Mobile App für bessere Offline-Funktionalität
 
 ### Community & Open Source
+
 - GitHub Repository für Community-Beiträge
 - Plugin-System für Erweiterungen
 - Regelmäßige Community-Meetings
@@ -732,12 +819,14 @@ Nachschub ──(Übergabe)───┘          (Rückgabe)
 ## 📄 Anhang
 
 ### Technische Spezifikationen
+
 - Minimum Browser-Support: Chrome 90+, Firefox 88+, Safari 14+
 - Mobile OS: iOS 13+, Android 8+
 - Server-Anforderungen: 4GB RAM, 2 CPU Cores, 50GB Storage
 - Netzwerk: Mindestens 1 Mbit/s für optimale Performance
 
 ### Compliance & Standards
+
 - DSGVO/GDPR Compliance
 - ISO 27001 Security Standards
 - WCAG 2.1 AA Accessibility

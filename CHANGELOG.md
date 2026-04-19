@@ -8,12 +8,25 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [Unreleased]
 
 ### Hinzugefügt
+
+- **Phase 0 – Projektfundament umgesetzt:**
+  - Monorepo-Struktur (`backend/`, `frontend/`, `database/`, `docs/`) mit npm workspaces
+  - `docker-compose.yml` mit `postgres` (PostGIS 16-3.4), `backend` (Node 20 + Express) und `frontend` (Vite + Vue 3 + Vuetify 3)
+  - Backend-Grundgerüst mit `GET /healthz`, graceful Shutdown, strict-TypeScript
+  - Frontend-Shell mit Vuetify-Bootstrap als Startpunkt für Phase 1
+  - Datenbank-Init: PostGIS- und pgcrypto-Extension automatisch aktiv
+  - Root-`tsconfig.base.json` (strict, `noUncheckedIndexedAccess`)
+  - ESLint (flat config), Prettier, EditorConfig, `.nvmrc` (Node 20)
+  - Husky + lint-staged (pre-commit) und commitlint (commit-msg, Conventional Commits)
+  - GitHub-Actions-CI: `lint`, `typecheck`, `test`, `commitlint`, Docker-Build-Matrix (backend/frontend)
+  - `.env.example`, `CONTRIBUTING.md`, Entwickler-Quickstart in README aktualisiert
 - **Implementierungsfahrplan (`FAHRPLAN.md`):** Bottom-to-Top-Phasenplan (Phase 0 Projektfundament bis Phase 9 Release 1.0, Phase 10 Post-MVP) mit Meilensteinen, Erfolgskriterien, Risiken und offenen Punkten. MVP-Grenze nach Phase 5 (Karte & Navigation).
 - **Namenskonvention:** Trennung zwischen Markenname (`EV.Digital` mit Punkt) und technischem Namen (`ev-digital` kebab-case / `ev_digital` snake_case) dokumentiert. Punkt im Projektnamen kann bei Tooling/Dateisystemen Probleme verursachen, daher klare Trennung für Repo, Projekt-Ordner, Docker, DB, npm.
 
 ## [1.5.0] - 2026-04-16
 
 ### Hinzugefügt
+
 - **Bestell-Interface für Einsatzkräfte:** Eigene Bestelloberfläche ohne Registrierung oder App
   - Zugang per QR-Code oder Event-Link
   - Standortfreigabe per GPS
@@ -28,6 +41,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Besteller als Benutzerrolle:** Einsatzkräfte sind jetzt Teil des Systems (statt externe Akteure)
 
 ### Geändert
+
 - **Rollenmodell auf 4 Kernrollen reduziert:** Besteller, Disponent, Versorger:in, Nachschubfahrer:in
   - Koordinator:in, Teamleiter:in und Helfer:in entfernt (Überschneidungen bereinigt)
   - "Mobiles Nachschubfahrzeug" umbenannt zu "Nachschubfahrer:in" (Person statt Fahrzeug)
@@ -93,6 +107,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [1.4.0] - 2026-04-16
 
 ### Geändert
+
 - **Tech-Stack finalisiert:** Klare Entscheidungen statt offener Alternativen
   - Frontend: Vue.js 3 + Vuetify 3 (statt "Vue.js oder React")
   - Backend: Node.js + Express + Socket.IO (statt "Node.js oder Python Flask")
@@ -106,6 +121,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Testing:** Vitest statt Jest/Pytest
 
 ### Entfernt
+
 - Redis als Pflichtkomponente (optional bei Skalierungsbedarf)
 - Kubernetes Deployment-Option
 - ELK Stack (Elasticsearch, Logstash, Kibana)
@@ -115,6 +131,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [1.3.0] - 2025-07-19
 
 ### Hinzugefügt
+
 - **Hybrid-Ansatz Verkehrsdaten:** Integration von Autobahn GmbH API, OpenStreetMap Overpass API und HERE Maps
 - **Autobahn GmbH API:** Kostenlose deutsche Autobahn-Baustellen, Sperrungen und Verkehrsmeldungen
 - **OpenStreetMap Overpass API:** Detaillierte Integration für lokale Straßenbaustellen aus Community-Daten
@@ -132,6 +149,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Erweiterte Kartendarstellung:** Farbkodierte Bereiche und Popup-Informationen
 
 ### Geändert
+
 - Technologie-Stack um Verkehrsdaten-APIs erweitert
 - Kartenintegration um Hybrid-Ansatz für Verkehrsdaten erweitert
 - Backend um Sperrungsmanagement-Funktionen erweitert
@@ -140,6 +158,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [1.2.0] - 2025-07-18
 
 ### Hinzugefügt
+
 - **Benutzerrollen:** Disponent, Ehrenamtliche Versorger:innen, Mobiles Nachschubfahrzeug
 - **Örtlichkeiten:** Geschäftsstelle der Gewerkschaft, Mobile Nachschubfahrzeuge, Einsatzorte
 - **WhatsApp-Bestellsystem:** Externe Bestellung über WhatsApp mit manueller Erfassung
@@ -150,6 +169,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **Externe Akteure:** Einsatzkräfte als Kunden ohne Systemzugriff (Lieferando-Modell)
 
 ### Geändert
+
 - Rollensystem überarbeitet: Einsatzkräfte aus internem System entfernt
 - Anwendungsszenarien um WhatsApp-Integration und Medienbruch-Management erweitert
 - Kartenfunktionen um Echtzeit-Tracking und Live-Koordination erweitert
@@ -158,18 +178,21 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 ## [1.1.0] - 2025-07-18
 
 ### Hinzugefügt
+
 - **Entwicklungsphilosophie:** Vision Driven Development-Ansatz
 - **Autonome KI-Entwicklung:** Eigenständige Informationsbeschaffung und vorausschauende Planung
 - **Implizites Wissen:** Nutzung des gesamten Dokumentations-"Wissensschatzes"
 - **Implementierungsauswirkungen:** Dokumentationsanforderungen und Qualitätssicherung
 
 ### Geändert
+
 - Konzeptdokument um Entwicklungsphilosophie erweitert
 - Strukturierung für autonome KI-Entwicklung optimiert
 
 ## [1.0.0] - 2025-07-18
 
 ### Hinzugefügt
+
 - **Projektkonzept:** Vollständiges Konzeptdokument für "Einsatzversorgung Digital"
 - **README:** Umfassende Projektdokumentation mit Roadmap
 - **Technische Architektur:** Vue.js/React Frontend, Node.js/Python Backend, PostgreSQL
@@ -182,6 +205,7 @@ und dieses Projekt folgt der [Semantischen Versionierung](https://semver.org/lan
 - **MIT-Lizenz:** Freie Verfügbarkeit des Projekts
 
 ### Dokumentation
+
 - Detailliertes Konzeptdokument (KONZEPT.md)
 - Projektübersicht und Anleitung (README.md)
 - Lizenzbestimmungen (MIT)
