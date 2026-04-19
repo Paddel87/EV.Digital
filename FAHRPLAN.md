@@ -18,19 +18,19 @@
 
 ## 🗺️ Meilensteine im Überblick
 
-| Phase | Ziel | Status |
-|---|---|---|
-| **0** | Projektfundament (Monorepo, Docker Compose, CI) | ⏳ Bevorstehend |
-| **1** | Kern-Infrastruktur (DB, Auth, API- & Frontend-Skelett) | ⏳ Geplant |
-| **2** | Einsatz-Lifecycle & Rollenzugang | ⏳ Geplant |
-| **3** | Sortiment & Lagerverwaltung | ⏳ Geplant |
-| **4** | Bestell- und Auftragsflow (Kern-MVP) | ⏳ Geplant |
-| **5** | Karte, Tracking & Navigation | ⏳ Geplant |
-| **6** | Nachschubfahrzeug & Betriebsmodi | ⏳ Geplant |
-| **7** | Kommunikation & Protokollierung | ⏳ Geplant |
-| **8** | Offline-Fähigkeit / PWA-Härtung | ⏳ Geplant |
-| **9** | Testing, Security, Release 1.0 | ⏳ Geplant |
-| **10** | Post-MVP (Barcode, Statistiken, KI-Routing) | 🔮 Zukunft |
+| Phase  | Ziel                                                   | Status           |
+| ------ | ------------------------------------------------------ | ---------------- |
+| **0**  | Projektfundament (Monorepo, Docker Compose, CI)        | ✅ Abgeschlossen |
+| **1**  | Kern-Infrastruktur (DB, Auth, API- & Frontend-Skelett) | ⏳ Geplant       |
+| **2**  | Einsatz-Lifecycle & Rollenzugang                       | ⏳ Geplant       |
+| **3**  | Sortiment & Lagerverwaltung                            | ⏳ Geplant       |
+| **4**  | Bestell- und Auftragsflow (Kern-MVP)                   | ⏳ Geplant       |
+| **5**  | Karte, Tracking & Navigation                           | ⏳ Geplant       |
+| **6**  | Nachschubfahrzeug & Betriebsmodi                       | ⏳ Geplant       |
+| **7**  | Kommunikation & Protokollierung                        | ⏳ Geplant       |
+| **8**  | Offline-Fähigkeit / PWA-Härtung                        | ⏳ Geplant       |
+| **9**  | Testing, Security, Release 1.0                         | ⏳ Geplant       |
+| **10** | Post-MVP (Barcode, Statistiken, KI-Routing)            | 🔮 Zukunft       |
 
 Ende von Phase 5 = **Lauffähiger MVP** (Bestellung → Auftrag → Lieferung auf der Karte).
 Ende von Phase 9 = **Release 1.0**.
@@ -42,6 +42,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Ein `docker-compose up` startet ein leeres, aber lauffähiges System.
 
 **Deliverables**
+
 - Monorepo-Struktur `frontend/`, `backend/`, `database/`, `docs/` gemäß README
 - `docker-compose.yml` mit Services `frontend`, `backend`, `postgres` (inkl. PostGIS)
 - TypeScript-Setup (Root-`tsconfig`, strict mode) für beide Pakete
@@ -58,6 +59,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Authentifizierte REST-API spricht mit Datenbank, Frontend-Shell rendert.
 
 **Backend**
+
 - Express + Socket.IO-Grundgerüst, strukturierte Fehlerbehandlung
 - Winston Structured Logging, Request-ID, Health-Endpoint (`/healthz`)
 - PostgreSQL-Migrationstool (z. B. `node-pg-migrate` oder Prisma Migrate)
@@ -66,12 +68,14 @@ Ende von Phase 9 = **Release 1.0**.
 - OpenAPI/Swagger-Spec-Gerüst
 
 **Frontend**
+
 - Vite + Vue 3 + Vuetify 3 + Pinia + Vue Router
 - PWA-Grundkonfiguration (Manifest, Service-Worker-Skelett, Offline-Shell)
 - i18n-Gerüst (Deutsch als Primärsprache)
 - Auth-Store, geschützte Routen, globaler Fetch-Client mit Auto-Retry/401-Handling
 
 **Datenbank-Schema (Initialmigrationen)**
+
 - `users`, `sessions`, `events` (Einsätze), `roles`, `audit_log`
 - PostGIS-Erweiterung aktiviert, Geometrie-Felder vorbereitet
 
@@ -84,6 +88,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Ein Einsatz lässt sich vorbereiten, aktivieren und beenden; QR-Codes funktionieren.
 
 **Features**
+
 - Einsatz-CRUD mit Status `Vorbereitung → Aktiv → Beendet` (KONZEPT §1)
 - Einsatzgebiet per Kartenausschnitt speichern (GeoJSON in PostGIS)
 - Automatische QR-Code-/Event-Link-Generierung (getrennte Tokens für Besteller vs. interne Rollen)
@@ -101,6 +106,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Warenbestand als Quelle der Wahrheit für spätere Bestellungen.
 
 **Features**
+
 - Artikelstamm mit Kategorien, Einheiten, Mengenlimits
 - Sortiment-Vorlagensystem: persistenter Standardkatalog → pro Einsatz kopiert & editierbar (KONZEPT §6)
 - Zwei Lagertypen: `lokales_lager` (Geschäftsstelle) + `mobiles_lager` pro Nachschubfahrzeug
@@ -117,18 +123,21 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Komplette Kette Bestellung → Auftrag → Lieferung, ohne Karte.
 
 **Besteller-Seite**
+
 - Standort via Browser-Geolocation, Fallback: Karten-Pin oder Auswahl aus vordefinierten Orten
 - Sortiment-Ansicht mit Gesamtbestand und Kategorien
 - Bestellabgabe + Status-Screen (Bestellt → Angenommen → Übernommen → Unterwegs → Geliefert)
 - Mehrfachbestellungen pro Session, Statuspersistenz über Browserneustart
 
 **Disponent-Seite**
+
 - Eingangskorb mit Echtzeit-Updates, Priorisieren/Bündeln/Ablehnen
 - Bestellungen gleicher Location zu einem Auftrag zusammenführen
 - Manuelle Bestellerfassung (WhatsApp-Fallback)
 - Zuweisung / Übersteuerung von Auftragsannahmen
 
 **Versorger-Seite**
+
 - Liste offener Aufträge, Selbstübernahme
 - Statuswechsel „Übernommen → Unterwegs → Geliefert"
 - Lieferbestätigung bucht reservierte Artikel vom Fahrzeugbestand ab
@@ -137,27 +146,31 @@ Ende von Phase 9 = **Release 1.0**.
 
 ---
 
-## Phase 5 – Karte, Tracking & Navigation  _(MVP-Abschluss)_
+## Phase 5 – Karte, Tracking & Navigation _(MVP-Abschluss)_
 
 **Ziel:** Die Lage wird sichtbar – Standorte, Routen, Verkehr.
 
 **Karten-Basis**
+
 - Leaflet + OpenStreetMap-Tiles, responsive
 - Rollenbasierte Sichtbarkeitsmatrix (KONZEPT §3) als zentrale Berechtigungslogik
 - Versorger-Tracking per Browser-Geolocation, Socket.IO-Broadcast an berechtigte Rollen
 
 **TomTom-Integration (serverseitig)**
+
 - Cron-Job ruft Traffic Flow & Traffic Incidents zentral ab (Default 15 Min.), cached Ergebnisse
 - Routing-Endpoint nutzt TomTom Routing API mit aktuellem Verkehrsbild
 - Clients erhalten fertiges GeoJSON per Socket.IO – kein Direktzugriff auf TomTom
 - Monitoring von Request-Kontingent + Fallback bei Ausfall
 
 **Sperrungen & Filter**
+
 - CRUD für manuelle Sperrungen (Polygon, Linie, Punkt) mit zwei Stufen („für Versorgungsfahrzeuge befahrbar" / „für alle gesperrt")
 - Disponenten-Filter für TomTom-Meldungen (einzeln / Einsatzgebiet / Meldungstyp)
 - Merge-Logik serverseitig: externes + internes Lagebild
 
 **Navigation**
+
 - Routen-Vorschlag bei Auftragsübernahme, manueller Start
 - Dauerhafter Button „Route zu Nachschub/Geschäftsstelle"
 - Optionales freies Routing
@@ -171,6 +184,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Nachschublogik vollständig inkl. drei Modi.
 
 **Features**
+
 - Mehrere Nachschubfahrzeuge pro Einsatz, unabhängige Modi `mobil` / `stationär` / `hybrid`
 - Stationär-Sichtbarkeit für Besteller konfigurierbar (als Abholstation)
 - Hybrid-Modus: akzeptiert Besteller-Aufträge + versorgt Versorger:innen
@@ -186,6 +200,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Weg von WhatsApp – interne Kommunikation und Nachbereitung.
 
 **Features**
+
 - Kurznachrichten (1:1 und Broadcast an Rolle/Team)
 - Automatische Systemereignisse im Protokoll (Bestellung, Statuswechsel, Filter-Änderung, Sperrung)
 - Optionale Team-Gruppierung von Versorger:innen durch Disponent
@@ -199,6 +214,7 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Versorgung bleibt funktionsfähig bei Funklöchern.
 
 **Features**
+
 - Service-Worker: Tiles-Cache, App-Shell, Queue für ausstehende Aktionen
 - Offline-Bestellung (Besteller), Offline-Statuswechsel (Versorger:in)
 - Konfliktauflösung beim Re-Sync (Server gewinnt bei „Geliefert", Warnung bei Dubletten)
@@ -211,12 +227,14 @@ Ende von Phase 9 = **Release 1.0**.
 **Ziel:** Produktionsreife.
 
 **Qualität**
+
 - Unit-Tests (Vitest) ≥ 80 % Coverage auf Backend + Frontend-Stores
 - Integrationstests gegen echte PostgreSQL-Instanz (Testcontainers)
 - E2E-Tests (Playwright) für die fünf Kernflows: Bestellung, Auftragslebenszyklus, Nachschub, Sperrungen, Einsatz-Lifecycle
 - Lasttest (Artillery) mit 100 parallelen Bestellern
 
 **Sicherheit & Betrieb**
+
 - Security-Audit: OWASP Top 10, Rate Limiting, Secret-Scanning in CI
 - DSGVO-Paket: Datenschutzerklärung, Einwilligung, Löschkonzept, Verarbeitungsverzeichnis
 - Backup-Strategie PostgreSQL (täglich, verschlüsselt)
@@ -224,6 +242,7 @@ Ende von Phase 9 = **Release 1.0**.
 - Benutzerhandbuch + Schulungsmaterial pro Rolle
 
 **Release-Kriterien**
+
 - Alle Kernflows grün in E2E
 - Keine High/Critical-Findings im Security-Audit
 - Health-Endpoint, Logging, Backups nachweislich funktionsfähig
@@ -253,14 +272,14 @@ Jede Phase endet mit:
 
 ## ⚠️ Risiken & Gegenmaßnahmen
 
-| Risiko | Gegenmaßnahme |
-|---|---|
-| TomTom-Kontingent überschritten | Zentrales Caching im Backend, Monitoring, konfigurierbares Intervall, lokaler Fallback |
-| Geolocation im Browser unzuverlässig | Drei-Wege-Fallback (GPS → Karten-Pin → vordefinierter Ort) bereits in Phase 4 |
-| Socket.IO-Last bei vielen gleichzeitigen Clients | Rooms pro Einsatz, Event-Throttling, Lasttest in Phase 9 |
-| Offline-Sync-Konflikte | Server-authoritatives Modell mit Warn-UI, Audit-Log für Dubletten |
-| DSGVO-Überraschungen | Datenschutz-Artefakte ab Phase 1 pflegen, nicht erst vor Release |
-| Scope Creep Richtung Barcode/Statistik | Harte MVP-Grenze hinter Phase 5, Phase 10 bleibt optional |
+| Risiko                                           | Gegenmaßnahme                                                                          |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| TomTom-Kontingent überschritten                  | Zentrales Caching im Backend, Monitoring, konfigurierbares Intervall, lokaler Fallback |
+| Geolocation im Browser unzuverlässig             | Drei-Wege-Fallback (GPS → Karten-Pin → vordefinierter Ort) bereits in Phase 4          |
+| Socket.IO-Last bei vielen gleichzeitigen Clients | Rooms pro Einsatz, Event-Throttling, Lasttest in Phase 9                               |
+| Offline-Sync-Konflikte                           | Server-authoritatives Modell mit Warn-UI, Audit-Log für Dubletten                      |
+| DSGVO-Überraschungen                             | Datenschutz-Artefakte ab Phase 1 pflegen, nicht erst vor Release                       |
+| Scope Creep Richtung Barcode/Statistik           | Harte MVP-Grenze hinter Phase 5, Phase 10 bleibt optional                              |
 
 ---
 
@@ -274,4 +293,4 @@ Jede Phase endet mit:
 
 ---
 
-*Dieser Fahrplan ist ein lebendes Dokument. Änderungen werden über Pull Requests diskutiert und im CHANGELOG vermerkt.*
+_Dieser Fahrplan ist ein lebendes Dokument. Änderungen werden über Pull Requests diskutiert und im CHANGELOG vermerkt._

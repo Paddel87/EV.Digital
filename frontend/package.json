@@ -1,0 +1,25 @@
+{
+  "name": "@ev-digital/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Frontend (Vue 3 + Vuetify 3, PWA) für Einsatzversorgung Digital.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --host",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vuetify": "^3.7.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5",
+    "vue-tsc": "^2.1.10"
+  }
+}

@@ -38,40 +38,47 @@ Die Software unterstützt insbesondere:
 ## 🚀 Geplante Funktionen
 
 ### 🗺️ Navigation & Orientierung
+
 - Kartenanzeige mit relevanten Orten (z. B. Versorgungspunkte, Treffpunkte)
 - OpenStreetMap + Echtzeit-Verkehrsdaten via TomTom (serverseitig)
 - Disponent filtert irrelevante Verkehrsmeldungen (z.B. Event-Sperrungen)
 - Mobile Nutzung ohne App-Installation
 
 ### 📱 Bestell-Interface für Einsatzkräfte
+
 - QR-Code scannen → Standort freigeben → Sortiment wählen → Bestellen
 - Bestellstatus live verfolgen (Bestellt → Angenommen → Übernommen → Unterwegs → Geliefert)
 - Kein Account, keine App, keine Registrierung
 
 ### 👥 Rollenmodell (4 Kernrollen)
+
 - **Besteller** (Einsatzkraft) – bestellt per QR-Code/Link, ohne Registrierung
 - **Disponent** – steuert Aufträge, Lager, Sortiment, Verkehrsfilter (stationär oder mobil)
 - **Versorger:in** – liefert Bestellungen aus, Auftrags-Selbstübernahme + Disponent-Steuerung
 - **Nachschubfahrer:in** – fährt mobiles Lager, drei Modi: mobil / stationär / hybrid
 
 ### 🤝 Versorger-Koordination
+
 - Anmeldung per QR-Code oder PIN
 - Echtzeit-Status (verfügbar, unterwegs, im Einsatz, Pause, nicht verfügbar)
 - Optionale Team-Gruppierung durch Disponent
 
 ### 📋 Bedarfserfassung & Zuweisung
+
 - Bestellungen kommen direkt über das Bestell-Interface
 - Disponent priorisiert, bündelt und verteilt
 - Versorger:innen können Aufträge selbst übernehmen – Disponent kann übersteuern
 - WhatsApp/Funk als Fallback bei Bedarf
 
 ### 🗓️ Einsatz-Lifecycle
+
 - Disponent legt Einsatz vorab an (Name, Datum, Einsatzgebiet, Sortiment)
 - QR-Codes und Event-Links werden automatisch generiert
 - Aktivierung am Einsatztag → Bestellungen und Tracking werden live
 - Einsatz beenden → Protokoll/Export bleibt verfügbar
 
 ### 📡 Kommunikation & Übersicht
+
 - Kurze Rückfragen oder Statusänderungen möglich (textbasiert)
 - Zentrale Übersicht für Disponenten
 - Automatisierte Protokollierung zur internen Nachbereitung
@@ -81,6 +88,7 @@ Die Software unterstützt insbesondere:
 ## 🔮 Geplante Erweiterungen
 
 ### 📦 Barcode-basierte Warenwirtschaft
+
 - Verpackungseinheiten scannen (Kamera oder externer Scanner)
 - Hybrid-Auflösung: Open Food Facts + UPCitemdb, Fallback manuell
 - Ladungs-Vorlagen für Fahrzeuge
@@ -89,6 +97,7 @@ Die Software unterstützt insbesondere:
 - Echtzeit-Bestandsübersicht pro Fahrzeug
 
 ### 📊 Einsatz-Statistiken
+
 - Live-Dashboard während des Einsatzes + Post-Auswertung
 - KPIs: Lieferzeit, Peak-Zeiten, Auslastung, beliebte Artikel
 - Visualisierungen: Tabellen, Diagramme, Karten-Heatmap, Zeitverlauf
@@ -102,20 +111,24 @@ Die Software unterstützt insbesondere:
 ### Geplanter Tech-Stack
 
 **Frontend:**
+
 - Vue.js 3 + Vuetify 3
 - Progressive Web App (PWA)
 - OpenStreetMap mit Leaflet.js
 - Responsive Design (Mobile First)
 
 **Backend:**
+
 - Node.js mit Express.js + Socket.IO
 - RESTful API mit Echtzeit-Updates
 - JWT-basierte Authentifizierung
 
 **Datenbank:**
+
 - PostgreSQL mit PostGIS für Geo- und strukturierte Daten
 
 **Infrastruktur:**
+
 - Docker Compose (ein Befehl startet alles)
 - Durchgängig TypeScript
 
@@ -149,12 +162,13 @@ ev-digital/
 
 ## ⚙️ Projektstatus
 
-**Aktueller Status:** 🟡 Konzeptionierungsphase
+**Aktueller Status:** 🟢 Phase 0 abgeschlossen – Projektfundament steht
 
 - ✅ Projektidee und Zielgruppe definiert
 - ✅ Funktionsumfang spezifiziert
 - ✅ Technische Architektur geplant
-- ⏳ Implementierung steht noch aus
+- ✅ Phase 0: Monorepo, Docker Compose, TypeScript, ESLint/Prettier, Husky/commitlint, CI
+- ⏳ Phase 1: Kern-Infrastruktur (Auth, API, DB-Schema, Frontend-Shell)
 - ⏳ Testing und Deployment geplant
 
 ### 📋 Changelog
@@ -162,6 +176,7 @@ ev-digital/
 Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
 **Aktuelle Version:** 1.5.0 (16.04.2026)
+
 - ✅ 4 Kernrollen (Besteller, Disponent, Versorger:in, Nachschubfahrer:in)
 - ✅ Bestell-Interface für Einsatzkräfte (QR-Code → Sortiment → Bestellen)
 - ✅ Lager- und Sortimentsverwaltung (lokales + mobiles Lager)
@@ -174,13 +189,14 @@ Alle Änderungen werden im [CHANGELOG.md](CHANGELOG.md) dokumentiert.
 
 ### Roadmap
 
-| Phase | Status | Beschreibung |
-|-------|--------|--------------|
-| **Konzeption** | ✅ Abgeschlossen | Konzept, Rollenmodell, Tech-Stack finalisiert |
-| **MVP-Implementierung** | ⏳ Bevorstehend | Basis-Infrastruktur, Bestell- und Auftragsflow |
-| **Beta** | ⏳ Geplant | Testing mit echten Anwendern |
-| **Release** | ⏳ Geplant | Produktive Version |
-| **Erweiterungen** | 🔮 Zukunft | Barcode-Warenwirtschaft, Statistiken, KI-Routing |
+| Phase                          | Status           | Beschreibung                                      |
+| ------------------------------ | ---------------- | ------------------------------------------------- |
+| **Konzeption**                 | ✅ Abgeschlossen | Konzept, Rollenmodell, Tech-Stack finalisiert     |
+| **Phase 0 – Projektfundament** | ✅ Abgeschlossen | Monorepo, Docker Compose, TypeScript, CI, Linting |
+| **MVP-Implementierung**        | 🟡 In Arbeit     | Basis-Infrastruktur, Bestell- und Auftragsflow    |
+| **Beta**                       | ⏳ Geplant       | Testing mit echten Anwendern                      |
+| **Release**                    | ⏳ Geplant       | Produktive Version                                |
+| **Erweiterungen**              | 🔮 Zukunft       | Barcode-Warenwirtschaft, Statistiken, KI-Routing  |
 
 ---
 
@@ -246,29 +262,53 @@ Dieses Projekt ist Open Source und lebt von der Community! Wir freuen uns über 
 
 ## 🛠️ Installation & Setup
 
-> **Hinweis:** Das Projekt befindet sich noch in der Konzeptphase. Eine lauffähige Version ist noch nicht verfügbar.
+> **Status:** Phase 0 abgeschlossen – Projektfundament steht. Fachliche Features folgen ab Phase 1 (siehe [FAHRPLAN.md](FAHRPLAN.md)).
 
-### Voraussetzungen (geplant)
+### Voraussetzungen
 
-- Node.js 18+
-- PostgreSQL 15+ (mit PostGIS)
-- Docker + Docker Compose (empfohlen)
+- Node.js **20** (siehe [`.nvmrc`](.nvmrc))
+- npm **≥ 10**
+- Docker + Docker Compose
 
-### Lokale Entwicklung (geplant)
+### Entwickler-Quickstart
 
 ```bash
 # Repository klonen
 git clone https://github.com/paddel87/ev-digital.git
 cd ev-digital
 
-# Alles mit Docker Compose starten
-docker-compose up
+# Environment anlegen
+cp .env.example .env
 
-# Oder manuell:
-npm install
-npm run db:setup
-npm run dev
+# Alles mit Docker Compose starten (Postgres/PostGIS + Backend + Frontend)
+docker compose up
 ```
+
+Erreichbarkeit nach dem Start:
+
+| Service  | URL                             |
+| -------- | ------------------------------- |
+| Frontend | http://localhost:5173           |
+| Backend  | http://localhost:3000/healthz   |
+| Postgres | localhost:5432 (PostGIS 16-3.4) |
+
+Alternative ohne Docker (nur Node-Seite):
+
+```bash
+npm install
+npm run dev          # backend + frontend parallel
+```
+
+Weitere Skripte:
+
+```bash
+npm run lint         # ESLint
+npm run format:check # Prettier
+npm run typecheck    # tsc in allen Workspaces
+npm test             # Vitest
+```
+
+Beiträge willkommen – siehe [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -381,4 +421,4 @@ Dieses Projekt wird ermöglicht durch:
 
 **Erstellt mit ❤️ für die ehrenamtliche Einsatzversorgung**
 
-*Letzte Aktualisierung: April 2026*
+_Letzte Aktualisierung: April 2026_
